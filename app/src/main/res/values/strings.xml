@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name" translatable="false">OCA</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="basicInfo_characterAge">Age</string>
+    <string name="genderMale">Male</string>
+    <string name="basicInfo_avatarDescription">Character look</string>
+    <string name="basicInfo_characterGender">Gender</string>
+    <string name="basicInfo_characterJob">Job</string>
+    <string name="basicInfo_characterName">Character name</string>
+    <string name="genderFemale">Female</string>
+    <string name="tab_string_attributes">Attributes</string>
+    <string name="tab_string_basicInfo">Info</string>
+    <string name="attribute_vitality">Vitality</string>
+    <string name="attribute_reflex">Reflex</string>
+    <string name="attribute_organism">Organism</string>
+</resources>

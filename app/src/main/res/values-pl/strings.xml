@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="basicInfo_avatarDescription">Wygląd postaci</string>
+    <string name="basicInfo_characterAge">Wiek</string>
+    <string name="basicInfo_characterGender">Płeć</string>
+    <string name="basicInfo_characterJob">Zawód</string>
+    <string name="basicInfo_characterName">Imię postaci</string>
+    <string name="genderFemale">Kobieta</string>
+    <string name="genderMale">Mężczyzna</string>
+    <string name="tab_string_attributes">Atrybuty</string>
+    <string name="tab_string_basicInfo">Info</string>
+    <string name="attribute_vitality">Witalność</string>
+    <string name="attribute_reflex">Refleks</string>
+    <string name="attribute_organism">Organizm</string>
+</resources>
