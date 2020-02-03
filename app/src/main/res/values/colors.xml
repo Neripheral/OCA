@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#131313</color>
-    <color name="colorPrimaryDark">#242424</color>
+    <color name="mainBackground">#131313</color>
+    <color name="mainContainer">#242424</color>
+    <color name="mainContainerNested">#363636</color>
+    <color name="mainBox">#555555</color>
+    <color name="mainFont">#FFFFFF</color>
     <color name="colorAccent">#D81B60</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>

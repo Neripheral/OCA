@@ -2,18 +2,13 @@ package com.example.oca.ui.pager;
 
 import android.content.Context;
 
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.oca.AttributesFragment;
-import com.example.oca.BasicInfoFragment;
-import com.example.oca.CharacterViewerActivity;
+import com.example.oca.fragments.AttributesFragment;
+import com.example.oca.fragments.BasicInfoFragment;
 import com.example.oca.R;
-
-import java.text.AttributedCharacterIterator;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     public static final int ITEMS_NUMBER = 2;
@@ -38,6 +33,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 return new BasicInfoFragment();
             case 1:
                 return new AttributesFragment();
+            /*case 2:
+                return new SkillsFragment();*/
         }
         return new Fragment();
     }

@@ -1,4 +1,4 @@
-package com.example.oca;
+package com.example.oca.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.oca.CharacterViewerActivity;
+import com.example.oca.R;
 import com.example.oca.classes.PlayerCharacter;
 
 public class BasicInfoFragment extends Fragment {

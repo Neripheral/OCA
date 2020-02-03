@@ -1,22 +1,48 @@
 package com.example.oca;
 
-import android.util.Log;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oca.fragments.AttributesFragment;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+
 
 public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.AttributeViewHolder> {
     private AttributesFragment.RecyclerViewClickListener listener;
     public List<AttributeModel> dataset;
+
+    public static class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+
+            // Add top margin only for the first item to avoid double space between items
+            if (parent.getChildLayoutPosition(view) == 0) {
+                outRect.top = space;
+            } else {
+                outRect.top = 0;
+            }
+        }
+    }
 
     public static class AttributeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private WeakReference<AttributesFragment.RecyclerViewClickListener> listenerRef;

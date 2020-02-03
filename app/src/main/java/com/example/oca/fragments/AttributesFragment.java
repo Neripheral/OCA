@@ -1,4 +1,4 @@
-package com.example.oca;
+package com.example.oca.fragments;
 
 
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.oca.AttributeAdapter;
+import com.example.oca.AttributeModel;
+import com.example.oca.CharacterViewerActivity;
+import com.example.oca.R;
 import com.example.oca.classes.PlayerCharacter;
 
 import java.util.ArrayList;
@@ -123,6 +127,8 @@ public class AttributesFragment extends Fragment {
             }
         });
         recyclerView.setAdapter(mAdapter);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        recyclerView.addItemDecoration(new AttributeAdapter.SpacesItemDecoration(spacingInPixels));
         return this.rootView;
     }
 }
