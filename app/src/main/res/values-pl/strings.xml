@@ -12,4 +12,5 @@
     <string name="attribute_vitality">Witalność</string>
     <string name="attribute_reflex">Refleks</string>
     <string name="attribute_organism">Organizm</string>
+    <string name="tab_string_skills">Umiejętności</string>
 </resources>

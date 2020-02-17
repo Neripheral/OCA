@@ -3,6 +3,7 @@ package com.example.oca.classes;
 import android.content.Context;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerCharacter {
     public final boolean GENDER_MALE = true;
@@ -37,6 +40,35 @@ public class PlayerCharacter {
     private int age;
     private String job;
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
+    private List<Skill> skills = new ArrayList<>();
+
+    public class Skill{
+        private String title;
+        private int counter;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public Skill setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public int getCounter() {
+            return counter;
+        }
+
+        public Skill setCounter(int counter) {
+            this.counter = counter;
+            return this;
+        }
+
+        public Skill(String title, int counter){
+            this.setTitle(title);
+            this.setCounter(counter);
+        }
+    }
 
 
     public PlayerCharacter(){}
@@ -78,23 +110,28 @@ public class PlayerCharacter {
         return this;
     }
 
-    public int[] getAttributes(){
-        return this.attributes;
-    }
-
     public int getAttribute(int pos){
         return attributes[pos];
-    }
-
-    public PlayerCharacter setAttributes(int[] attributes){
-        this.attributes = attributes;
-        return this;
     }
 
     public PlayerCharacter setAttribute(int pos, int number){
         this.attributes[pos] = number;
         return this;
     }
+
+    public List<Skill> getSkills(){
+        return this.skills;
+    }
+
+    public Skill getSkill(int pos){ return this.skills.get(pos); }
+
+    public PlayerCharacter setSkill(int pos, Skill skill){ this.skills.set(pos, skill); return this; }
+
+    public PlayerCharacter addSkill(Skill skill){
+        this.skills.add(skill);
+        return this;
+    }
+
 
     public String toJSON(){
         JSONObject in = new JSONObject();
@@ -108,6 +145,16 @@ public class PlayerCharacter {
             // put all of the attributes into the json object
             for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
                 in.put("attribute"+i, getAttribute(i));
+
+            // put all of the skills into the json object
+            JSONArray skillsJSONArray = new JSONArray();
+            for(int i = 0; i < this.skills.size(); i++){
+                JSONObject skillInJSON = new JSONObject();
+                skillInJSON.put("title", this.skills.get(i).title);
+                skillInJSON.put("counter", this.skills.get(i).counter);
+                skillsJSONArray.put(skillInJSON);
+            }
+            in.put("skills", skillsJSONArray);
 
             return in.toString();
         }catch(JSONException e){
@@ -131,6 +178,15 @@ public class PlayerCharacter {
             for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
                 this.setAttribute(i, obj.getInt("attribute"+i));
 
+            // get all skills from json string
+            this.skills.clear();
+            JSONArray skillsObj = obj.getJSONArray("skills");
+            for(int i = 0; i < skillsObj.length(); i++){
+                JSONObject skillObj = skillsObj.getJSONObject(i);
+                String title = skillObj.getString("title");
+                int counter = skillObj.getInt("counter");
+                this.addSkill(new Skill(title, counter));
+            }
             return this;
         }catch(JSONException e){
             Log.e("Exception", "JSON to PlayerCharacter parsing failed: " + e.toString());

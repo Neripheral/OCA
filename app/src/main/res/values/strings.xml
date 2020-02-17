@@ -13,4 +13,5 @@
     <string name="attribute_vitality">Vitality</string>
     <string name="attribute_reflex">Reflex</string>
     <string name="attribute_organism">Organism</string>
+    <string name="tab_string_skills">Skills</string>
 </resources>

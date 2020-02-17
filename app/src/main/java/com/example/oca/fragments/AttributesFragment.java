@@ -11,24 +11,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.oca.AttributeAdapter;
 import com.example.oca.AttributeModel;
 import com.example.oca.CharacterViewerActivity;
 import com.example.oca.R;
+import com.example.oca.RecyclerViewClickListener;
+import com.example.oca.SpacesItemDecoration;
 import com.example.oca.classes.PlayerCharacter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class AttributesFragment extends Fragment {
     public View rootView = null;
-
-    public interface RecyclerViewClickListener{
-        void onClick(View view, int position);
-    }
 
     public static class Layout{
         public static RecyclerView getRecycler(View rootView){
@@ -37,6 +34,10 @@ public class AttributesFragment extends Fragment {
             return recyclerView;
         }
 
+    }
+
+    public interface AttributeLayoutChangeListener extends RecyclerViewClickListener{
+        void onCounterChanged(View view, int position);
     }
 
     public AttributesFragment() {
@@ -79,7 +80,7 @@ public class AttributesFragment extends Fragment {
 
     public void updateData(int value, int position){
         AttributeModel model =((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset.get(position);
-        model.counter = value;
+        model.setCounter(value);
         ((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset.set(position, model);
     }
 
@@ -109,6 +110,11 @@ public class AttributesFragment extends Fragment {
         getPlayerCharacterData().setAttribute(attrPosition, currentCounter-1);
     }
 
+    private void updateAttributeCounter(View view, int position) {
+        int currentCounter = Integer.parseInt(((TextView)view.findViewById(R.id.attributes_attribute_counter)).getText().toString());
+        this.getPlayerCharacterData().setAttribute(position, currentCounter);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,15 +126,21 @@ public class AttributesFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter mAdapter = new AttributeAdapter(getDataset(), new RecyclerViewClickListener() {
+        RecyclerView.Adapter mAdapter = new AttributeAdapter(getDataset(), new AttributeLayoutChangeListener() {
             @Override
             public void onClick(View view, int position) {
                 clickOperator(view, position);
             }
+
+            @Override
+            public void onCounterChanged(View view, int position){
+                updateAttributeCounter(view, position);
+            }
+
         });
         recyclerView.setAdapter(mAdapter);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        recyclerView.addItemDecoration(new AttributeAdapter.SpacesItemDecoration(spacingInPixels));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
         return this.rootView;
     }
 }

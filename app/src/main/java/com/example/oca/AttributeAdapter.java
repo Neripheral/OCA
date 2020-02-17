@@ -1,6 +1,8 @@
 package com.example.oca;
 
 import android.graphics.Rect;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,34 +20,11 @@ import java.util.List;
 
 
 public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.AttributeViewHolder> {
-    private AttributesFragment.RecyclerViewClickListener listener;
+    private AttributesFragment.AttributeLayoutChangeListener listener;
     public List<AttributeModel> dataset;
 
-    public static class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-        private int space;
-
-        public SpacesItemDecoration(int space) {
-            this.space = space;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view,
-                                   RecyclerView parent, RecyclerView.State state) {
-            outRect.left = space;
-            outRect.right = space;
-            outRect.bottom = space;
-
-            // Add top margin only for the first item to avoid double space between items
-            if (parent.getChildLayoutPosition(view) == 0) {
-                outRect.top = space;
-            } else {
-                outRect.top = 0;
-            }
-        }
-    }
-
     public static class AttributeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private WeakReference<AttributesFragment.RecyclerViewClickListener> listenerRef;
+        private WeakReference<AttributesFragment.AttributeLayoutChangeListener> listenerRef;
         private TextView attCounter;
         private TextView attTitle;
         private ImageView attImage;
@@ -53,11 +32,20 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
         private ImageButton attDecrementButton;
 
 
-        public AttributeViewHolder(View v, AttributesFragment.RecyclerViewClickListener listener){
+        public AttributeViewHolder(View v, AttributesFragment.AttributeLayoutChangeListener listener){
             super(v);
             listenerRef = new WeakReference<>(listener);
             attCounter = (TextView) v.findViewById(R.id.attributes_attribute_counter);
             attTitle = (TextView) v.findViewById(R.id.attributes_attributeTitle);
+            attCounter.addTextChangedListener(new TextWatcher(){
+                public void afterTextChanged(Editable s){
+                    listenerRef.get().onCounterChanged(attCounter, getLayoutPosition());
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+                public void onTextChanged(CharSequence s, int start, int before, int count){}
+            });
             attImage = (ImageView) v.findViewById(R.id.attributes_attributeImage);
 
             attIncrementButton = (ImageButton) v.findViewById(R.id.attributes_attribute_incrementButton);
@@ -73,7 +61,7 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
         }
     }
 
-    public AttributeAdapter(List<AttributeModel> dataset, AttributesFragment.RecyclerViewClickListener listener){
+    public AttributeAdapter(List<AttributeModel> dataset, AttributesFragment.AttributeLayoutChangeListener listener){
         this.dataset = dataset;
         this.listener = listener;
     }
@@ -91,9 +79,9 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
         AttributeModel model = dataset.get(position);
 
         // update holder with fresh data
-        holder.attCounter.setText("" + model.counter);
-        holder.attTitle.setText(model.title);
-        holder.attImage.setImageResource(model.imageId);
+        holder.attCounter.setText("" + model.getCounter());
+        holder.attTitle.setText(model.getTitle());
+        holder.attImage.setImageResource(model.getImageId());
     }
 
     @Override
