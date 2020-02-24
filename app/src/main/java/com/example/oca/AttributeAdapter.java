@@ -1,6 +1,5 @@
 package com.example.oca;
 
-import android.graphics.Rect;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oca.fragments.AttributesFragment;
+import com.example.oca.models.AttributeModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

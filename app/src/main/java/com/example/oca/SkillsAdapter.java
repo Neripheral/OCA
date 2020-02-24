@@ -12,13 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oca.classes.PlayerCharacter;
+import com.example.oca.models.SkillModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewHolder> {
     private SkillsFragment.SkillLayoutChangeListener listener;
-    public List<PlayerCharacter.Skill> dataset;
+    public List<SkillModel> dataset;
 
     public static class SkillViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private WeakReference<SkillsFragment.SkillLayoutChangeListener> listenerRef;
@@ -27,20 +28,12 @@ class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewHolder> 
         private ImageButton skillIncrementButton;
         private ImageButton skillDecrementButton;
 
+
         public SkillViewHolder(View v, SkillsFragment.SkillLayoutChangeListener listener){
             super(v);
             listenerRef = new WeakReference<>(listener);
 
             skillCounter = (TextView) v.findViewById(R.id.skills_counter);
-            skillCounter.addTextChangedListener(new TextWatcher(){
-                public void afterTextChanged(Editable s){
-                    listenerRef.get().onCounterChanged(skillCounter, getLayoutPosition());
-                }
-
-                public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-
-                public void onTextChanged(CharSequence s, int start, int before, int count){}
-            });
             skillTitle = (TextView) v.findViewById(R.id.skills_skillTitle);
 
             skillIncrementButton = (ImageButton) v.findViewById(R.id.skills_incrementButton);
@@ -54,7 +47,7 @@ class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewHolder> 
         public void onClick(View v){listenerRef.get().onClick(v, this.getLayoutPosition());}
     }
 
-    public SkillsAdapter(List<PlayerCharacter.Skill> dataset, SkillsFragment.SkillLayoutChangeListener listener) {
+    public SkillsAdapter(List<SkillModel> dataset, SkillsFragment.SkillLayoutChangeListener listener) {
         this.dataset = dataset;
         this.listener = listener;
     }
@@ -69,11 +62,24 @@ class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewHolder> 
     @Override
     public void onBindViewHolder(SkillViewHolder holder, int position){
         // get specific model from dataset
-        PlayerCharacter.Skill model = dataset.get(position);
+        SkillModel model = dataset.get(position);
 
         // update holder with fresh data
         holder.skillCounter.setText("" + model.getCounter());
         holder.skillTitle.setText(model.getTitle());
+    }
+
+    @Override
+    public void onViewAttachedToWindow(final SkillViewHolder holder){
+        holder.skillCounter.addTextChangedListener(new TextWatcher(){
+            public void afterTextChanged(Editable s){
+                listener.onCounterChanged(holder.skillCounter, holder.getLayoutPosition());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
     }
 
     @Override

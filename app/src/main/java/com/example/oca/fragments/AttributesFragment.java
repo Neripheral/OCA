@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.oca.AttributeAdapter;
-import com.example.oca.AttributeModel;
+import com.example.oca.models.AttributeModel;
 import com.example.oca.CharacterViewerActivity;
 import com.example.oca.R;
 import com.example.oca.RecyclerViewClickListener;

@@ -15,6 +15,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class PlayerCharacter {
     public final boolean GENDER_MALE = true;
@@ -40,35 +42,7 @@ public class PlayerCharacter {
     private int age;
     private String job;
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
-    private List<Skill> skills = new ArrayList<>();
-
-    public class Skill{
-        private String title;
-        private int counter;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public Skill setTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public int getCounter() {
-            return counter;
-        }
-
-        public Skill setCounter(int counter) {
-            this.counter = counter;
-            return this;
-        }
-
-        public Skill(String title, int counter){
-            this.setTitle(title);
-            this.setCounter(counter);
-        }
-    }
+    private Map<String, Skill> skills = new TreeMap<>();
 
 
     public PlayerCharacter(){}
@@ -119,19 +93,23 @@ public class PlayerCharacter {
         return this;
     }
 
-    public List<Skill> getSkills(){
+    public Map<String, Skill> getSkills(){
         return this.skills;
     }
 
-    public Skill getSkill(int pos){ return this.skills.get(pos); }
-
-    public PlayerCharacter setSkill(int pos, Skill skill){ this.skills.set(pos, skill); return this; }
-
-    public PlayerCharacter addSkill(Skill skill){
-        this.skills.add(skill);
-        return this;
+    public Map<String, Skill> setSkills(Map<String, Skill> newMap){
+        Map<String, Skill> old = this.getSkills();
+        this.skills = newMap;
+        return old;
     }
 
+    public Skill getSkill(String id){
+        return this.skills.get(id);
+    }
+
+    public Skill setSkill(String id, Skill skill){
+        return this.skills.put(id, skill);
+    }
 
     public String toJSON(){
         JSONObject in = new JSONObject();
@@ -148,10 +126,10 @@ public class PlayerCharacter {
 
             // put all of the skills into the json object
             JSONArray skillsJSONArray = new JSONArray();
-            for(int i = 0; i < this.skills.size(); i++){
+            for(Map.Entry<String, Skill> entry : skills.entrySet()){
                 JSONObject skillInJSON = new JSONObject();
-                skillInJSON.put("title", this.skills.get(i).title);
-                skillInJSON.put("counter", this.skills.get(i).counter);
+                skillInJSON.put("id", entry.getKey());
+                skillInJSON.put("counter", entry.getValue().getCounter());
                 skillsJSONArray.put(skillInJSON);
             }
             in.put("skills", skillsJSONArray);
@@ -183,9 +161,9 @@ public class PlayerCharacter {
             JSONArray skillsObj = obj.getJSONArray("skills");
             for(int i = 0; i < skillsObj.length(); i++){
                 JSONObject skillObj = skillsObj.getJSONObject(i);
-                String title = skillObj.getString("title");
+                String id = skillObj.getString("id");
                 int counter = skillObj.getInt("counter");
-                this.addSkill(new Skill(title, counter));
+                this.setSkill(id, new Skill(id, counter));
             }
             return this;
         }catch(JSONException e){

@@ -1,4 +1,4 @@
-package com.example.oca;
+package com.example.oca.models;
 
 public class AttributeModel{
     private int counter;
