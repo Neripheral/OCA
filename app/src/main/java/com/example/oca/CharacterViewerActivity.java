@@ -2,10 +2,12 @@ package com.example.oca;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.example.oca.classes.PlayerCharacter;

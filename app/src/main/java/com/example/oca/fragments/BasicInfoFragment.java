@@ -2,8 +2,11 @@ package com.example.oca.fragments;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +117,7 @@ public class BasicInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         // inflate the view
         this.rootView = inflater.inflate(R.layout.fragment_basic_info, container, false);
+
         // get character profile handler
         PlayerCharacter pc = getPlayerCharacterData();
 
