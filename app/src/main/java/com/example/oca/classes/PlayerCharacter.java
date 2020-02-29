@@ -45,16 +45,14 @@ public class PlayerCharacter {
     public final int MANIPULATION = 11;
 
 
-    private String name;
-    private boolean gender;
-    private int age;
-    private String job;
+    private String name = "";
+    private boolean gender = GENDER_MALE;
+    private int age = 30;
+    private String job = "";
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
     private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
 
-
-    public PlayerCharacter(){}
 
 
     public String getName() {
@@ -286,5 +284,10 @@ public class PlayerCharacter {
         }
         initFromJSON(json);
         return this;
+    }
+
+    public PlayerCharacter(){
+        for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
+            attributes[i] = 5;
     }
 }

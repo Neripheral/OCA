@@ -36,6 +36,11 @@ public class AttributesFragment extends Fragment {
             return recyclerView;
         }
 
+        public static ConstraintLayout getFloatingActionButtonContainer(View rootView){
+            ConstraintLayout layout = (ConstraintLayout) rootView.findViewById(R.id.attributes_floatingActionButton_container);
+            return layout;
+        }
+
         public static FloatingActionButton getFloatingActionButton(View rootView){
             FloatingActionButton fabView = (FloatingActionButton) rootView.findViewById(R.id.attributes_floatingActionButton);
             return fabView;
@@ -229,19 +234,26 @@ public class AttributesFragment extends Fragment {
         // get all needed views
         FloatingActionButton fabView = Layout.getFloatingActionButton(rootView);
         TextView balanceView = Layout.getFABRemainingPoints(rootView);
-        ConstraintLayout layout = Layout.getFABRemainingPointsContainer(rootView);
+        View pointsContainer = Layout.getFABRemainingPointsContainer(rootView);
 
         // set default values
         int imageToSet = android.R.drawable.checkbox_off_background;
-        int balanceVisibility = View.VISIBLE;
+        int pointsVisibility = View.VISIBLE;
 
         if(getPlayerCharacterData().areAttributesCorrect()){
             imageToSet = android.R.drawable.checkbox_on_background;
-            balanceVisibility = View.GONE;
+            pointsVisibility = View.GONE;
         }
         fabView.setImageResource(imageToSet);
         balanceView.setText(String.valueOf(getPlayerCharacterData().ATTRIBUTES_POINTS - getPlayerCharacterData().countCurrentMainAttributesAmount()));
-        layout.setVisibility(balanceVisibility);
+        pointsContainer.setVisibility(pointsVisibility);
+
+        // what if user committed changes
+        View fabContainer = Layout.getFloatingActionButtonContainer(rootView);
+        int fabVisibility = View.VISIBLE;
+        if(getPlayerCharacterData().areAttributesCommitted())
+            fabVisibility = View.GONE;
+        fabContainer.setVisibility(fabVisibility);
     }
 
     public void clickOperator(View v, int position){
@@ -277,6 +289,7 @@ public class AttributesFragment extends Fragment {
         if(getPlayerCharacterData().areAttributesCorrect()) {
             getPlayerCharacterData().setAttributesCommitted(true);
             updateRecyclerData();
+            updateFloatingActionButton();
             return true;
         } else {
             return false;
