@@ -3,6 +3,7 @@ package com.example.oca.fragments;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.example.oca.R;
 import com.example.oca.RecyclerViewClickListener;
 import com.example.oca.SpacesItemDecoration;
 import com.example.oca.classes.PlayerCharacter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +36,23 @@ public class AttributesFragment extends Fragment {
             return recyclerView;
         }
 
+        public static FloatingActionButton getFloatingActionButton(View rootView){
+            FloatingActionButton fabView = (FloatingActionButton) rootView.findViewById(R.id.attributes_floatingActionButton);
+            return fabView;
+        }
+
+        public static TextView getFABRemainingPoints(View rootView){
+            TextView textView = (TextView) rootView.findViewById(R.id.attributes_floatingActionButton_remainingPoints);
+            return textView;
+        }
+
+        public static ConstraintLayout getFABRemainingPointsContainer(View rootView){
+            ConstraintLayout layout = (ConstraintLayout) rootView.findViewById(R.id.attributes_floatingActionButton_remainingPoints_container);
+            return layout;
+        }
     }
 
-    public interface AttributeLayoutChangeListener extends RecyclerViewClickListener{
-        void onCounterChanged(View view, int position);
-    }
+    public interface AttributeLayoutChangeListener extends RecyclerViewClickListener{}
 
     public AttributesFragment() {
         // Required empty public constructor
@@ -197,12 +211,37 @@ public class AttributesFragment extends Fragment {
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
+        if(pc.areAttributesCommitted())
+            for(AttributeModel m : toReturn){
+                m.setCommitted(true);
+            }
+
         // return a created list
         return toReturn;
     }
 
-    public void updateData(int value, int position){
+    private void updateRecyclerData(){
         ((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset = getDataset();
+        Layout.getRecycler(rootView).getAdapter().notifyDataSetChanged();
+    }
+
+    private void updateFloatingActionButton(){
+        // get all needed views
+        FloatingActionButton fabView = Layout.getFloatingActionButton(rootView);
+        TextView balanceView = Layout.getFABRemainingPoints(rootView);
+        ConstraintLayout layout = Layout.getFABRemainingPointsContainer(rootView);
+
+        // set default values
+        int imageToSet = android.R.drawable.checkbox_off_background;
+        int balanceVisibility = View.VISIBLE;
+
+        if(getPlayerCharacterData().areAttributesCorrect()){
+            imageToSet = android.R.drawable.checkbox_on_background;
+            balanceVisibility = View.GONE;
+        }
+        fabView.setImageResource(imageToSet);
+        balanceView.setText(String.valueOf(getPlayerCharacterData().ATTRIBUTES_POINTS - getPlayerCharacterData().countCurrentMainAttributesAmount()));
+        layout.setVisibility(balanceVisibility);
     }
 
     public void clickOperator(View v, int position){
@@ -217,23 +256,31 @@ public class AttributesFragment extends Fragment {
                 Log.d("Warning", "clickOperator error in AttributeAdapter: button not recognized");
         }
         int currentCounter = getPlayerCharacterData().getAttribute(position);
-        updateData(currentCounter, position);
-        Layout.getRecycler(rootView).getAdapter().notifyDataSetChanged();
+        updateRecyclerData();
+        updateFloatingActionButton();
     }
 
-    public void incrementAttributeCounter(int attrPosition){
-        int currentCounter = getPlayerCharacterData().getAttribute(attrPosition);
-        getPlayerCharacterData().setAttribute(attrPosition, currentCounter+1);
+    private void increasePCAttribute(int pos, int numberToAdd){
+        int currentCounter = getPlayerCharacterData().getAttribute(pos);
+        getPlayerCharacterData().setAttribute(pos, currentCounter+numberToAdd);
     }
 
-    public void decrementAttributeCounter(int attrPosition){
-        int currentCounter = getPlayerCharacterData().getAttribute(attrPosition);
-        getPlayerCharacterData().setAttribute(attrPosition, currentCounter-1);
+    private void incrementAttributeCounter(int pos){
+        increasePCAttribute(pos, 1);
     }
 
-    private void updateAttributeCounter(View view, int position) {
-        int currentCounter = Integer.parseInt(((TextView)view.findViewById(R.id.attributes_attribute_counter)).getText().toString());
-        this.getPlayerCharacterData().setAttribute(position, currentCounter);
+    private void decrementAttributeCounter(int pos){
+        increasePCAttribute(pos, -1);
+    }
+
+    public boolean commitAttributeChanges(){
+        if(getPlayerCharacterData().areAttributesCorrect()) {
+            getPlayerCharacterData().setAttributesCommitted(true);
+            updateRecyclerData();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -252,16 +299,20 @@ public class AttributesFragment extends Fragment {
             public void onClick(View view, int position) {
                 clickOperator(view, position);
             }
-
-            @Override
-            public void onCounterChanged(View view, int position){
-                updateAttributeCounter(view, position);
-            }
-
         });
         recyclerView.setAdapter(mAdapter);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+
+        FloatingActionButton fab = this.rootView.findViewById(R.id.attributes_floatingActionButton);
+        updateFloatingActionButton();
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                commitAttributeChanges();
+            }
+        });
+
         return this.rootView;
     }
 }

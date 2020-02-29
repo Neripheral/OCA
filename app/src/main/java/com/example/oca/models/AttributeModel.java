@@ -14,6 +14,7 @@ public class AttributeModel{
     private String counterDescription;
     private int parentImageId;
     private int balance;
+    private boolean committed;
 
 
 
@@ -88,13 +89,22 @@ public class AttributeModel{
         return this;
     }
 
+    public boolean isCommitted() {
+        return committed;
+    }
+
+    public AttributeModel setCommitted(boolean committed) {
+        this.committed = committed;
+        return this;
+    }
+
     public AttributeModel(){
-        this(0, "", 0, "", "", 0, 0, 0);
+        this(0, "", 0, "", "", 0, 0, 0, false);
         setBalance(MISSING_BALANCE);
         setBalanceColor(R.color.mainFont);
     }
 
-    public AttributeModel(int counter, String title, int imageId, String description, String counterDescription, int parentImageId, int balance, int balanceColor){
+    public AttributeModel(int counter, String title, int imageId, String description, String counterDescription, int parentImageId, int balance, int balanceColor, boolean commited){
         this.setCounter(counter);
         this.setTitle(title);
         this.setImageId(imageId);
@@ -103,5 +113,6 @@ public class AttributeModel{
         this.setParentImageId(parentImageId);
         this.setBalance(balance);
         this.setBalanceColor(balanceColor);
+        this.setCommitted(commited);
     }
 }

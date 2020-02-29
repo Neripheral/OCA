@@ -26,6 +26,7 @@ public class PlayerCharacter {
     public final boolean GENDER_FEMALE = false;
     public final String DEFAULT_FILENAME = "savedCharacter.opc";
     public final int ATTRIBUTES_AMOUNT = 12;
+    public final int ATTRIBUTES_POINTS = 20;
     public final int MAIN_ATTRIBUTE = -1;
     public final int MISSING_ATTRIBUTE = -2;
     public final int ATTRIBUTE_LOWER_LIMIT = 1;
@@ -49,6 +50,7 @@ public class PlayerCharacter {
     private int age;
     private String job;
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
+    private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
 
 
@@ -131,6 +133,42 @@ public class PlayerCharacter {
         return this;
     }
 
+    public int getBalance(int attribute){
+        int parent = getParentAttribute(attribute);
+        parent = (parent == MAIN_ATTRIBUTE ? attribute : parent);
+        int childSum = getAttribute(parent+1) + getAttribute(parent+2);
+        int difference = 2 * getAttribute(parent) - childSum;
+        return difference;
+    }
+
+    public int countCurrentMainAttributesAmount() {
+        int netPoints = 0;
+        for(int i = 0; i < attributes.length ; i++){
+            if(getParentAttribute(i) == MAIN_ATTRIBUTE)
+                netPoints += attributes[i];
+        }
+        return netPoints;
+    }
+
+    public boolean areAttributesCorrect(){
+        if(countCurrentMainAttributesAmount() != ATTRIBUTES_POINTS)
+            return false;
+        for(int i = 0; i < ATTRIBUTES_AMOUNT ; i++){
+            if(getParentAttribute(i) != MAIN_ATTRIBUTE && getBalance(i) != 0)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean areAttributesCommitted() {
+        return attributesCommitted;
+    }
+
+    public PlayerCharacter setAttributesCommitted(boolean attributesCommitted) {
+        this.attributesCommitted = attributesCommitted;
+        return this;
+    }
+
     public Map<String, Skill> getSkills(){
         return this.skills;
     }
@@ -149,13 +187,7 @@ public class PlayerCharacter {
         return this.skills.put(id, skill);
     }
 
-    public int getBalance(int attribute){
-        int parent = getParentAttribute(attribute);
-        parent = (parent == MAIN_ATTRIBUTE ? attribute : parent);
-        int childSum = getAttribute(parent+1) + getAttribute(parent+2);
-        int difference = 2 * getAttribute(parent) - childSum;
-        return difference;
-    }
+
 
     public String toJSON(){
         JSONObject in = new JSONObject();

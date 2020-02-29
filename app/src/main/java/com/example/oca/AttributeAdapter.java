@@ -89,6 +89,7 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
         holder.attCounterDescription.setText(model.getCounterDescription());
         holder.attImage.setImageResource(model.getImageId());
 
+        // what happens whether it is a main attribute or child
         holder.attParentImage.setImageResource(model.getParentImageId());
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.attRoot.getLayoutParams();
         if(model.getParentImageId() != 0) {
@@ -99,6 +100,13 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
             holder.attBalance.setText("");
         }
         holder.attBalance.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), model.getBalanceColor()));
+
+        // what happens when user committed his attribute changes
+        if(model.isCommitted()){
+            holder.attBalance.setVisibility(View.GONE);
+            holder.attDecrementButton.setVisibility(View.GONE);
+            holder.attIncrementButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
