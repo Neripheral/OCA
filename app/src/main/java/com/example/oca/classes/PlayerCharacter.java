@@ -3,6 +3,8 @@ package com.example.oca.classes;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.oca.models.AttributeModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,10 @@ public class PlayerCharacter {
     public final boolean GENDER_FEMALE = false;
     public final String DEFAULT_FILENAME = "savedCharacter.opc";
     public final int ATTRIBUTES_AMOUNT = 12;
+    public final int MAIN_ATTRIBUTE = -1;
+    public final int MISSING_ATTRIBUTE = -2;
+    public final int ATTRIBUTE_LOWER_LIMIT = 1;
+    public final int ATTRIBUTE_UPPER_LIMIT = 9;
     public final int VITALITY = 0;
     public final int REFLEX = 1;
     public final int ORGANISM = 2;
@@ -30,7 +37,7 @@ public class PlayerCharacter {
     public final int STRENGTH = 4;
     public final int AGILITY = 5;
     public final int PSYCHE = 6;
-    public final int SCIENCE = 7;
+    public final int DISCIPLINE = 7;
     public final int INTELLIGENCE = 8;
     public final int CHARISMA = 9;
     public final int EMPATHY = 10;
@@ -88,7 +95,38 @@ public class PlayerCharacter {
         return attributes[pos];
     }
 
+    public int getParentAttribute(int attribute){
+        switch(attribute){
+            case VITALITY:
+            case CONDITION:
+            case PSYCHE:
+            case CHARISMA:
+                return MAIN_ATTRIBUTE;
+
+            case REFLEX:
+            case ORGANISM:
+                return VITALITY;
+
+            case STRENGTH:
+            case AGILITY:
+                return CONDITION;
+
+            case DISCIPLINE:
+            case INTELLIGENCE:
+                return PSYCHE;
+
+            case EMPATHY:
+            case MANIPULATION:
+                return CHARISMA;
+        }
+        return MISSING_ATTRIBUTE;
+    }
+
     public PlayerCharacter setAttribute(int pos, int number){
+        if(number < ATTRIBUTE_LOWER_LIMIT)
+            number = ATTRIBUTE_LOWER_LIMIT;
+        if(number > ATTRIBUTE_UPPER_LIMIT)
+            number = ATTRIBUTE_UPPER_LIMIT;
         this.attributes[pos] = number;
         return this;
     }
@@ -109,6 +147,14 @@ public class PlayerCharacter {
 
     public Skill setSkill(String id, Skill skill){
         return this.skills.put(id, skill);
+    }
+
+    public int getBalance(int attribute){
+        int parent = getParentAttribute(attribute);
+        parent = (parent == MAIN_ATTRIBUTE ? attribute : parent);
+        int childSum = getAttribute(parent+1) + getAttribute(parent+2);
+        int difference = 2 * getAttribute(parent) - childSum;
+        return difference;
     }
 
     public String toJSON(){

@@ -48,6 +48,14 @@ public class AttributesFragment extends Fragment {
         return ((CharacterViewerActivity) getActivity()).pc;
     }
 
+    private int getCorrespondingBalanceColor(int balance){
+        if(balance > 0)
+            return R.color.optionSemiwrong;
+        if(balance == 0)
+            return R.color.optionCorrect;
+        return R.color.optionWrong;
+    }
+
     public List<AttributeModel> getDataset(){
         // create a list that will be returned
         List<AttributeModel> toReturn = new ArrayList<>();
@@ -56,32 +64,145 @@ public class AttributesFragment extends Fragment {
         PlayerCharacter pc = getPlayerCharacterData();
 
         // add all of the attributes
-        //// Vitality
-        toReturn.add(new AttributeModel(
-                pc.getAttribute(pc.VITALITY),
-                getString(R.string.attribute_vitality),
-                R.drawable.attribute_vitality));
-        //// Reflex
-        toReturn.add(new AttributeModel(
-                pc.getAttribute(pc.REFLEX),
-                getString(R.string.attribute_reflex),
-                R.drawable.attribute_reflex));
-        //// Organism
-        toReturn.add(new AttributeModel(
-                pc.getAttribute(pc.ORGANISM),
-                getString(R.string.attribute_organism),
-                R.drawable.attribute_organism));
 
-        //TODO: add the rest of the attributes
+        //// Vitality
+        AttributeModel model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.VITALITY))
+                .setTitle(getString(R.string.attribute_vitality))
+                .setImageId(R.drawable.attribute_vitality)
+                .setDescription(getString(R.string.attribute_vitality_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_vitality_counterDescriptions)[model.getCounter()]);
+        toReturn.add(model);
+
+        //// Reflex
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.REFLEX))
+                .setTitle(getString(R.string.attribute_reflex))
+                .setImageId(R.drawable.attribute_reflex)
+                .setDescription(getString(R.string.attribute_reflex_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_reflex_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_vitality)
+                .setBalance(pc.getBalance(pc.REFLEX))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Organism
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.ORGANISM))
+                .setTitle(getString(R.string.attribute_organism))
+                .setImageId(R.drawable.attribute_organism)
+                .setDescription(getString(R.string.attribute_organism_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_organism_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_vitality)
+                .setBalance(pc.getBalance(pc.ORGANISM))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Condition
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.CONDITION))
+                .setTitle(getString(R.string.attribute_condition))
+                .setImageId(R.drawable.attribute_condition)
+                .setDescription(getString(R.string.attribute_condition_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_condition_counterDescriptions)[model.getCounter()]);
+        toReturn.add(model);
+
+        //// Strength
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.STRENGTH))
+                .setTitle(getString(R.string.attribute_strength))
+                .setImageId(R.drawable.attribute_strength)
+                .setDescription(getString(R.string.attribute_strength_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_strength_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_condition)
+                .setBalance(pc.getBalance(pc.CONDITION))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Agility
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.AGILITY))
+                .setTitle(getString(R.string.attribute_agility))
+                .setImageId(R.drawable.attribute_agility)
+                .setDescription(getString(R.string.attribute_agility_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_agility_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_condition)
+                .setBalance(pc.getBalance(pc.AGILITY))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Psyche
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.PSYCHE))
+                .setTitle(getString(R.string.attribute_psyche))
+                .setImageId(R.drawable.attribute_psyche)
+                .setDescription(getString(R.string.attribute_psyche_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_psyche_counterDescriptions)[model.getCounter()]);
+        toReturn.add(model);
+
+        //// Discipline
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.DISCIPLINE))
+                .setTitle(getString(R.string.attribute_discipline))
+                .setImageId(R.drawable.attribute_discipline)
+                .setDescription(getString(R.string.attribute_discipline_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_discipline_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_psyche)
+                .setBalance(pc.getBalance(pc.PSYCHE))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Intelligence
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.INTELLIGENCE))
+                .setTitle(getString(R.string.attribute_intelligence))
+                .setImageId(R.drawable.attribute_intelligence)
+                .setDescription(getString(R.string.attribute_intelligence_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_intelligence_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_psyche)
+                .setBalance(pc.getBalance(pc.INTELLIGENCE))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Charisma
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.CHARISMA))
+                .setTitle(getString(R.string.attribute_charisma))
+                .setImageId(R.drawable.attribute_charisma)
+                .setDescription(getString(R.string.attribute_charisma_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_charisma_counterDescriptions)[model.getCounter()]);
+        toReturn.add(model);
+
+        //// Empathy
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.EMPATHY))
+                .setTitle(getString(R.string.attribute_empathy))
+                .setImageId(R.drawable.attribute_empathy)
+                .setDescription(getString(R.string.attribute_empathy_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_empathy_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_charisma)
+                .setBalance(pc.getBalance(pc.CHARISMA))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
+
+        //// Manipulation
+        model = new AttributeModel();
+        model.setCounter(pc.getAttribute(pc.MANIPULATION))
+                .setTitle(getString(R.string.attribute_manipulation))
+                .setImageId(R.drawable.attribute_manipulation)
+                .setDescription(getString(R.string.attribute_manipulation_description))
+                .setCounterDescription(getResources().getStringArray(R.array.attribute_manipulation_counterDescriptions)[model.getCounter()])
+                .setParentImageId(R.drawable.attribute_charisma)
+                .setBalance(pc.getBalance(pc.MANIPULATION))
+                .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
+        toReturn.add(model);
 
         // return a created list
         return toReturn;
     }
 
     public void updateData(int value, int position){
-        AttributeModel model =((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset.get(position);
-        model.setCounter(value);
-        ((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset.set(position, model);
+        ((AttributeAdapter)Layout.getRecycler(rootView).getAdapter()).dataset = getDataset();
     }
 
     public void clickOperator(View v, int position){
@@ -97,7 +218,7 @@ public class AttributesFragment extends Fragment {
         }
         int currentCounter = getPlayerCharacterData().getAttribute(position);
         updateData(currentCounter, position);
-        Layout.getRecycler(rootView).getAdapter().notifyItemChanged(position, currentCounter);
+        Layout.getRecycler(rootView).getAdapter().notifyDataSetChanged();
     }
 
     public void incrementAttributeCounter(int attrPosition){

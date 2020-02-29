@@ -13,4 +13,25 @@
     <string name="attribute_reflex">Refleks</string>
     <string name="attribute_organism">Organizm</string>
     <string name="tab_string_skills">Umiejętności</string>
+    <string name="attribute_organism_description">Działanie organów wewnętrznych i metabolizm. Jak łatwo jest zachorować, tolerancja na trucizny itp.</string>
+    <string name="attribute_vitality_description">Wola przetrwania. Określa, jak bardzo organizm chce kontynuować swoją działaność.</string>
+    <string name="attribute_reflex_description">Sprawność zmysłów. Jak dobrze jesteś w stanie odbierać sygnały z otoczenia i jak szybko je przetwarzasz.</string>
+    <string name="attribute_agility">Zwinność</string>
+    <string name="attribute_charisma">Charyzma</string>
+    <string name="attribute_condition">Kondycja</string>
+    <string name="attribute_psyche">Psychika</string>
+    <string name="attribute_strength">Siła</string>
+    <string name="attribute_empathy">Empatia</string>
+    <string name="attribute_intelligence">Inteligencja</string>
+    <string name="attribute_manipulation">Manipulacja</string>
+    <string name="attribute_discipline">Dyscyplina</string>
+    <string name="attribute_agility_description">Gibkość i rozciągliwość ciała. Określa, jak wygimnastykowany jesteś.</string>
+    <string name="attribute_charisma_description">Twoje umiejętności interpersonalne. Określa, jak łatwo możesz wywierać odpowiedni wpływ na innych ludzi.</string>
+    <string name="attribute_condition_description">Wytrzymałość na zmęczenie. Określa, jak męczący wysiłek możesz wykonać bez odpoczynku.</string>
+    <string name="attribute_empathy_description">Umiejętność postrzegania stanów psychicznych innych osób. Określa, jak dobrze jesteś w stanie rozgryżć drugą osobę.</string>
+    <string name="attribute_intelligence_description">"Łatwość i szybkość analizy danych. Określa, jak dobrze idzie ci łączenie faktów i nauka nowych rzeczy. "</string>
+    <string name="attribute_manipulation_description">Umiejętność podświadomego wpływania na innych. Określa, jak dobrze jesteś w stanie zrobić komuś pranie mózgu.</string>
+    <string name="attribute_psyche_description">Twoja psychika. Określa pamięć i siłę umysłu.</string>
+    <string name="attribute_strength_description">Co tu dużo gadać - krzepa twojej postaci.</string>
+    <string name="attribute_discipline_description">Opanowanie i odwaga. Określa, jak silną masz wolę.</string>
 </resources>

@@ -10,4 +10,7 @@
     <color name="white">#FFFFFF</color>
     <color name="dark">#111111</color>
     <color name="dark_grey">#777777</color>
+    <color name="optionCorrect">#00CC00</color>
+    <color name="optionWrong">#CC2222</color>
+    <color name="optionSemiwrong">#7777FF</color>
 </resources>

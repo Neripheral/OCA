@@ -3,73 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/attributes_attribute_container"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorBackgroundFloating">
+    android:background="?attr/colorBackgroundFloating"
+    android:paddingBottom="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/attributes_attributeCounter_container"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="?attr/colorButtonNormal"
-        app:layout_constraintBottom_toBottomOf="@+id/attributes_attributeImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/attributes_attributeImage"
-        app:layout_constraintTop_toTopOf="@+id/attributes_attributeImage">
+        app:layout_constraintEnd_toEndOf="@+id/attributes_attributeImage"
+        app:layout_constraintStart_toStartOf="@+id/attributes_attributeImage"
+        app:layout_constraintTop_toBottomOf="@+id/attributes_attributeImage">
 
-        <EditText
-            android:id="@+id/attributes_attribute_counter"
-            android:layout_width="0dp"
+        <ImageButton
+            android:id="@+id/attributes_attribute_decrementButton"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:rotation="90"
+            android:src="@android:drawable/arrow_down_float"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.766" />
+
+        <TextView
+            android:id="@+id/attributes_attribute_counter"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center_horizontal|center_vertical"
             android:hint="0"
             android:inputType="number"
             android:text="0"
             android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/attributes_attribute_decrementButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/attributes_attribute_incrementButton" />
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/attributes_attribute_decrementButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/attributes_attribute_incrementButton"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:rotation="90"
             android:src="@android:drawable/arrow_up_float"
-            app:layout_constraintBottom_toTopOf="@+id/attributes_attribute_counter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.155"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/attributes_attribute_decrementButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@android:drawable/arrow_down_float"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/attributes_attribute_counter"
-            app:layout_constraintVertical_bias="0.766" />
+            app:layout_constraintStart_toEndOf="@+id/attributes_attribute_counter"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/attributes_attributeImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attributes_attributeTitle"
         app:srcCompat="@drawable/attribute_agility" />
@@ -83,8 +77,57 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:text="Missing Title"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attributes_attributeDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Missing Description"
+        app:layout_constraintBottom_toBottomOf="@+id/attributes_attributeImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/attributes_attributeImage"
+        app:layout_constraintTop_toTopOf="@+id/attributes_attributeImage" />
+
+    <TextView
+        android:id="@+id/attributes_attributeCounterDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Missing Counter Description"
+        app:layout_constraintEnd_toEndOf="@+id/attributes_attributeDescription"
+        app:layout_constraintStart_toStartOf="@+id/attributes_attributeDescription"
+        app:layout_constraintTop_toTopOf="@+id/attributes_attributeCounter_container" />
+
+    <ImageView
+        android:id="@+id/attributes_attributeParent"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:alpha="0.6"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/attributes_attributeBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/attributes_attributeParent"
+        app:layout_constraintEnd_toStartOf="@+id/attributes_attributeParent"
+        app:layout_constraintTop_toTopOf="@+id/attributes_attributeParent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

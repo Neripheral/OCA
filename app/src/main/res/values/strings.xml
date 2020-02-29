@@ -14,4 +14,25 @@
     <string name="attribute_reflex">Reflex</string>
     <string name="attribute_organism">Organism</string>
     <string name="tab_string_skills">Skills</string>
+    <string name="attribute_organism_description">-</string>
+    <string name="attribute_vitality_description">-</string>
+    <string name="attribute_reflex_description" >-</string>
+    <string name="attribute_condition">Condition</string>
+    <string name="attribute_strength">Strength</string>
+    <string name="attribute_agility">Agility</string>
+    <string name="attribute_psyche">Psyche</string>
+    <string name="attribute_charisma">Charisma</string>
+    <string name="attribute_discipline">Discipline</string>
+    <string name="attribute_intelligence">Intelligence</string>
+    <string name="attribute_empathy">Empathy</string>
+    <string name="attribute_manipulation">Manipulation</string>
+    <string name="attribute_condition_description">-</string>
+    <string name="attribute_strength_description">-</string>
+    <string name="attribute_agility_description">-</string>
+    <string name="attribute_psyche_description">-</string>
+    <string name="attribute_intelligence_description">-</string>
+    <string name="attribute_charisma_description">-</string>
+    <string name="attribute_empathy_description">-</string>
+    <string name="attribute_manipulation_description">-</string>
+    <string name="attribute_discipline_description">-</string>
 </resources>

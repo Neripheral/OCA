@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="attribute_vitality_counterDescriptions">
+        <item>-</item>
+        <item>Ugryzienie biedronki może cię zabić.</item>
+        <item>Chwilowy brak wody czy jedzenia to dla ciebie walka o życie.</item>
+        <item>W przypadku nawet lekkich ran powinien cię opatrzeć lekarz, lecz ogólnie nie narzekasz na stan zdrowia.</item>
+        <item>Choroby mogą być niebezpieczne. Potencjalne rany podczas bitwy nie stanowią poważnego zagrożenia.</item>
+        <item>Normalne zdrowie. Organizm nie podda się bez walki.</item>
+        <item>Wyprawa do dżungli, na pustynię czy w góry to świetny sposób na zahartowanie się!</item>
+        <item>Wybity palec? Trzeba go nastawić. Strzała w nodze? Co mówiłeś? Nie wolno wyjmować obiektów z ciała? Bzdura</item>
+        <item>Jesteś tym, kto przeżywa śmierć kliniczną.</item>
+        <item>Miałbyś problem z popełnieniem samobójstwa.</item>
+    </string-array>
+    <string-array name="attribute_reflex_counterDescriptions">
+        <item>-</item>
+        <item>W sumie nie istotne, co tu napiszę, bo i tak nie zauważysz tego tekstu.</item>
+        <item>Powinieneś dostrzec wybuch bomby atomowej.</item>
+        <item>Przygłuchy krótkowidz. Bez okularów i aparatu słuchowego możesz mieć problemy.</item>
+        <item>Czasem masz problemy ze słuchem czy wzrokiem, ale nie przeszkadza to w normalnym życiu.</item>
+        <item>Średni refleks. Raczej nie unikniesz lecącej strzały ale nie musisz się obawiać potknięcia o losowy kamień.</item>
+        <item>Początkujący ninja.</item>
+        <item>PRAWIE sokoli wzrok, PRAWIE słuch nietoperza, PRAWIE węch niedźwiedzia, PRAWIE czucie pająka i PRAWIE poczucie smaku Gordona Ramsaya.</item>
+        <item>Zatrudniliby cię w charakterze psa policyjnego.</item>
+        <item>Złapałbyś muchę obcęgami.</item>
+    </string-array>
+    <string-array name="attribute_organism_counterDescriptions">
+        <item>-</item>
+        <item>Niewiarygodne, że bez nerki, płuca, śledziony, genitaliów, żołądka, jelita grubego, wyrostka robaczkowego i pęcherzyka żółciowego można żyć tak wspaniałym życiem, jak twoje.</item>
+        <item>Hipochondria w twoim przypadku nie bierze się znikąd.</item>
+        <item>Masz lekką astmę i słaby żołądek. Uważaj, co jesz!</item>
+        <item>Słaba głowa do alkoholu, ale za to nie wymiotujesz po byle jakim jedzeniu niewiadomego pochodzenia.</item>
+        <item>Normalnie funkcjonujący normalny organizm normalnego człowieka... czy kim jesteś...</item>
+        <item>Nie pamiętasz, kiedy ostatnio miałeś przeziębienie.</item>
+        <item>Mocna głowa do alkoholu i żołądek ze stali.</item>
+        <item>Raz miałeś tasiemca, ale spierdolił.</item>
+        <item>Leki popijasz denaturatem z dodatkiem cyjanku.</item>
+    </string-array>
+    <string-array name="attribute_condition_counterDescriptions">
+        <item>-</item>
+        <item>Jesteś niepełnosprawny.</item>
+        <item>Nie biegaj za szybko. Pamiętaj o wrodzonej łamliwości kości!</item>
+        <item>Otyłość i astma. Omijało się wf w szkole, co?</item>
+        <item>Nadwaga. Kanapowy tryb życia i czipsy nie sprzyjają bieganiu.</item>
+        <item>Normalna sylwetka. Przebiegłbyś kilka kilometrów, ale o maratonie zapomnij.</item>
+        <item>Trenowało się karate za dzieciaka?</item>
+        <item>Bez problemu przebiegłbyś maraton.</item>
+        <item>K2 w zimę - żaden problem.</item>
+        <item>Przepłynąłbyś wpław przez atlantyk.</item>
+    </string-array>
+    <string-array name="attribute_strength_counterDescriptions">
+        <item>-</item>
+        <item>Anoreksja</item>
+        <item>Czasem masz problem z odkręceniem butelki z wodą.</item>
+        <item>Chodzisz z siatkami na dwa razy.</item>
+        <item>Siła przeciętnej kobiety.</item>
+        <item>Najnormalniejsza siła. Biceps można pokazać w lustrze ale kaptur nie istnieje.</item>
+        <item>Siła przeciętnego mężczyzny.</item>
+        <item>Sylwetka żołnierza.</item>
+        <item>Strongmen</item>
+        <item>Panie Björnsson, to Pan?</item>
+    </string-array>
+    <string-array name="attribute_agility_counterDescriptions">
+        <item>-</item>
+        <item>Worek cementu jest bardziej żywiołowy.</item>
+        <item>Zwinność żółwia.</item>
+        <item>Zwinność pandy.</item>
+        <item>Trochę zmulony, ale nie ma tragedii.</item>
+        <item>Normalna zwinność. Ni to małpa, ni to foka.</item>
+        <item>Parę razy się było w parku linowym.</item>
+        <item>Bez większych problemów poruszałbyś się w koronach drzew.</item>
+        <item>Amator parkouru.</item>
+        <item>Człowiek-guma.</item>
+    </string-array>
+    <string-array name="attribute_psyche_counterDescriptions">
+        <item>-</item>
+        <item>Pamięć rybki Doris</item>
+        <item>Choroba Alzheimera.</item>
+        <item>Lubisz segregować informacje na te ważne i te mniej ważne. Z jakiejś przyczyny tych mniej ważnych jest dużo więcej,</item>
+        <item>Słabo zapamiętujesz daty, czy imiona, ale czasem intuicja ci podpowiada pierwszą literę czy miesiąc.</item>
+        <item>Normalna pamięć. Raz masz dzień zapominalstwa a raz masz przebłyski geniuszu.</item>
+        <item>Ze swojej edukacji zapamiętałeś więcej, niż byś tego chciał. Odpowiadasz poprawnie na większość pytań w milionerach, mimo że nie wiesz, dlaczego akurat ta odpowiedź ci pasuje.</item>
+        <item>Nigdy nie miałeś problemu z przypomnieniem sobie "tej piosenki", którą słyszałeś w radiu.</item>
+        <item>Masz pamięć sawanta.</item>
+        <item>Pamięć fotograficzna.</item>
+    </string-array>
+    <string-array name="attribute_discipline_counterDescriptions">
+        <item>-</item>
+        <item>Zdarza się, że przestraszy cię twój własny cień.</item>
+        <item>Masz germofobię.</item>
+        <item>Wskakujesz na krzesło, gdy mysz wbiega do pokoju.</item>
+        <item>Nie przeszedłbyś przez pajęczynę.</item>
+        <item>Normalna dyscyplina. Możesz mieć opory przed pewnymi czynnościami, ale przełkniesz ślinę i wykonasz, co trzeba.</item>
+        <item>Ból może cię przytłoczyć, ale umiesz utrzymać nerwy na wodzy.</item>
+        <item>Zdążyłeś zwalczyć swoje fobie. Mało jest rzeczy, które powodują u ciebie zwątpienie.</item>
+        <item>Mógłbyś przeprowadzić na sobie operację.</item>
+        <item>Nie istotne, jakie tortury - pary z ust nie puścisz.</item>
+    </string-array>
+    <string-array name="attribute_intelligence_counterDescriptions">
+        <item>-</item>
+        <item>Musisz dzielić koncentrację pomiędzy myślami a oddychaniem.</item>
+        <item>Szczepionki powodują autyzm, a Ziemia jest płaska.</item>
+        <item>To zdanie ma 16 liter.</item>
+        <item>Uważasz siebie za osobę inteligentną.</item>
+        <item>100 IQ</item>
+        <item>Nie uważasz siebie za osobę inteligentną.</item>
+        <item>Przecież na oko widać, że zdanie w pkt. 3 ma 15 liter, 2 cyfry, 4 znaki białe i jeden interpunkcyjny.</item>
+        <item>Mensa wita.</item>
+        <item>Szwedzi już czekają z Noblem.</item>
+    </string-array>
+    <string-array name="attribute_charisma_counterDescriptions">
+        <item>-</item>
+        <item>Charyzmatyczny jak opakowanie po cukierkach.</item>
+        <item>Jesteś tym "dziwnym typem" z klasy.</item>
+        <item>Samotnik.</item>
+        <item>Introwertyk.</item>
+        <item>Normalna charyzma. Masz przyjaciół i znajomych; nie masz trudności w kontaktach z innymi.</item>
+        <item>Jesteś bardziej otwarty niż powinieneś, ale najwyraźniej ludziom to nie przeszkadza.</item>
+        <item>Ekstrawertyk.</item>
+        <item>Dusza towarzystwa.</item>
+        <item>Magnes społeczny.</item>
+    </string-array>
+    <string-array name="attribute_empathy_counterDescriptions">
+        <item>-</item>
+        <item>Socjopata.</item>
+        <item>Autyzm.</item>
+        <item>Zespół Aspergera.</item>
+        <item>Empatia przeciętnego mężczyzny.</item>
+        <item>Normalna empatia. Umiesz poprawnie interpretować sygnały drugiej osoby, ale nie zawsze są one poprawne.</item>
+        <item>Empatia przeciętnej kobiety.</item>
+        <item>Psycholog</item>
+        <item>HSP</item>
+        <item>Telepata.</item>
+    </string-array>
+    <string-array name="attribute_manipulation_counterDescriptions">
+        <item>-</item>
+        <item>Witam, Panie Pinokio.</item>
+        <item>Jąkasz się.</item>
+        <item>Beznadziejny ||iluzjonista.</item>
+        <item>Prezenter z telezakupów Mango.</item>
+        <item>Normalna manipulacja. Umiesz kłamać i zachować kamienną twarz przy kartach, jeśli tego wymaga sytuacja.</item>
+        <item>Hazardzista</item>
+        <item>Nadasz się na polityka.</item>
+        <item>Eskimosom lód sprzedasz.</item>
+        <item>Kokichi Oma</item>
+    </string-array>
+</resources>
