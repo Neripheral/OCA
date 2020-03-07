@@ -30,8 +30,19 @@
     <string name="attribute_condition_description">Wytrzymałość na zmęczenie. Określa, jak męczący wysiłek możesz wykonać bez odpoczynku.</string>
     <string name="attribute_empathy_description">Umiejętność postrzegania stanów psychicznych innych osób. Określa, jak dobrze jesteś w stanie rozgryżć drugą osobę.</string>
     <string name="attribute_intelligence_description">"Łatwość i szybkość analizy danych. Określa, jak dobrze idzie ci łączenie faktów i nauka nowych rzeczy. "</string>
-    <string name="attribute_manipulation_description">Umiejętność podświadomego wpływania na innych. Określa, jak dobrze jesteś w stanie zrobić komuś pranie mózgu.</string>
+    <string name="attribute_manipulation_description">Umiejętność wpływania na podświadomość innych. Określa, jak dobrze jesteś w stanie zrobić komuś pranie mózgu.</string>
     <string name="attribute_psyche_description">Twoja psychika. Określa pamięć i siłę umysłu.</string>
     <string name="attribute_strength_description">Co tu dużo gadać - krzepa twojej postaci.</string>
     <string name="attribute_discipline_description">Opanowanie i odwaga. Określa, jak silną masz wolę.</string>
+    <string name="reason_attributes_are_already_commited">Atrybuty zostały już zaakceptowane.</string>
+    <string name="reason_attributes_points_remaining">Wciąż zostały punkty do przydzielenia!</string>
+    <string name="reason_attributes_spent_too_many_points">Wydałeś zbyt dużo punktów!</string>
+    <string name="reason_attribute_not_balanced">%1$s nie jest zbalansowana!</string>
+    <string name="tabSkills_dependentOn">Zależne od:</string>
+    <string name="ok">Ok</string>
+    <string name="criticalSuccess">Krytyczny Sukces</string>
+    <string name="bigSuccess">Duży Sukces</string>
+    <string name="successFlow">Flow</string>
+    <string name="failure">Porażka</string>
+    <string name="criticalFailure">Krytyczna Porażka</string>
 </resources>

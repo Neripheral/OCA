@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.oca.SkillsFragment;
+import com.example.oca.fragments.SkillsFragment;
 import com.example.oca.fragments.AttributesFragment;
 import com.example.oca.fragments.BasicInfoFragment;
 import com.example.oca.R;

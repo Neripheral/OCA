@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.oca.AttributeAdapter;
 import com.example.oca.models.AttributeModel;
@@ -101,7 +102,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_reflex_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_reflex_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_vitality)
-                .setBalance(pc.getBalance(pc.REFLEX))
+                .setBalance(pc.getAttributesBalance(pc.REFLEX))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -113,7 +114,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_organism_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_organism_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_vitality)
-                .setBalance(pc.getBalance(pc.ORGANISM))
+                .setBalance(pc.getAttributesBalance(pc.ORGANISM))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -134,7 +135,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_strength_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_strength_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_condition)
-                .setBalance(pc.getBalance(pc.CONDITION))
+                .setBalance(pc.getAttributesBalance(pc.CONDITION))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -146,7 +147,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_agility_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_agility_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_condition)
-                .setBalance(pc.getBalance(pc.AGILITY))
+                .setBalance(pc.getAttributesBalance(pc.AGILITY))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -167,7 +168,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_discipline_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_discipline_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_psyche)
-                .setBalance(pc.getBalance(pc.PSYCHE))
+                .setBalance(pc.getAttributesBalance(pc.PSYCHE))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -179,7 +180,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_intelligence_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_intelligence_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_psyche)
-                .setBalance(pc.getBalance(pc.INTELLIGENCE))
+                .setBalance(pc.getAttributesBalance(pc.INTELLIGENCE))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -200,7 +201,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_empathy_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_empathy_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_charisma)
-                .setBalance(pc.getBalance(pc.CHARISMA))
+                .setBalance(pc.getAttributesBalance(pc.CHARISMA))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -212,7 +213,7 @@ public class AttributesFragment extends Fragment {
                 .setDescription(getString(R.string.attribute_manipulation_description))
                 .setCounterDescription(getResources().getStringArray(R.array.attribute_manipulation_counterDescriptions)[model.getCounter()])
                 .setParentImageId(R.drawable.attribute_charisma)
-                .setBalance(pc.getBalance(pc.MANIPULATION))
+                .setBalance(pc.getAttributesBalance(pc.MANIPULATION))
                 .setBalanceColor(this.getCorrespondingBalanceColor(model.getBalance()));
         toReturn.add(model);
 
@@ -237,7 +238,7 @@ public class AttributesFragment extends Fragment {
         View pointsContainer = Layout.getFABRemainingPointsContainer(rootView);
 
         // set default values
-        int imageToSet = android.R.drawable.checkbox_off_background;
+        int imageToSet = android.R.drawable.ic_dialog_alert;
         int pointsVisibility = View.VISIBLE;
 
         if(getPlayerCharacterData().areAttributesCorrect()){
@@ -267,7 +268,6 @@ public class AttributesFragment extends Fragment {
             default:
                 Log.d("Warning", "clickOperator error in AttributeAdapter: button not recognized");
         }
-        int currentCounter = getPlayerCharacterData().getAttribute(position);
         updateRecyclerData();
         updateFloatingActionButton();
     }
@@ -296,6 +296,20 @@ public class AttributesFragment extends Fragment {
         }
     }
 
+    public boolean onFABClicked(){
+        if(commitAttributeChanges())
+            return true;
+
+        String textToShow = "";
+
+        String[] reasons = getPlayerCharacterData().whyCannotCommitAttributes(rootView.getContext());
+        for(String reason : reasons)
+            textToShow += (reason + "\n");
+        textToShow = textToShow.substring(0, textToShow.length()-1);
+        Toast.makeText(rootView.getContext(), textToShow, Toast.LENGTH_LONG).show();
+        return false;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -322,7 +336,7 @@ public class AttributesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                commitAttributeChanges();
+                onFABClicked();
             }
         });
 

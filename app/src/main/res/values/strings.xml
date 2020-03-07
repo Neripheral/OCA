@@ -35,4 +35,16 @@
     <string name="attribute_empathy_description">-</string>
     <string name="attribute_manipulation_description">-</string>
     <string name="attribute_discipline_description">-</string>
+    <string name="reason_attributes_are_already_commited">Attributes are already commited.</string>
+    <string name="reason_attributes_points_remaining">There are still some points you haven\'t spent!</string>
+    <string name="reason_attributes_spent_too_many_points">Too many points were spent!</string>
+    <string name="reason_attribute_not_balanced">%1$s is not balanced!</string>
+    <string name="tabSkills_dependentOn">Dependent on:</string>
+    <string name="ok">Ok</string>
+    <string name="criticalSuccess">Critical Success</string>
+    <string name="bigSuccess">Big Success</string>
+    <string name="successFlow">Flow</string>
+    <string name="failure">Failure</string>
+    <string name="criticalFailure">Critical Failure</string>
+    <string name="success">Sukces</string>
 </resources>

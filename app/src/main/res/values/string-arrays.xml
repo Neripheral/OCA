@@ -144,4 +144,134 @@
         <item>-</item>
         <item>-</item>
     </string-array>
+    <string-array name="skillNames">
+        <item>equestrianism</item>
+        <item>Equestrianism</item>
+
+        <item>pickpocketing</item>
+        <item>Pickpocketing</item>
+
+        <item>eavesdropping</item>
+        <item>Eavesdropping</item>
+
+        <item>perceptivity</item>
+        <item>Perceptivity</item>
+
+        <item>lockpicking</item>
+        <item>Lockpicking</item>
+
+        <item>tracking</item>
+        <item>Tracking</item>
+
+        <item>drinkHolding</item>
+        <item>DrinkHolding</item>
+
+        <item>swimming</item>
+        <item>Swimming</item>
+
+        <item>throwing</item>
+        <item>Throwing</item>
+
+        <item>jumping</item>
+        <item>Jumping</item>
+
+        <item>climbing</item>
+        <item>Climbing</item>
+
+        <item>sneaking</item>
+        <item>Sneaking</item>
+
+        <item>painResistance</item>
+        <item>Pain Resistance</item>
+
+        <item>goreTolerance</item>
+        <item>Tolerance To Gore</item>
+
+        <item>languages</item>
+        <item>Languages</item>
+
+        <item>medicine</item>
+        <item>Medicine</item>
+
+        <item>nature</item>
+        <item>Nature</item>
+
+        <item>navigation</item>
+        <item>Navigation</item>
+
+        <item>politics</item>
+        <item>Politics</item>
+
+        <item>appraising</item>
+        <item>Appraising</item>
+
+        <item>survival</item>
+        <item>Survival</item>
+
+        <item>physics</item>
+        <item>Physics</item>
+
+        <item>accounting</item>
+        <item>Accounting</item>
+
+        <item>camouflage</item>
+        <item>Camouflage</item>
+
+        <item>mathematics</item>
+        <item>Mathematics</item>
+
+        <item>commanding</item>
+        <item>Commanding</item>
+
+        <item>flirting</item>
+        <item>Flirting</item>
+
+        <item>rhetoric</item>
+        <item>Rhetoric</item>
+
+        <item>intimidation</item>
+        <item>Intimidation</item>
+
+        <item>arts</item>
+        <item>Arts</item>
+
+        <item>teaching</item>
+        <item>Teaching</item>
+
+        <item>animalTaming</item>
+        <item>AnimalTaming</item>
+
+        <item>gambling</item>
+        <item>Gambling</item>
+
+        <item>impersonation</item>
+        <item>Impersonation</item>
+
+        <item>haggling</item>
+        <item>Haggling</item>
+
+        <item>1hWeapons</item>
+        <item>1-Handed Weapons</item>
+
+        <item>2hWeapons</item>
+        <item>2-Handed Weapons</item>
+
+        <item>poleWeapons</item>
+        <item>Pole Weapons</item>
+
+        <item>brawling</item>
+        <item>Brawling</item>
+
+        <item>archery</item>
+        <item>Archery</item>
+
+        <item>crossbows</item>
+        <item>Crossbows</item>
+
+        <item>pistols</item>
+        <item>Pistols</item>
+
+        <item>rifles</item>
+        <item>Rifles</item>
+    </string-array>
 </resources>

@@ -1,53 +1,53 @@
 package com.example.oca.models;
 
-import com.example.oca.classes.Skill;
-
 public class SkillModel implements Comparable<SkillModel>{
-    private Skill skillData;
+    private int totalCounter;
+    private int spentPointsCounter;
+    private String id;
     private String title;
+    private int parentAttributeImageId;
+    private boolean detailsVisible;
 
-    public SkillModel(String id, int counter, String title){
-        this(new Skill(id, counter), title);
+    public int getTotalCounter() {
+        return totalCounter;
     }
-
-    public SkillModel(Skill skillData, String title) {
-        this.setSkillData(skillData);
-        this.setTitle(title);
+    public SkillModel setTotalCounter(int totalCounter){
+            this.totalCounter = totalCounter;
+            return this;
     }
-
-    private Skill getSkillData() {
-        return skillData;
+    public int getSpentPointsCounter(){
+        return spentPointsCounter;
     }
-
-    private SkillModel setSkillData(Skill skillData) {
-        this.skillData = skillData;
+    public SkillModel setSpentPointsCounter(int spentPointsCounter){
+        this.spentPointsCounter = spentPointsCounter;
         return this;
     }
-
     public String getId(){
-        return getSkillData().getId();
+        return id;
     }
-
     public SkillModel setId(String id){
-        this.getSkillData().setId(id);
+        this.id = id;
         return this;
     }
-
-    public int getCounter(){
-        return getSkillData().getCounter();
-    }
-
-    public SkillModel setCounter(int counter){
-        this.getSkillData().setCounter(counter);
-        return this;
-    }
-
     public String getTitle() {
         return title;
     }
-
     public SkillModel setTitle(String title) {
         this.title = title;
+        return this;
+    }
+    public boolean areDetailsVisible() {
+        return detailsVisible;
+    }
+    public SkillModel setDetailsVisible(boolean detailsVisible) {
+        this.detailsVisible = detailsVisible;
+        return this;
+    }
+    public int getParentAttributeImageId() {
+        return parentAttributeImageId;
+    }
+    public SkillModel setParentAttributeImageId(int parentAttributeImageId) {
+        this.parentAttributeImageId = parentAttributeImageId;
         return this;
     }
 
@@ -56,5 +56,14 @@ public class SkillModel implements Comparable<SkillModel>{
         String myStr = this.getTitle();
         String otherStr = other.getTitle();
         return myStr.compareTo(otherStr);
+    }
+
+    public SkillModel(int totalCounter, int spentPointsCounter, String id, String title, int parentSkillImageId){
+        setTotalCounter(totalCounter);
+        setSpentPointsCounter(spentPointsCounter);
+        setId(id);
+        setTitle(title);
+        setDetailsVisible(false);
+        setParentAttributeImageId(parentSkillImageId);
     }
 }

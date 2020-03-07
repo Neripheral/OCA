@@ -8,17 +8,17 @@
         <item>Choroby mogą być niebezpieczne. Potencjalne rany podczas bitwy nie stanowią poważnego zagrożenia.</item>
         <item>Normalne zdrowie. Organizm nie podda się bez walki.</item>
         <item>Wyprawa do dżungli, na pustynię czy w góry to świetny sposób na zahartowanie się!</item>
-        <item>Wybity palec? Trzeba go nastawić. Strzała w nodze? Co mówiłeś? Nie wolno wyjmować obiektów z ciała? Bzdura</item>
+        <item>Wybity palec? Trzeba go nastawić. Strzała w nodze? Co mówiłeś? Nie wolno wyjmować obiektów z ciała? Bzdura...</item>
         <item>Jesteś tym, kto przeżywa śmierć kliniczną.</item>
         <item>Miałbyś problem z popełnieniem samobójstwa.</item>
     </string-array>
     <string-array name="attribute_reflex_counterDescriptions">
         <item>-</item>
-        <item>W sumie nie istotne, co tu napiszę, bo i tak nie zauważysz tego tekstu.</item>
+        <item>W sumie nieistotne, co tu napiszę, bo i tak nie zauważysz tego tekstu.</item>
         <item>Powinieneś dostrzec wybuch bomby atomowej.</item>
         <item>Przygłuchy krótkowidz. Bez okularów i aparatu słuchowego możesz mieć problemy.</item>
         <item>Czasem masz problemy ze słuchem czy wzrokiem, ale nie przeszkadza to w normalnym życiu.</item>
-        <item>Średni refleks. Raczej nie unikniesz lecącej strzały ale nie musisz się obawiać potknięcia o losowy kamień.</item>
+        <item>Średni refleks. Raczej nie unikniesz lecącej strzały, ale nie musisz się obawiać potknięcia o losowy kamień.</item>
         <item>Początkujący ninja.</item>
         <item>PRAWIE sokoli wzrok, PRAWIE słuch nietoperza, PRAWIE węch niedźwiedzia, PRAWIE czucie pająka i PRAWIE poczucie smaku Gordona Ramsaya.</item>
         <item>Zatrudniliby cię w charakterze psa policyjnego.</item>
@@ -54,7 +54,7 @@
         <item>Czasem masz problem z odkręceniem butelki z wodą.</item>
         <item>Chodzisz z siatkami na dwa razy.</item>
         <item>Siła przeciętnej kobiety.</item>
-        <item>Najnormalniejsza siła. Biceps można pokazać w lustrze ale kaptur nie istnieje.</item>
+        <item>Najnormalniejsza siła. Biceps można pokazać w lustrze, ale kaptur nie istnieje.</item>
         <item>Siła przeciętnego mężczyzny.</item>
         <item>Sylwetka żołnierza.</item>
         <item>Strongmen</item>
@@ -76,9 +76,9 @@
         <item>-</item>
         <item>Pamięć rybki Doris</item>
         <item>Choroba Alzheimera.</item>
-        <item>Lubisz segregować informacje na te ważne i te mniej ważne. Z jakiejś przyczyny tych mniej ważnych jest dużo więcej,</item>
+        <item>Lubisz segregować informacje na te ważne i te mniej ważne. Z jakiejś przyczyny tych mniej ważnych jest dużo więcej.</item>
         <item>Słabo zapamiętujesz daty, czy imiona, ale czasem intuicja ci podpowiada pierwszą literę czy miesiąc.</item>
-        <item>Normalna pamięć. Raz masz dzień zapominalstwa a raz masz przebłyski geniuszu.</item>
+        <item>Normalna pamięć. Raz masz dzień zapominalstwa, a raz masz przebłyski geniuszu.</item>
         <item>Ze swojej edukacji zapamiętałeś więcej, niż byś tego chciał. Odpowiadasz poprawnie na większość pytań w milionerach, mimo że nie wiesz, dlaczego akurat ta odpowiedź ci pasuje.</item>
         <item>Nigdy nie miałeś problemu z przypomnieniem sobie "tej piosenki", którą słyszałeś w radiu.</item>
         <item>Masz pamięć sawanta.</item>
@@ -111,7 +111,7 @@
     <string-array name="attribute_charisma_counterDescriptions">
         <item>-</item>
         <item>Charyzmatyczny jak opakowanie po cukierkach.</item>
-        <item>Jesteś tym "dziwnym typem" z klasy.</item>
+        <item>Jesteś tym \"dziwnym typem\" z klasy.</item>
         <item>Samotnik.</item>
         <item>Introwertyk.</item>
         <item>Normalna charyzma. Masz przyjaciół i znajomych; nie masz trudności w kontaktach z innymi.</item>
@@ -126,10 +126,10 @@
         <item>Autyzm.</item>
         <item>Zespół Aspergera.</item>
         <item>Empatia przeciętnego mężczyzny.</item>
-        <item>Normalna empatia. Umiesz poprawnie interpretować sygnały drugiej osoby, ale nie zawsze są one poprawne.</item>
+        <item>Normalna empatia. Umiesz interpretować sygnały drugiej osoby, ale nie zawsze poprawnie.</item>
         <item>Empatia przeciętnej kobiety.</item>
-        <item>Psycholog</item>
-        <item>HSP</item>
+        <item>Psycholog.</item>
+        <item>HSP.</item>
         <item>Telepata.</item>
     </string-array>
     <string-array name="attribute_manipulation_counterDescriptions">
@@ -137,11 +137,141 @@
         <item>Witam, Panie Pinokio.</item>
         <item>Jąkasz się.</item>
         <item>Prezenter z telezakupów Mango.</item>
-        <item>Kłamiesz jak co zdolniejsze dzieci..</item>
+        <item>Kłamiesz jak co zdolniejsze dzieci.</item>
         <item>Normalna manipulacja. Umiesz kłamać i zachować kamienną twarz przy kartach, jeśli tego wymaga sytuacja.</item>
-        <item>Hazardzista</item>
+        <item>Hazardzista.</item>
         <item>Nadasz się na polityka.</item>
         <item>Eskimosom lód sprzedasz.</item>
         <item>Kokichi Oma</item>
+    </string-array>
+    <string-array name="skillNames">
+        <item>equestrianism</item>
+        <item>Jeździectwo</item>
+
+        <item>pickpocketing</item>
+        <item>Kradzież kieszonkowa</item>
+
+        <item>eavesdropping</item>
+        <item>Podsłuchiwanie</item>
+
+        <item>perceptivity</item>
+        <item>Spostrzegawczość</item>
+
+        <item>lockpicking</item>
+        <item>Otwieranie zamków</item>
+
+        <item>tracking</item>
+        <item>Tropienie</item>
+
+        <item>drinkHolding</item>
+        <item>Mocna głowa</item>
+
+        <item>swimming</item>
+        <item>Pływanie</item>
+
+        <item>throwing</item>
+        <item>Rzucanie</item>
+
+        <item>jumping</item>
+        <item>Skakanie</item>
+
+        <item>climbing</item>
+        <item>Wspinaczka</item>
+
+        <item>sneaking</item>
+        <item>Skradanie</item>
+
+        <item>painResistance</item>
+        <item>Odporność na ból</item>
+
+        <item>goreTolerance</item>
+        <item>Odporność na gore</item>
+
+        <item>languages</item>
+        <item>Językoznawstwo</item>
+
+        <item>medicine</item>
+        <item>Medycyna</item>
+
+        <item>nature</item>
+        <item>Przyroda</item>
+
+        <item>navigation</item>
+        <item>Nawigacja</item>
+
+        <item>politics</item>
+        <item>Polityka</item>
+
+        <item>appraising</item>
+        <item>Rzeczoznawstwo</item>
+
+        <item>survival</item>
+        <item>Sztuka przetrwania</item>
+
+        <item>physics</item>
+        <item>Fizyka</item>
+
+        <item>accounting</item>
+        <item>Księgowość</item>
+
+        <item>camouflage</item>
+        <item>Kamuflaż</item>
+
+        <item>mathematics</item>
+        <item>Matematyka</item>
+
+        <item>commanding</item>
+        <item>Dowodzenie</item>
+
+        <item>flirting</item>
+        <item>Uwodzenie</item>
+
+        <item>rhetoric</item>
+        <item>Retoryka</item>
+
+        <item>intimidation</item>
+        <item>Zastraszanie</item>
+
+        <item>arts</item>
+        <item>Artyzm</item>
+
+        <item>teaching</item>
+        <item>Nauczanie</item>
+
+        <item>animalTaming</item>
+        <item>Oswajanie zwierząt</item>
+
+        <item>gambling</item>
+        <item>Hazard</item>
+
+        <item>impersonation</item>
+        <item>Podszywanie</item>
+
+        <item>haggling</item>
+        <item>Targowanie</item>
+
+        <item>1hWeapons</item>
+        <item>Broń jednoręczna</item>
+
+        <item>2hWeapons</item>
+        <item>Broń dwuręczna</item>
+
+        <item>poleWeapons</item>
+        <item>Broń drzewcowa</item>
+
+        <item>brawling</item>
+        <item>Walka na pięści</item>
+
+        <item>archery</item>
+        <item>Łucznictwo</item>
+
+        <item>crossbows</item>
+        <item>Kusznictwo</item>
+
+        <item>pistols</item>
+        <item>Krótka broń palna</item>
+
+        <item>rifles</item>
+        <item>Długa broń palna</item>
     </string-array>
 </resources>
