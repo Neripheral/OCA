@@ -32,6 +32,12 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewH
         private ConstraintLayout detailsContainer;
         private ImageView parentAttributeImage;
         private ImageButton rollDiceButton;
+        private TextView criticalSuccessBoundaries;
+        private TextView bigSuccessBoundaries;
+        private TextView normalSuccessBoundaries;
+        private TextView flowBoundaries;
+        private TextView failureBoundaries;
+        private TextView criticalFailureBoundaries;
 
         public SkillViewHolder(View v, SkillsFragment.SkillLayoutChangeListener listener){
             super(v);
@@ -48,6 +54,12 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewH
             detailsContainer = (ConstraintLayout) v.findViewById(R.id.skills_skill_details_container);
             parentAttributeImage = (ImageView) v.findViewById(R.id.skills_parentAttributeImage);
             rollDiceButton = (ImageButton) v.findViewById(R.id.skills_rollButton);
+            criticalSuccessBoundaries = (TextView) v.findViewById(R.id.skills_criticalSuccessBoundaries);
+            bigSuccessBoundaries = (TextView) v.findViewById(R.id.skills_bigSuccessBoundaries);
+            normalSuccessBoundaries = (TextView) v.findViewById(R.id.skills_normalSuccessBoundaries);
+            flowBoundaries = (TextView) v.findViewById(R.id.skills_flowBoundaries);
+            failureBoundaries = (TextView) v.findViewById(R.id.skills_failureBoundaries);
+            criticalFailureBoundaries = (TextView) v.findViewById(R.id.skills_criticalFailureBoundaries);
 
             skillIncrementButton.setOnClickListener(this);
             skillDecrementButton.setOnClickListener(this);
@@ -96,6 +108,12 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewH
         holder.skillTotalCounter.setText(String.valueOf(model.getTotalCounter()));
         holder.skillTitle.setText(model.getTitle());
         holder.parentAttributeImage.setImageResource(model.getParentAttributeImageId());
+        holder.criticalSuccessBoundaries.setText(model.getCriticalSuccessBoundaries());
+        holder.bigSuccessBoundaries.setText(model.getBigSuccessBoundaries());
+        holder.normalSuccessBoundaries.setText(model.getNormalSuccessBoundaries());
+        holder.flowBoundaries.setText(model.getFlowBoundaries());
+        holder.failureBoundaries.setText(model.getFailureBoundaries());
+        holder.criticalFailureBoundaries.setText(model.getCriticalFailureBoundaries());
         if(model.areDetailsVisible())
             holder.setDetailsVisible();
         else

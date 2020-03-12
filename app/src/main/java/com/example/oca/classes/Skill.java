@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.example.oca.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Skill {
     public static final int MIN_SPENTPOINTS = 0;
     public static final int MAX_SPENTPOINTS = 40;
@@ -51,6 +54,52 @@ public class Skill {
         totalCounter += pc.getAttribute(getParentAttribute()) * getSpentPoints();
 
         return totalCounter;
+    }
+
+    public static final int CRITICAL_SUCCESS = 0;
+    public static final int BIG_SUCCESS = 1;
+    public static final int NORMAL_SUCCESS = 2;
+    public static final int FLOW = 3;
+    public static final int FAILURE = 4;
+    public static final int CRITICAL_FAILURE = 5;
+    public static final double CRITICAL_SUCCESS_FRACTION = 0.1;
+    public static final double BIG_SUCCESS_FRACTION = 0.5;
+
+    public List<List<Integer>> getSkillThrowResultBoundaries(PlayerCharacter pc){
+        List<List<Integer>> boundaries = new ArrayList<>();
+        int total = getTotalCounter(pc);
+        for(int i = 0; i <= CRITICAL_FAILURE; i++){
+            List<Integer> entry = new ArrayList<>();
+            if(i == 0)
+                entry.add(1);
+            else
+                entry.add(boundaries.get(i-1).get(1)+1);
+
+            switch(i){
+                case CRITICAL_SUCCESS:
+                    entry.add((int)(total * CRITICAL_SUCCESS_FRACTION));
+                    break;
+                case BIG_SUCCESS:
+                    entry.add((int)(total * BIG_SUCCESS_FRACTION));
+                    break;
+                case NORMAL_SUCCESS:
+                    entry.add(total-1);
+                    break;
+                case FLOW:
+                    entry.add(total);
+                    break;
+                case FAILURE:
+                    entry.add(99);
+                    break;
+                case CRITICAL_FAILURE:
+                    entry.add(100);
+                    break;
+                default:
+                    return null;
+            }
+            boundaries.add(entry);
+        }
+        return boundaries;
     }
 
     public Skill(){

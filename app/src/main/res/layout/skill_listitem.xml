@@ -104,11 +104,155 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <LinearLayout
+                android:id="@+id/skills_boundariesContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:orientation="vertical"
+                android:padding="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/skills_dependencyInfo"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/skills_criticalSuccess"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_criticalSuccessIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/critical_success" />
+
+                    <TextView
+                        android:id="@+id/skills_criticalSuccessBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skills_bigSuccess"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_bigSuccessIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/double_tick" />
+
+                    <TextView
+                        android:id="@+id/skills_bigSuccessBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skills_normalSuccess"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_normalSuccessIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/single_tick" />
+
+                    <TextView
+                        android:id="@+id/skills_normalSuccessBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skills_flow"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_flowIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/flow" />
+
+                    <TextView
+                        android:id="@+id/skills_flowBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skills_failure"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_failureIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/ic_delete" />
+
+                    <TextView
+                        android:id="@+id/skills_failureBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skills_criticalFailure"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/skills_criticalFailureIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/skull" />
+
+                    <TextView
+                        android:id="@+id/skills_criticalFailureBoundaries"
+                        android:layout_width="48dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="-"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/skills_baseCounterContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="?attr/colorButtonNormal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -116,6 +260,8 @@
                     android:id="@+id/skills_incrementButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toTopOf="@+id/skills_spentPointsCounter"
                     app:layout_constraintEnd_toEndOf="@+id/skills_spentPointsCounter"
                     app:layout_constraintStart_toStartOf="@+id/skills_spentPointsCounter"
                     app:layout_constraintTop_toTopOf="parent"
@@ -125,11 +271,13 @@
                     android:id="@+id/skills_spentPointsCounter"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:inputType="number"
                     android:padding="8dp"
                     android:text="0"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/skills_decrementButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/skills_incrementButton" />
 

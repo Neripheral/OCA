@@ -302,6 +302,7 @@ public class PlayerCharacter {
         return totalCount;
     }
 
+
     public String toJSON(){
         JSONObject in = new JSONObject();
         try{
