@@ -1,21 +1,18 @@
-package com.example.oca.fragments;
+package com.nerpage.oca.fragments;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.example.oca.CharacterViewerActivity;
-import com.example.oca.R;
-import com.example.oca.classes.PlayerCharacter;
+import com.nerpage.oca.CharacterViewerActivity;
+import com.nerpage.oca.R;
+import com.nerpage.oca.classes.PlayerCharacter;
 
 public class BasicInfoFragment extends Fragment {
     private View rootView = null;

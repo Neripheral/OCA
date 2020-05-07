@@ -1,4 +1,4 @@
-package com.example.oca.ui.pager;
+package com.nerpage.oca.ui.pager;
 
 import android.content.Context;
 
@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.oca.fragments.SkillsFragment;
-import com.example.oca.fragments.AttributesFragment;
-import com.example.oca.fragments.BasicInfoFragment;
-import com.example.oca.R;
+import com.nerpage.oca.fragments.SkillsFragment;
+import com.nerpage.oca.fragments.AttributesFragment;
+import com.nerpage.oca.fragments.BasicInfoFragment;
+import com.nerpage.oca.R;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     public static final int ITEMS_NUMBER = 3;

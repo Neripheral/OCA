@@ -45,4 +45,9 @@
     <string name="successFlow">Flow</string>
     <string name="failure">Porażka</string>
     <string name="criticalFailure">Krytyczna Porażka</string>
+    <string name="dialog_yes">Tak</string>
+    <string name="dialog_no">Nie</string>
+    <string name="dialog_commitAttributes_title">Czy chcesz zaakceptować atrybuty?</string>
+    <string name="dialog_commitAttributes_message">Zaakceptowanie jest permanentne!</string>
+    <string name="success">Sukces</string>
 </resources>

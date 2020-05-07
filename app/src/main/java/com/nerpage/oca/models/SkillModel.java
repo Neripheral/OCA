@@ -1,4 +1,4 @@
-package com.example.oca.models;
+package com.nerpage.oca.models;
 
 public class SkillModel implements Comparable<SkillModel>{
     private int totalCounter;
@@ -7,7 +7,9 @@ public class SkillModel implements Comparable<SkillModel>{
     private String title;
     private int parentAttributeImageId;
     private boolean detailsVisible;
+
     private String criticalSuccessBoundaries;
+
     private String bigSuccessBoundaries;
     private String normalSuccessBoundaries;
     private String flowBoundaries;

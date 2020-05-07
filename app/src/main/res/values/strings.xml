@@ -46,5 +46,9 @@
     <string name="successFlow">Flow</string>
     <string name="failure">Failure</string>
     <string name="criticalFailure">Critical Failure</string>
-    <string name="success">Sukces</string>
+    <string name="success">Success</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_commitAttributes_title">Are you sure you want to submit?</string>
+    <string name="dialog_commitAttributes_message">The commit is permanent!</string>
 </resources>

@@ -1,17 +1,15 @@
-package com.example.oca;
+package com.nerpage.oca;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 
-import com.example.oca.classes.PlayerCharacter;
-import com.example.oca.ui.pager.PagerAdapter;
+import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.ui.pager.PagerAdapter;
 
 public class CharacterViewerActivity extends AppCompatActivity {
 

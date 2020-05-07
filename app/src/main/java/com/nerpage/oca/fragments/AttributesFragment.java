@@ -1,8 +1,10 @@
-package com.example.oca.fragments;
+package com.nerpage.oca.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +17,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.oca.AttributeAdapter;
-import com.example.oca.models.AttributeModel;
-import com.example.oca.CharacterViewerActivity;
-import com.example.oca.R;
-import com.example.oca.RecyclerViewClickListener;
-import com.example.oca.SpacesItemDecoration;
-import com.example.oca.classes.PlayerCharacter;
+import com.nerpage.oca.AttributeAdapter;
+import com.nerpage.oca.models.AttributeModel;
+import com.nerpage.oca.CharacterViewerActivity;
+import com.nerpage.oca.R;
+import com.nerpage.oca.RecyclerViewClickListener;
+import com.nerpage.oca.SpacesItemDecoration;
+import com.nerpage.oca.classes.PlayerCharacter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -285,11 +287,34 @@ public class AttributesFragment extends Fragment {
         increasePCAttribute(pos, -1);
     }
 
-    public boolean commitAttributeChanges(){
+    public void commitAttributeChanges(){
+        getPlayerCharacterData().setAttributesCommitted(true);
+        updateRecyclerData();
+        updateFloatingActionButton();
+    }
+
+    private void showDialogCommitAttribute(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_commitAttributes_title)
+                .setMessage(R.string.dialog_commitAttributes_message)
+                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        dialog.dismiss();
+                        commitAttributeChanges();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public boolean attemptToCommitAttributeChanges(){
         if(getPlayerCharacterData().areAttributesCorrect()) {
-            getPlayerCharacterData().setAttributesCommitted(true);
-            updateRecyclerData();
-            updateFloatingActionButton();
+            showDialogCommitAttribute();
             return true;
         } else {
             return false;
@@ -297,7 +322,7 @@ public class AttributesFragment extends Fragment {
     }
 
     public boolean onFABClicked(){
-        if(commitAttributeChanges())
+        if(attemptToCommitAttributeChanges())
             return true;
 
         String textToShow = "";

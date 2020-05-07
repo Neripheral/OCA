@@ -1,4 +1,4 @@
-package com.example.oca;
+package com.nerpage.oca;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.oca.fragments.SkillsFragment;
-import com.example.oca.models.SkillModel;
+import com.nerpage.oca.fragments.SkillsFragment;
+import com.nerpage.oca.models.SkillModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

@@ -1,9 +1,9 @@
-package com.example.oca.classes;
+package com.nerpage.oca.classes;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.oca.R;
+import com.nerpage.oca.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

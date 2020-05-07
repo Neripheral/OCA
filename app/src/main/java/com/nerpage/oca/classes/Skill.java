@@ -1,8 +1,8 @@
-package com.example.oca.classes;
+package com.nerpage.oca.classes;
 
 import android.content.Context;
 
-import com.example.oca.R;
+import com.nerpage.oca.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.oca.fragments;
+package com.nerpage.oca.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,18 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.oca.CharacterViewerActivity;
-import com.example.oca.R;
-import com.example.oca.RecyclerViewClickListener;
-import com.example.oca.SkillsAdapter;
-import com.example.oca.SpacesItemDecoration;
-import com.example.oca.classes.PlayerCharacter;
-import com.example.oca.classes.Skill;
-import com.example.oca.models.SkillModel;
+import com.nerpage.oca.CharacterViewerActivity;
+import com.nerpage.oca.R;
+import com.nerpage.oca.RecyclerViewClickListener;
+import com.nerpage.oca.SkillsAdapter;
+import com.nerpage.oca.SpacesItemDecoration;
+import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.Skill;
+import com.nerpage.oca.models.SkillModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -173,7 +172,7 @@ public class SkillsFragment extends Fragment {
                 skill.getId(),
                 skill.getTitle(getContext()),
                 getPlayerCharacterData().getAttributeImageId(skill.getParentAttribute()),
-                boundaries.get(Skill.CRITICAL_SUCCESS).get(0) + " - " + boundaries.get(Skill.CRITICAL_SUCCESS).get(1),
+                String.valueOf(boundaries.get(Skill.CRITICAL_SUCCESS).get(0)) + " - " + boundaries.get(Skill.CRITICAL_SUCCESS).get(1),
                 boundaries.get(Skill.BIG_SUCCESS).get(0) + " - " + boundaries.get(Skill.BIG_SUCCESS).get(1),
                 boundaries.get(Skill.NORMAL_SUCCESS).get(0) + " - " + boundaries.get(Skill.NORMAL_SUCCESS).get(1),
                 String.valueOf(boundaries.get(Skill.FLOW).get(0)),

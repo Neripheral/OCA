@@ -1,8 +1,6 @@
-package com.example.oca.models;
+package com.nerpage.oca.models;
 
-import android.content.Context;
-
-import com.example.oca.R;
+import com.nerpage.oca.R;
 
 public class AttributeModel{
     public final int MISSING_BALANCE = 100;
