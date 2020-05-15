@@ -36,7 +36,7 @@
     <string name="attribute_discipline_description">Opanowanie i odwaga. Określa, jak silną masz wolę.</string>
     <string name="reason_attributes_are_already_commited">Atrybuty zostały już zaakceptowane.</string>
     <string name="reason_attributes_points_remaining">Wciąż zostały punkty do przydzielenia!</string>
-    <string name="reason_attributes_spent_too_many_points">Wydałeś zbyt dużo punktów!</string>
+    <string name="reason_attributes_spent_too_many_points">Zostało wydanych zbyt dużo punktów!</string>
     <string name="reason_attribute_not_balanced">%1$s nie jest zbalansowana!</string>
     <string name="tabSkills_dependentOn">Zależne od:</string>
     <string name="ok">Ok</string>
@@ -50,4 +50,6 @@
     <string name="dialog_commitAttributes_title">Czy chcesz zaakceptować atrybuty?</string>
     <string name="dialog_commitAttributes_message">Zaakceptowanie jest permanentne!</string>
     <string name="success">Sukces</string>
+    <string name="character_editor_name">Postać</string>
+    <string name="inventory_editor_name">Inwentarz</string>
 </resources>

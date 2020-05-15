@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.nerpage.oca.CharacterViewerActivity;
+import com.nerpage.oca.CharacterManagerActivity;
+import com.nerpage.oca.CharacterViewerFragment;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.PlayerCharacter;
 
@@ -76,7 +77,7 @@ public class BasicInfoFragment extends Fragment {
      * @return
      */
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterViewerActivity)getActivity()).pc;
+        return ((CharacterManagerActivity)getActivity()).pc;
     }
 
     /**
@@ -108,6 +109,12 @@ public class BasicInfoFragment extends Fragment {
         // ...and save it if it was specified
         if(!pcJob.isEmpty())
             pc.setJob(pcJob);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override

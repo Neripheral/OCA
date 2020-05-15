@@ -4,14 +4,14 @@ import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.nerpage.oca.fragments.SkillsFragment;
 import com.nerpage.oca.fragments.AttributesFragment;
 import com.nerpage.oca.fragments.BasicInfoFragment;
 import com.nerpage.oca.R;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
     public static final int ITEMS_NUMBER = 3;
 
     private static final int[] TAB_TITLES = new int[]{R.string.tab_string_basicInfo, R.string.tab_string_attributes, R.string.tab_string_skills};

@@ -16,7 +16,7 @@
     <string name="tab_string_skills">Skills</string>
     <string name="attribute_organism_description">-</string>
     <string name="attribute_vitality_description">-</string>
-    <string name="attribute_reflex_description" >-</string>
+    <string name="attribute_reflex_description">-</string>
     <string name="attribute_condition">Condition</string>
     <string name="attribute_strength">Strength</string>
     <string name="attribute_agility">Agility</string>
@@ -51,4 +51,6 @@
     <string name="dialog_no">No</string>
     <string name="dialog_commitAttributes_title">Are you sure you want to submit?</string>
     <string name="dialog_commitAttributes_message">The commit is permanent!</string>
+    <string name="character_editor_name">Character</string>
+    <string name="inventory_editor_name">Inventory</string>
 </resources>
