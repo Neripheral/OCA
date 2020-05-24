@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.CharacterManagerActivity;
-import com.nerpage.oca.CharacterViewerFragment;
 import com.nerpage.oca.R;
 import com.nerpage.oca.RecyclerViewClickListener;
 import com.nerpage.oca.SkillsAdapter;

@@ -1,12 +1,7 @@
-package com.nerpage.oca;
+package com.nerpage.oca.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -15,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.R;
 import com.nerpage.oca.ui.pager.PagerAdapter;
 
 public class CharacterViewerFragment extends Fragment {
-    public PagerAdapter adapter;
-    public View rootView;
+    private PagerAdapter adapter;
+    private View rootView;
 
     public static class Layout{
         public static ViewPager getViewPager(View rootView){
@@ -36,7 +31,7 @@ public class CharacterViewerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.rootView = inflater.inflate(R.layout.character_viewer_fragment, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_character_viewer, container, false);
         // initialize adapter
         FragmentManager fm = getFragmentManager();
         this.adapter = new PagerAdapter(rootView.getContext(), fm);

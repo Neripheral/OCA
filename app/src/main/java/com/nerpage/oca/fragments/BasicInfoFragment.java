@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.nerpage.oca.CharacterManagerActivity;
-import com.nerpage.oca.CharacterViewerFragment;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.PlayerCharacter;
 

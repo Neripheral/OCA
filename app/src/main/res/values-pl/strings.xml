@@ -52,4 +52,6 @@
     <string name="success">Sukces</string>
     <string name="character_editor_name">Postać</string>
     <string name="inventory_editor_name">Inwentarz</string>
+    <string name="currency_name_small">menilit</string>
+    <string name="currency_name_main">opal</string>
 </resources>

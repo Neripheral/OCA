@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CharacterManagerActivity"></activity>
         <activity
-            android:name=".CharacterViewerFragment"
+            android:name=".fragments.CharacterViewerFragment"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".MainActivity">
             <intent-filter>

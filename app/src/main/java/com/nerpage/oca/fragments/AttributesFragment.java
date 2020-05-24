@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.nerpage.oca.AttributeAdapter;
 import com.nerpage.oca.CharacterManagerActivity;
 import com.nerpage.oca.models.AttributeModel;
-import com.nerpage.oca.CharacterViewerFragment;
 import com.nerpage.oca.R;
 import com.nerpage.oca.RecyclerViewClickListener;
 import com.nerpage.oca.SpacesItemDecoration;

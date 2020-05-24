@@ -53,4 +53,7 @@
     <string name="dialog_commitAttributes_message">The commit is permanent!</string>
     <string name="character_editor_name">Character</string>
     <string name="inventory_editor_name">Inventory</string>
+    <string name="currency_name_main">opal</string>
+    <string name="currency_symbol" translatable="false">ᱵ</string>
+    <string name="currency_name_small">menilite</string>
 </resources>

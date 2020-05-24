@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.interfaces.Inventory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PlayerCharacter {
+public class PlayerCharacter implements Inventory {
     public final boolean GENDER_MALE = true;
     public final boolean GENDER_FEMALE = false;
     public final String DEFAULT_FILENAME = "savedCharacter.opc";
@@ -53,7 +54,7 @@ public class PlayerCharacter {
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
     private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
-
+    private ItemStorage inventory = new ItemStorage();
 
 
     public String getName() {
@@ -302,6 +303,24 @@ public class PlayerCharacter {
         return totalCount;
     }
 
+    public ItemStorage getInventoryEx(){
+        return inventory;
+    }
+
+    public PlayerCharacter setInventoryEx(ItemStorage inventory) {
+        this.inventory = inventory;
+        return this;
+    }
+
+    @Override
+    public ItemStorage getInventory() {
+        return this.getInventoryEx();
+    }
+
+    @Override
+    public void setInventory(ItemStorage inventory) {
+        setInventoryEx(inventory);
+    }
 
     public String toJSON(){
         JSONObject in = new JSONObject();
