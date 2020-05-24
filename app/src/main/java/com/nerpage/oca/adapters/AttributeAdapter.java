@@ -1,4 +1,4 @@
-package com.nerpage.oca;
+package com.nerpage.oca.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.AttributesFragment;
 import com.nerpage.oca.models.AttributeModel;
 

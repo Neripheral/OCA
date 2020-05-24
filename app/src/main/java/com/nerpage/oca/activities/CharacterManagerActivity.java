@@ -1,4 +1,4 @@
-package com.nerpage.oca;
+package com.nerpage.oca.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
+import com.nerpage.oca.R;
 import com.nerpage.oca.classes.PlayerCharacter;
 
 public class CharacterManagerActivity extends AppCompatActivity {

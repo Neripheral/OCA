@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nerpage.oca.CharacterManagerActivity;
+import com.nerpage.oca.activities.CharacterManagerActivity;
 import com.nerpage.oca.R;
-import com.nerpage.oca.RecyclerViewClickListener;
-import com.nerpage.oca.SkillsAdapter;
-import com.nerpage.oca.SpacesItemDecoration;
+import com.nerpage.oca.misc.RecyclerViewClickListener;
+import com.nerpage.oca.adapters.SkillsAdapter;
+import com.nerpage.oca.misc.SpacesItemDecoration;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.Skill;
 import com.nerpage.oca.models.SkillModel;

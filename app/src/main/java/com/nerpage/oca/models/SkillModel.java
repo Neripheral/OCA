@@ -15,10 +15,10 @@ public class SkillModel implements Comparable<SkillModel>{
     private String flowBoundaries;
     private String failureBoundaries;
     private String criticalFailureBoundaries;
+
     public int getTotalCounter() {
         return totalCounter;
     }
-
     public SkillModel setTotalCounter(int totalCounter){
             this.totalCounter = totalCounter;
             return this;

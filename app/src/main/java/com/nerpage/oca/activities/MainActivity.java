@@ -1,14 +1,11 @@
-package com.nerpage.oca;
+package com.nerpage.oca.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
+import com.nerpage.oca.misc.LanguageHelper;
 
 public class MainActivity extends AppCompatActivity {
 

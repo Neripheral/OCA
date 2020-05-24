@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.interfaces.Inventory;
+import com.nerpage.oca.items.CustomItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -426,5 +427,10 @@ public class PlayerCharacter implements Inventory {
         for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
             attributes[i] = 5;
         setSkills(getPossibleSkills());
+
+        //TESTING!!!REMOVELATER
+        this.getInventory().add(new CustomItem("testing_item", "TESTING ITEM"));
+        //TESTING!!!REMOVELATER
+
     }
 }

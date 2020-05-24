@@ -1,4 +1,4 @@
-package com.nerpage.oca;
+package com.nerpage.oca.misc;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
