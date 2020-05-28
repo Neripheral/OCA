@@ -21,7 +21,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.Item
 
         public ItemViewHolder(View v){
             super(v);
-            itemTitle = (TextView) v.findViewById(R.id.inventory_item_title);
+            itemTitle = v.findViewById(R.id.inventory_item_title);
         }
     }
 

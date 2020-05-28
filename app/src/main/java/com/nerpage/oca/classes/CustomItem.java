@@ -1,8 +1,8 @@
-package com.nerpage.oca.items;
+package com.nerpage.oca.classes;
 
 import android.content.Context;
 
-public class CustomItem extends Item{
+public class CustomItem extends Item {
     private String id;
     private String name;
 

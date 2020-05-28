@@ -48,7 +48,7 @@ public class Skill {
         return "";
     }
     public int getTotalCounter(final PlayerCharacter pc){
-        int totalCounter = pc.MIN_SKILLLEVEL;
+        int totalCounter = PlayerCharacter.MIN_SKILLLEVEL;
 
         totalCounter += 2 * pc.getAttribute(getParentAttribute());
         totalCounter += pc.getAttribute(getParentAttribute()) * getSpentPoints();

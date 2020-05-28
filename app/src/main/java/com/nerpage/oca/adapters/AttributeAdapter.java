@@ -41,16 +41,16 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
             super(v);
             listenerRef = new WeakReference<>(listener);
             attRoot = v;
-            attCounter = (TextView) v.findViewById(R.id.attributes_attribute_counter);
-            attTitle = (TextView) v.findViewById(R.id.attributes_attributeTitle);
-            attDescription = (TextView) v.findViewById(R.id.attributes_attributeDescription);
-            attCounterDescription = (TextView) v.findViewById(R.id.attributes_attributeCounterDescription);
-            attImage = (ImageView) v.findViewById(R.id.attributes_attributeImage);
-            attParentImage = (ImageView) v.findViewById(R.id.attributes_attributeParent);
-            attBalance = (TextView) v.findViewById(R.id.attributes_attributeBalance);
+            attCounter = v.findViewById(R.id.attributes_attribute_counter);
+            attTitle = v.findViewById(R.id.attributes_attributeTitle);
+            attDescription = v.findViewById(R.id.attributes_attributeDescription);
+            attCounterDescription = v.findViewById(R.id.attributes_attributeCounterDescription);
+            attImage = v.findViewById(R.id.attributes_attributeImage);
+            attParentImage = v.findViewById(R.id.attributes_attributeParent);
+            attBalance = v.findViewById(R.id.attributes_attributeBalance);
 
-            attIncrementButton = (ImageButton) v.findViewById(R.id.attributes_attribute_incrementButton);
-            attDecrementButton = (ImageButton) v.findViewById(R.id.attributes_attribute_decrementButton);
+            attIncrementButton = v.findViewById(R.id.attributes_attribute_incrementButton);
+            attDecrementButton = v.findViewById(R.id.attributes_attribute_decrementButton);
 
             attIncrementButton.setOnClickListener(this);
             attDecrementButton.setOnClickListener(this);

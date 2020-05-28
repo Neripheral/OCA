@@ -68,7 +68,7 @@ public class SkillsFragment extends Fragment {
         int rolledNumber = rng.nextInt(100)+1;
 
         String title = "missingTitle";
-        String message = String.valueOf(rolledNumber) + " / " + String.valueOf(total);
+        String message = rolledNumber + " / " + total;
         double ratio = (double)rolledNumber / (double)total;
         if(ratio < 0.1)
             title = getString(R.string.criticalSuccess);
@@ -172,7 +172,7 @@ public class SkillsFragment extends Fragment {
                 skill.getId(),
                 skill.getTitle(getContext()),
                 getPlayerCharacterData().getAttributeImageId(skill.getParentAttribute()),
-                String.valueOf(boundaries.get(Skill.CRITICAL_SUCCESS).get(0)) + " - " + boundaries.get(Skill.CRITICAL_SUCCESS).get(1),
+                boundaries.get(Skill.CRITICAL_SUCCESS).get(0) + " - " + boundaries.get(Skill.CRITICAL_SUCCESS).get(1),
                 boundaries.get(Skill.BIG_SUCCESS).get(0) + " - " + boundaries.get(Skill.BIG_SUCCESS).get(1),
                 boundaries.get(Skill.NORMAL_SUCCESS).get(0) + " - " + boundaries.get(Skill.NORMAL_SUCCESS).get(1),
                 String.valueOf(boundaries.get(Skill.FLOW).get(0)),

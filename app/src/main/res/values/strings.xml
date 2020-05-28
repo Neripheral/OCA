@@ -56,4 +56,6 @@
     <string name="currency_name_main">opal</string>
     <string name="currency_symbol" translatable="false">ᱵ</string>
     <string name="currency_name_small">menilite</string>
+    <string name="item_blackOpal">Black Opal</string>
+    <string name="add_new_item">Add new item</string>
 </resources>

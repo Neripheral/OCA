@@ -1,6 +1,6 @@
 package com.nerpage.oca.interfaces;
 
-import com.nerpage.oca.items.Item;
+import com.nerpage.oca.classes.Item;
 
 public interface Groupable {
     boolean compatibleWith(Item item);

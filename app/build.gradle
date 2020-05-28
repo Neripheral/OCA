@@ -5,11 +5,12 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId 'com.nerpage.oca'
-        minSdkVersion 14
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resConfigs "pl"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,4 +35,32 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
+}
+
+task buildItemDatabase {
+    doLast{
+        String resDir = android.sourceSets.main.res.srcDirs[0]
+        resDir += '\\raw'
+        String itemsDir = android.sourceSets.main.java.srcDirs[0]
+        itemsDir += '\\com\\nerpage\\oca\\itemsdb'
+        def names = []
+        fileTree(itemsDir).visit { FileVisitDetails details ->
+            if(details.file.path.endsWith('.java')){
+                names << details.file.name
+            }
+        }
+
+        String namesStr = ""
+        names.each{
+            namesStr = namesStr + it.reverse().substring(5).reverse() + "\n"
+        }
+        println itemsDir
+        new File(resDir, "item_list.txt").text = namesStr
+    }
+}
+
+afterEvaluate{
+    android.applicationVariants.all{ variant ->
+        variant.javaCompiler.dependsOn(buildItemDatabase)
+    }
 }

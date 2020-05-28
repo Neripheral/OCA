@@ -2,7 +2,7 @@ package com.nerpage.oca.models;
 
 import android.content.Context;
 
-import com.nerpage.oca.items.Item;
+import com.nerpage.oca.classes.Item;
 
 public class ItemModel implements Comparable<ItemModel> {
     private String title;

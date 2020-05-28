@@ -44,23 +44,23 @@ public class SkillsAdapter extends RecyclerView.Adapter<SkillsAdapter.SkillViewH
             super(v);
             listenerRef = new WeakReference<>(listener);
 
-            skillSpentPointsCounter = (TextView) v.findViewById(R.id.skills_spentPointsCounter);
-            skillTotalCounter = (TextView) v.findViewById(R.id.skills_totalCounter);
-            skillTitle = (TextView) v.findViewById(R.id.skills_skillTitle);
+            skillSpentPointsCounter = v.findViewById(R.id.skills_spentPointsCounter);
+            skillTotalCounter = v.findViewById(R.id.skills_totalCounter);
+            skillTitle = v.findViewById(R.id.skills_skillTitle);
 
-            skillIncrementButton = (ImageButton) v.findViewById(R.id.skills_incrementButton);
-            skillDecrementButton = (ImageButton) v.findViewById(R.id.skills_decrementButton);
-            showDetailsButton = (ImageButton) v.findViewById(R.id.skills_showDetailsButton);
-            hideDetailsButton = (ImageButton) v.findViewById(R.id.skills_hideDetailsButton);
-            detailsContainer = (ConstraintLayout) v.findViewById(R.id.skills_skill_details_container);
-            parentAttributeImage = (ImageView) v.findViewById(R.id.skills_parentAttributeImage);
-            rollDiceButton = (ImageButton) v.findViewById(R.id.skills_rollButton);
-            criticalSuccessBoundaries = (TextView) v.findViewById(R.id.skills_criticalSuccessBoundaries);
-            bigSuccessBoundaries = (TextView) v.findViewById(R.id.skills_bigSuccessBoundaries);
-            normalSuccessBoundaries = (TextView) v.findViewById(R.id.skills_normalSuccessBoundaries);
-            flowBoundaries = (TextView) v.findViewById(R.id.skills_flowBoundaries);
-            failureBoundaries = (TextView) v.findViewById(R.id.skills_failureBoundaries);
-            criticalFailureBoundaries = (TextView) v.findViewById(R.id.skills_criticalFailureBoundaries);
+            skillIncrementButton = v.findViewById(R.id.skills_incrementButton);
+            skillDecrementButton = v.findViewById(R.id.skills_decrementButton);
+            showDetailsButton = v.findViewById(R.id.skills_showDetailsButton);
+            hideDetailsButton = v.findViewById(R.id.skills_hideDetailsButton);
+            detailsContainer = v.findViewById(R.id.skills_skill_details_container);
+            parentAttributeImage = v.findViewById(R.id.skills_parentAttributeImage);
+            rollDiceButton = v.findViewById(R.id.skills_rollButton);
+            criticalSuccessBoundaries = v.findViewById(R.id.skills_criticalSuccessBoundaries);
+            bigSuccessBoundaries = v.findViewById(R.id.skills_bigSuccessBoundaries);
+            normalSuccessBoundaries = v.findViewById(R.id.skills_normalSuccessBoundaries);
+            flowBoundaries = v.findViewById(R.id.skills_flowBoundaries);
+            failureBoundaries = v.findViewById(R.id.skills_failureBoundaries);
+            criticalFailureBoundaries = v.findViewById(R.id.skills_criticalFailureBoundaries);
 
             skillIncrementButton.setOnClickListener(this);
             skillDecrementButton.setOnClickListener(this);

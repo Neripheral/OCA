@@ -1,8 +1,5 @@
 package com.nerpage.oca.classes;
 
-import com.nerpage.oca.items.CustomItem;
-import com.nerpage.oca.items.Item;
-
 import java.util.ArrayList;
 
 public class ItemStorage {
@@ -91,9 +88,7 @@ public class ItemStorage {
                 pivot++;
         }
 
-        if(pivot == 0)
-            return true;
-        return false;
+        return pivot == 0;
     }
 
 

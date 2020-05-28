@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.interfaces.Inventory;
-import com.nerpage.oca.items.CustomItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;

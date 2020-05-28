@@ -54,4 +54,6 @@
     <string name="inventory_editor_name">Inwentarz</string>
     <string name="currency_name_small">menilit</string>
     <string name="currency_name_main">opal</string>
+    <string name="item_blackOpal">Czarny opal</string>
+    <string name="add_new_item">Dodaj nowy przedmiot</string>
 </resources>
