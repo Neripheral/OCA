@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.activities.CharacterManagerActivity;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.adapters.InventoryAdapter;
 import com.nerpage.oca.classes.ItemDatabase;
 import com.nerpage.oca.classes.PlayerCharacter;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class InventoryBrowserFragment extends Fragment {
+public class InventoryManagerFragment extends Fragment {
     public View rootView = null;
 
     public static final class Layout{
@@ -41,7 +41,7 @@ public class InventoryBrowserFragment extends Fragment {
     }
 
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterManagerActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).pc;
     }
 
     public ItemModel composeDatasetEntryFor(Item item){
@@ -107,7 +107,7 @@ public class InventoryBrowserFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public InventoryBrowserFragment(){
+    public InventoryManagerFragment(){
         //Empty constructor
     }
 }

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nerpage.oca.adapters.AttributeAdapter;
-import com.nerpage.oca.activities.CharacterManagerActivity;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.models.AttributeModel;
 import com.nerpage.oca.R;
 import com.nerpage.oca.misc.RecyclerViewClickListener;
@@ -67,7 +67,7 @@ public class AttributesFragment extends Fragment {
     }
 
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterManagerActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).pc;
     }
 
     private int getCorrespondingBalanceColor(int balance){

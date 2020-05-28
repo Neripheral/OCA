@@ -6,12 +6,11 @@
     app:startDestination="@id/nav_character">
     <fragment
         android:id="@+id/nav_character"
-        android:name="com.nerpage.oca.fragments.CharacterViewerFragment"
+        android:name="com.nerpage.oca.fragments.CharacterManagerFragment"
         android:label="@string/character_editor_name"
-        tools:layout="@layout/fragment_character_viewer" />
+        tools:layout="@layout/fragment_character_manager" />
     <fragment
         android:id="@+id/nav_inventory"
-        android:name="com.nerpage.oca.fragments.InventoryViewerFragment"
-        android:label="@string/inventory_editor_name"
-        tools:layout="@layout/fragment_inventory_viewer" />
+        android:name="com.nerpage.oca.fragments.InventoryManagerFragment"
+        android:label="@string/inventory_editor_name" />
 </navigation>

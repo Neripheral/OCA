@@ -1,7 +1,5 @@
 package com.nerpage.oca.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -15,7 +13,7 @@ import android.view.ViewGroup;
 import com.nerpage.oca.R;
 import com.nerpage.oca.ui.pager.PagerAdapter;
 
-public class CharacterViewerFragment extends Fragment {
+public class CharacterManagerFragment extends Fragment {
     private PagerAdapter adapter;
     private View rootView;
 
@@ -33,7 +31,7 @@ public class CharacterViewerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.rootView = inflater.inflate(R.layout.fragment_character_viewer, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_character_manager, container, false);
         // initialize adapter
         FragmentManager fm = getChildFragmentManager();
         this.adapter = new PagerAdapter(rootView.getContext(), fm);

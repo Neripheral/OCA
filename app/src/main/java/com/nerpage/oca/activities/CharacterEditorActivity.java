@@ -24,7 +24,7 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.misc.LocaleHelper;
 
-public class CharacterManagerActivity extends AppCompatActivity {
+public class CharacterEditorActivity extends AppCompatActivity {
 
     public AppBarConfiguration appBarConfiguration;
     public PlayerCharacter pc;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.nerpage.oca.activities.CharacterManagerActivity;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.PlayerCharacter;
 
@@ -76,7 +76,7 @@ public class BasicInfoFragment extends Fragment {
      * @return
      */
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterManagerActivity)getActivity()).pc;
+        return ((CharacterEditorActivity)getActivity()).pc;
     }
 
     /**

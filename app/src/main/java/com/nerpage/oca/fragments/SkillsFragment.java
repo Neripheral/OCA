@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nerpage.oca.activities.CharacterManagerActivity;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.R;
 import com.nerpage.oca.misc.RecyclerViewClickListener;
 import com.nerpage.oca.adapters.SkillsAdapter;
@@ -162,7 +162,7 @@ public class SkillsFragment extends Fragment {
     }
 
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterManagerActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).pc;
     }
 
     public SkillModel composeDatasetEntryFor(Skill skill){
