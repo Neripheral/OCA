@@ -15,26 +15,42 @@ import java.util.List;
 import java.util.Map;
 
 public final class ItemDatabase {
+    private static List<Item.Tag> tags;
     private static Map<String, Class<Item>> itemList;
 
     public static Map<String, Class<Item>> getItemList(){
         return itemList;
     }
 
-    public Class<Item> getItemById(String id){
+    public static Class<Item> getItemClassById(String id){
         if(getItemList().containsKey(id))
             return getItemList().get(id);
         return null;
     }
 
-    private static int getItemlistResourceId(){
+    public static Item getItemById(String id){
+        Class<Item> itemClass = getItemClassById(id);
+        if(itemClass != null){
+            try {
+                Item item = itemClass.newInstance();
+                return item;
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static int getItemListResourceId(){
         return R.raw.item_list;
     }
 
     private static List<String> findAllPossibleItemNames(Context context){
         List<String> namesList = new ArrayList<>();
 
-        InputStream stream = context.getResources().openRawResource(getItemlistResourceId());
+        InputStream stream = context.getResources().openRawResource(getItemListResourceId());
         InputStreamReader isReader = new InputStreamReader(stream);
         BufferedReader reader = new BufferedReader(isReader);
         StringBuffer sb = new StringBuffer();

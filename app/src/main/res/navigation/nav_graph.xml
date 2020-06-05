@@ -12,5 +12,18 @@
     <fragment
         android:id="@+id/nav_inventory"
         android:name="com.nerpage.oca.fragments.InventoryManagerFragment"
-        android:label="@string/inventory_editor_name" />
+        android:label="@string/inventory_editor_name" >
+        <action
+            android:id="@+id/action_nav_inventory_to_itemDbSelector"
+            app:destination="@id/nav_itemdb_selector" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_itemdb_selector"
+        android:name="com.nerpage.oca.fragments.ItemDbSelector"
+        android:label="ItemDbSelector" >
+        <action
+            android:id="@+id/action_nav_itemdb_selector_pop"
+            app:popUpTo="@id/nav_itemdb_selector"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -58,4 +58,8 @@
     <string name="currency_name_small">menilite</string>
     <string name="item_blackOpal">Black Opal</string>
     <string name="add_new_item">Add new item</string>
+    <string name="item_add_simple_notification">Added: %1$s</string>
+    <string name="dialog_howmuch">How much?</string>
+    <string name="dialog_remove_item_question">Remove %1$s?</string>
+    <string name="cancel">Cancel</string>
 </resources>

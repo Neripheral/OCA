@@ -56,4 +56,8 @@
     <string name="currency_name_main">opal</string>
     <string name="item_blackOpal">Czarny opal</string>
     <string name="add_new_item">Dodaj nowy przedmiot</string>
+    <string name="item_add_simple_notification">Dodano: %1$s</string>
+    <string name="dialog_howmuch">Ile?</string>
+    <string name="dialog_remove_item_question">Usunąć %1$s?</string>
+    <string name="cancel">Anuluj</string>
 </resources>

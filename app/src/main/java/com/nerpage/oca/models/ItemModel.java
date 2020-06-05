@@ -4,8 +4,21 @@ import android.content.Context;
 
 import com.nerpage.oca.classes.Item;
 
+import java.lang.ref.WeakReference;
+
 public class ItemModel implements Comparable<ItemModel> {
-    private String title;
+    private WeakReference<Item> itemRef;
+    private String id = "";
+    private String title = "";
+    private String quantity = "";
+
+    public String getId(){
+        return id;
+    }
+    public ItemModel setId(String id){
+        this.id = id;
+        return this;
+    }
 
     public String getTitle() {
         return title;
@@ -15,6 +28,18 @@ public class ItemModel implements Comparable<ItemModel> {
         return this;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+    public ItemModel setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public WeakReference<Item> getItemRef(){
+        return this.itemRef;
+    }
+
     @Override
     public int compareTo(ItemModel other){
         String myStr = this.getTitle();
@@ -22,11 +47,12 @@ public class ItemModel implements Comparable<ItemModel> {
         return myStr.compareTo(otherStr);
     }
 
-    public ItemModel(String title){
-        this.setTitle(title);
-    }
-
     public ItemModel(Item item, Context context){
-        this(item.getName(context));
+        this.itemRef = new WeakReference<>(item);
+        this.setId(item.getId());
+        this.setTitle(item.getName(context));
+        if(item instanceof Item.Groupable){
+            this.setQuantity(((Item.Groupable)item).getShownQuantity());
+        }
     }
 }
