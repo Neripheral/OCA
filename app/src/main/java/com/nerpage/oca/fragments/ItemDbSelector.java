@@ -3,9 +3,13 @@ package com.nerpage.oca.fragments;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.adapters.ItemListAdapter;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.classes.ItemDatabase;
@@ -25,6 +30,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemDbSelector extends ItemListFragment {
+    @Override
+    public ItemStorage getCorrespondingInventory() {
+        return ((CharacterEditorActivity) getActivity()).pc.getInventory();
+    }
+
     public List<ItemModel> getDataset(){
         java.util.List<com.nerpage.oca.models.ItemModel> dataset = new ArrayList<>();
 
@@ -49,7 +59,7 @@ public class ItemDbSelector extends ItemListFragment {
         if(item == null)
             Log.e("exception", "Item id not found in database: " + id);
         else{
-            AlertDialog dialog = item.initByDialog(new AlertDialog.Builder(getActivity()), () -> {this.addItemToPCInventory(item);});
+            AlertDialog dialog = item.initByDialog(new AlertDialog.Builder(getActivity()), () -> {this.addItemToCorrespondingInventory(item);});
             if(dialog != null) {
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.show();
@@ -87,11 +97,26 @@ public class ItemDbSelector extends ItemListFragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fragment f = this;
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                NavController controller = NavHostFragment.findNavController(f);
+                controller.navigate(R.id.nav_inventory);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         this.rootView = inflater.inflate(R.layout.fragment_itemdb_selector, container, false);
-        super.onCreateView(inflater, rootView.findViewById(R.id.embed_item_browser), savedInstanceState);
+        this.setupRecycler();
         return this.rootView;
     }
+
 
     public ItemDbSelector() {
         // Required empty public constructor

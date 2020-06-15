@@ -3,16 +3,23 @@ package com.nerpage.oca.classes;
 import android.content.Context;
 
 public class CustomItem extends Item {
-    private String id;
+    //================================================================================
+    // Attributes
+    //================================================================================
+
+    private String customId;
     private String name;
 
-    @Override
-    public String getId(){
-        return this.id;
+    //================================================================================
+    // Accessors
+    //================================================================================
+
+    public String getCustomId(){
+        return this.customId;
     }
 
-    public CustomItem setId(String id){
-        this.id = id;
+    public CustomItem setCustomId(String customId){
+        this.customId = customId;
         return this;
     }
 
@@ -20,23 +27,46 @@ public class CustomItem extends Item {
         return this.name;
     }
 
-    @Override
-    public String getName(Context context){
-        return this.getName();
-    }
-
     public CustomItem setName(String name){
         this.name = name;
         return this;
     }
 
+    //================================================================================
+    // Constructors
+    //================================================================================
+
     public CustomItem(String id, String name){
         super();
-        this.setId(id);
+        this.setCustomId(id);
         this.setName(name);
     }
 
     public CustomItem(String id){
         this(id, "missing_name");
+    }
+
+    //================================================================================
+    // Item overrides
+    //================================================================================
+
+    @Override
+    public String getId(){
+        return this.getCustomId();
+    }
+
+    @Override
+    public String getName(Context context){
+        return this.getName();
+    }
+
+    @Override
+    public void initTags() {
+        this.getTags().add(Tag.CUSTOM);
+    }
+
+    @Override
+    public int getWeight() {
+        return 1000;
     }
 }

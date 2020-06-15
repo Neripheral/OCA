@@ -1,8 +1,7 @@
 package com.nerpage.oca.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,65 +16,84 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.adapters.ItemListAdapter;
-import com.nerpage.oca.classes.ItemStorage;
+import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Item;
+import com.nerpage.oca.classes.ItemDatabase;
+import com.nerpage.oca.classes.ItemStorage;
+import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.models.ItemModel;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class InventoryManagerFragment extends ItemListFragment {
-    public void updateRecyclerHolder(int position){
-        getAdapter().dataset = getDataset();
-        getAdapter().notifyDataSetChanged();
+    public static class Layout{
+        public static int getHoldingSpaceId(){
+            return R.id.inventory_held_item_include;
+        }
+
+        public static View getHoldingSpaceView(View root){
+            return root.findViewById(getHoldingSpaceId());
+        }
+
+        public static void showHoldingSpace(View root){
+            getHoldingSpaceView(root).setVisibility(View.VISIBLE);
+        }
+
+        public static void hideHoldingSpace(View root){
+            getHoldingSpaceView(root).setVisibility(View.GONE);
+        }
+
     }
 
-    public void onRemoveButtonClick(int position){
-        AlertDialog dialog = this.getAdapter().dataset.get(position).getItemRef().get().removeByDialog(new AlertDialog.Builder(getActivity()), () -> {
-            this.getPlayerCharacterData().getInventory().cleanEmptyItems();
-            updateRecyclerHolder(position);
-        });
-        if(dialog != null){
-            dialog.show();
+    public PlayerCharacter getPCData(){
+        return ((CharacterEditorActivity) getActivity()).pc;
+    }
+
+    @Override
+    public ItemStorage getCorrespondingInventory() {
+        return getPCData().getInventory();
+    }
+
+    public void updateHoldingSpaceView(){
+        Item heldItem = getPCData().getItemInHands();
+        if(heldItem == null)
+            Layout.hideHoldingSpace(rootView);
+        else{
+            Layout.showHoldingSpace(rootView);
+            ItemModel model = new ItemModel(heldItem, this.getActivity());
+            model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView), getChildFragmentManager())
+                    .prepareHolder()
+                    .showSideMenu()
+                    .showRemoveButton()
+                    .setListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            switch(v.getId()){
+                                case R.id.inventory_item_remove_button:
+                                    getPCData().unequipFromHands();
+                            }
+                            Log.e("debug", "test");
+                        }
+                    });
         }
     }
 
     @Override
-    public void clickOperator(View view, int position) {
-        switch(view.getId()){
-            case R.id.inventory_item_remove_button:
-                this.onRemoveButtonClick(position);
-                break;
-        }
-    }
-
-    @Override
-    public List<ItemModel> getDataset(){
-        List<ItemModel> dataset = new ArrayList<>();
-
-        ItemStorage itemStorage = getPlayerCharacterData().getInventory();
-        ArrayList<Item> items = itemStorage.getStoredItems();
-        for(Item item : items){
-            dataset.add(this.composeDatasetEntryFor(item));
-        }
-        return dataset;
+    public void moveToHands(Item item) {
+        getPCData().equipInHands((Item)item.clone());
+        item.discard();
+        getCorrespondingInventory().cleanEmptyItems();
+        updateHoldingSpaceView();
+        updateRecyclerHolder();
     }
 
     public void onAddNewItemButtonPressed(){
         NavController navController = NavHostFragment.findNavController(this);
         navController.navigate(R.id.nav_itemdb_selector);
-    }
-
-    @Override
-    public int getAdapterWorkMode() {
-        return ItemListAdapter.WORKMODE_PCINVENTORY;
     }
 
     @Override
@@ -93,7 +111,8 @@ public class InventoryManagerFragment extends ItemListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         this.rootView = inflater.inflate(R.layout.fragment_inventory_manager, container, false);
-        super.onCreateView(inflater, rootView.findViewById(R.id.embed_item_browser), savedInstanceState);
+        this.setupRecycler();
+        this.updateHoldingSpaceView();
         return rootView;
     }
 

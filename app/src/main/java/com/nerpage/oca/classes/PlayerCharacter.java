@@ -55,7 +55,7 @@ public class PlayerCharacter implements Inventory {
     private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
     private ItemStorage inventory = new ItemStorage();
-
+    private Equipment equipment = new Equipment();
 
     public String getName() {
         return name;
@@ -307,7 +307,7 @@ public class PlayerCharacter implements Inventory {
         return inventory;
     }
 
-    public PlayerCharacter setInventoryEx(ItemStorage inventory) {
+    public PlayerCharacter setInventory(ItemStorage inventory) {
         this.inventory = inventory;
         return this;
     }
@@ -317,9 +317,18 @@ public class PlayerCharacter implements Inventory {
         return this.getInventoryEx();
     }
 
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public PlayerCharacter setEquipment(Equipment equipment) {
+        this.equipment = equipment;
+        return this;
+    }
+
     @Override
-    public void setInventory(ItemStorage inventory) {
-        setInventoryEx(inventory);
+    public int getCapacity() {
+        return 18000;
     }
 
     public String toJSON(){
@@ -420,6 +429,23 @@ public class PlayerCharacter implements Inventory {
         }
         initFromJSON(json);
         return this;
+    }
+
+    public Item getItemInHands(){
+        return this.getEquipment().getSlots().get(Equipment.Slot.RIGHT_PALM);
+    }
+
+    public void equipInHands(Item item){
+        this.getEquipment().equip(item, Equipment.Slot.RIGHT_PALM);
+    }
+
+    public void unequipFromHands(){
+        this.getEquipment().unequip(Equipment.Slot.RIGHT_PALM);
+    }
+
+    @Override
+    public double getWeightReduction() {
+        return 0;
     }
 
     public PlayerCharacter(){

@@ -62,4 +62,5 @@
     <string name="dialog_howmuch">How much?</string>
     <string name="dialog_remove_item_question">Remove %1$s?</string>
     <string name="cancel">Cancel</string>
+    <string name="inv_empty">Empty</string>
 </resources>

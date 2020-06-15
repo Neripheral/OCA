@@ -1,5 +1,8 @@
 package com.nerpage.oca.classes;
 
+import com.nerpage.oca.interfaces.Inventory;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,19 +56,23 @@ public class ItemStorage {
             item = (Item) i.next();
             if(item.shouldBeDiscarded())
                 i.remove();
+            if(item instanceof Inventory)
+                ((Inventory)item).getInventory().cleanEmptyItems();
         }
     }
 
+    /**
+     * @param item
+     * @return true if added successfully or false if there was a problem
+     */
     public boolean add(Item item){
         List<Item.Groupable> list = ItemSearchEngine.findAbleToAdd(this.getStoredItems(), item);
         if(!list.isEmpty()) {
             list.get(0).add(item);
-            return true;
         }else{
             this.getStoredItems().add(item);
         }
-        this.cleanEmptyItems();
-        return false;
+        return true;
     }
 
     public boolean subtract(Item item) {
@@ -76,5 +83,13 @@ public class ItemStorage {
         }
         this.cleanEmptyItems();
         return false;
+    }
+
+    public int getContentWeight(){
+        int totalWeight = 0;
+        for(Item item : this.getStoredItems()){
+            totalWeight += item.getWeight();
+        }
+        return totalWeight;
     }
 }

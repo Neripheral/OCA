@@ -20,10 +20,5 @@
     <fragment
         android:id="@+id/nav_itemdb_selector"
         android:name="com.nerpage.oca.fragments.ItemDbSelector"
-        android:label="ItemDbSelector" >
-        <action
-            android:id="@+id/action_nav_itemdb_selector_pop"
-            app:popUpTo="@id/nav_itemdb_selector"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:label="ItemDbSelector" />
 </navigation>
