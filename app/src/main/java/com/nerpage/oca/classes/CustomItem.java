@@ -46,6 +46,10 @@ public class CustomItem extends Item {
         this(id, "missing_name");
     }
 
+    public CustomItem(){
+        this("missingId");
+    }
+
     //================================================================================
     // Item overrides
     //================================================================================

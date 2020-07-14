@@ -12,8 +12,9 @@ import com.nerpage.oca.R;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-public abstract class Item implements Cloneable {
+public abstract class Item {
     //================================================================================
     // Inner Classes
     //================================================================================
@@ -36,30 +37,12 @@ public abstract class Item implements Cloneable {
     }
 
     public enum Tag{
-        ACCESSORY(R.drawable.tag_accessory),
-        ALCOHOL(R.drawable.tag_alcohol),
-        AMMO(R.drawable.tag_ammo),
         BACKPACK(R.drawable.tag_backpack),
-        CARCASS(R.drawable.tag_carcass),
-        CONSUMABLE(R.drawable.tag_consumable),
         CUSTOM(R.drawable.tag_custom),
-        DOCUMENT(R.drawable.tag_document),
-        DRINK(R.drawable.tag_drink),
-        DRUG(R.drawable.tag_drug),
-        FAVOURITE(R.drawable.tag_food),
-        FOOD(R.drawable.tag_food),
         GEM(R.drawable.tag_gem),
-        GUN(R.drawable.tag_gun),
-        HERB(R.drawable.tag_herb),
-        JEWELRY(R.drawable.tag_jewelery),
-        MATERIAL(R.drawable.tag_material),
-        MEDICINE(R.drawable.tag_medicine),
-        QUEST(R.drawable.tag_quest),
-        TECH(R.drawable.tag_tech),
-        TOOL(R.drawable.tag_tool),
         VALUABLE(R.drawable.tag_valuable),
-        WEAPON(R.drawable.tag_weapon);
-
+        GLOVE(R.drawable.tag_glove),
+        CLOTHING_TOP(R.drawable.tag_clothing_top);
 
         int titleId;
         int imageId;
@@ -84,8 +67,20 @@ public abstract class Item implements Cloneable {
     // Accessors
     //================================================================================
 
+    public boolean getToDiscard(){
+        return this.toDiscard;
+    }
+    public Item setToDiscard(boolean toDiscard){
+        this.toDiscard = toDiscard;
+        return this;
+    }
+
     public List<Tag> getTags(){
         return this.tags;
+    }
+    public Item setTags(List<Tag> tags){
+        this.tags = tags;
+        return this;
     }
 
     //================================================================================
@@ -99,18 +94,6 @@ public abstract class Item implements Cloneable {
     //================================================================================
     // Overrides
     //================================================================================
-
-
-    @NonNull
-    @Override
-    public Object clone(){
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public boolean equals(Object o){
@@ -151,6 +134,19 @@ public abstract class Item implements Cloneable {
     public boolean equals(Item item){
         return this.getId().equals(item.getId());
     }
+    public Item copy(){
+        Item clone = null;
+        try {
+            clone = this.getClass().newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        clone.setToDiscard(this.getToDiscard());
+        clone.setTags(new ArrayList<>(this.getTags()));
+        return clone;
+    }
     public String composeOnAddToastMessage(Context context){
         return context.getResources().getString(R.string.item_add_simple_notification, this.getName(context));
     }
@@ -158,13 +154,19 @@ public abstract class Item implements Cloneable {
         onSuccess.run();
         return null;
     }
-    public AlertDialog removeByDialog(AlertDialog.Builder builder, Runnable onRemove){
+    public AlertDialog removeByDialog(AlertDialog.Builder builder, Consumer<Item> onRemove){
         builder.setTitle(builder.getContext().getResources().getString(R.string.dialog_remove_item_question, this.getName(builder.getContext())))
                 .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Item removed = null;
+                        try {
+                            removed = (Item)this.clone();
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                         discard();
-                        onRemove.run();
+                        onRemove.accept(removed);
                         dialog.dismiss();
                     }
                 })
@@ -175,6 +177,16 @@ public abstract class Item implements Cloneable {
                     }
                 });
         return builder.create();
+    }
+    public Item move(){
+        Item toReturn = this.copy();
+        this.discard();
+        return toReturn;
+    }
+    public AlertDialog moveByDialog(AlertDialog.Builder builder, Consumer<Item> onMove){
+        Item item = this.move();
+        onMove.accept(item);
+        return null;
     }
     public abstract void initTags();
     public Tag getMainTag(){

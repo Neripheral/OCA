@@ -16,17 +16,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Item;
-import com.nerpage.oca.classes.ItemDatabase;
 import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.interfaces.Equipable;
+import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.models.ItemModel;
 
 public class InventoryManagerFragment extends ItemListFragment {
@@ -55,7 +54,16 @@ public class InventoryManagerFragment extends ItemListFragment {
 
     @Override
     public ItemStorage getCorrespondingInventory() {
-        return getPCData().getInventory();
+        ItemStorage is = new ItemStorage();
+        for(Inventory item : getPCData().getInventories()){
+            is.add((Item)item);
+        }
+        return is;
+    }
+
+    public void onEquipButtonClicked(){
+        Item item = unequipFromHands();
+        getPCData().getEquipment().equip((Equipable)item);
     }
 
     public void updateHoldingSpaceView(){
@@ -65,30 +73,43 @@ public class InventoryManagerFragment extends ItemListFragment {
         else{
             Layout.showHoldingSpace(rootView);
             ItemModel model = new ItemModel(heldItem, this.getActivity());
-            model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView), getChildFragmentManager())
+            ItemModel.LayoutHelper helper = model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView), getChildFragmentManager())
                     .prepareHolder()
                     .showSideMenu()
-                    .showRemoveButton()
+                    .hideAllButtons()
                     .setListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             switch(v.getId()){
                                 case R.id.inventory_item_remove_button:
                                     getPCData().unequipFromHands();
+                                    break;
+                                case R.id.inventory_item_equip_button:
+                                    onEquipButtonClicked();
                             }
                             Log.e("debug", "test");
                         }
                     });
+            if(model.getItemRef().get() instanceof Equipable){
+                if(getPCData().getEquipment().isSlotEmpty(((Equipable)model.getItemRef().get()).getEquipableSlot())){
+                   helper.showEquipButton();
+                }
+            }
         }
     }
 
     @Override
     public void moveToHands(Item item) {
-        getPCData().equipInHands((Item)item.clone());
-        item.discard();
-        getCorrespondingInventory().cleanEmptyItems();
+        getPCData().equipInHands(item);
         updateHoldingSpaceView();
-        updateRecyclerHolder();
+    }
+
+    @Override
+    public Item unequipFromHands() {
+        Item item = getPCData().getItemInHands();
+        getPCData().unequipFromHands();
+        updateHoldingSpaceView();
+        return item;
     }
 
     public void onAddNewItemButtonPressed(){
@@ -111,9 +132,14 @@ public class InventoryManagerFragment extends ItemListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         this.rootView = inflater.inflate(R.layout.fragment_inventory_manager, container, false);
-        this.setupRecycler();
+        this.setupRecycler(true);
         this.updateHoldingSpaceView();
         return rootView;
+    }
+
+    @Override
+    public ItemModel composeDatasetEntryFor(Item item) {
+        return super.composeDatasetEntryFor(item).setHiddenTransferToHandsButton(true);
     }
 
     @Override
@@ -130,6 +156,13 @@ public class InventoryManagerFragment extends ItemListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.inventory_browser_action_bar, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.updateRecyclerHolder();
+        this.updateHoldingSpaceView();
     }
 
     public InventoryManagerFragment(){

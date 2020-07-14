@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 
 import com.nerpage.oca.R;
 
-public abstract class Stackable extends Item implements Item.Groupable {
+import java.util.function.Consumer;
+
+public abstract class Stackable extends Item implements Item.Groupable{
     //================================================================================
     // Attributes
     //================================================================================
@@ -157,6 +159,13 @@ public abstract class Stackable extends Item implements Item.Groupable {
     // Item overrides
     //================================================================================
 
+
+    @Override
+    public Item copy() {
+        return ((Stackable)super.copy())
+                .setQuantity(this.getQuantity());
+    }
+
     @Override
     public boolean shouldBeDiscarded() {
         if(this.getQuantity() == 0)
@@ -182,7 +191,7 @@ public abstract class Stackable extends Item implements Item.Groupable {
     }
 
     @Override
-    public AlertDialog removeByDialog(AlertDialog.Builder builder, Runnable onRemove) {
+    public AlertDialog removeByDialog(AlertDialog.Builder builder, Consumer<Item> onRemove) {
         EditText input = getNumberInput(builder.getContext());
         builder.setView(input)
                 .setTitle(R.string.dialog_howmuch)
@@ -190,8 +199,9 @@ public abstract class Stackable extends Item implements Item.Groupable {
                 .setNeutralButton(getShownQuantity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Stackable removed = (Stackable)copy();
                         removeQuantity(getQuantity());
-                        onRemove.run();
+                        onRemove.accept(removed);
                         dialog.dismiss();
                     }
                 })
@@ -213,10 +223,12 @@ public abstract class Stackable extends Item implements Item.Groupable {
                     @Override
                     public void onClick(View v) {
                         int quantity = getQuantityFromString(input.getText().toString());
+                        Stackable removed = (Stackable)copy();
                         if(!removeQuantity(quantity)){
                             input.getBackground().setColorFilter(builder.getContext().getResources().getColor(R.color.optionWrong, null), PorterDuff.Mode.SRC_ATOP);
                         }else{
-                            onRemove.run();
+                            removed.setQuantity(quantity);
+                            onRemove.accept(removed);
                             dialog.dismiss();
                         }
                     }
@@ -225,6 +237,11 @@ public abstract class Stackable extends Item implements Item.Groupable {
         });
 
         return dialog;
+    }
+
+    @Override
+    public AlertDialog moveByDialog(AlertDialog.Builder builder, Consumer<Item> onMove) {
+        return this.removeByDialog(builder, onMove);
     }
 
     @Override

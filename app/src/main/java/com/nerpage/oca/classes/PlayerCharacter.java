@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.interfaces.Inventory;
+import com.nerpage.oca.itemsdb.SmallSatchel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PlayerCharacter implements Inventory {
+public class PlayerCharacter {
     public final boolean GENDER_MALE = true;
     public final boolean GENDER_FEMALE = false;
     public final String DEFAULT_FILENAME = "savedCharacter.opc";
@@ -303,18 +304,14 @@ public class PlayerCharacter implements Inventory {
         return totalCount;
     }
 
-    public ItemStorage getInventoryEx(){
-        return inventory;
-    }
-
-    public PlayerCharacter setInventory(ItemStorage inventory) {
-        this.inventory = inventory;
-        return this;
-    }
-
-    @Override
-    public ItemStorage getInventory() {
-        return this.getInventoryEx();
+    public List<Inventory> getInventories(){
+        List<Inventory> toReturn = new ArrayList<>();
+        for(Item item : this.getEquipment().getSlots().values()){
+            if(item instanceof Inventory){
+                toReturn.add((Inventory)item);
+            }
+        }
+        return toReturn;
     }
 
     public Equipment getEquipment() {
@@ -324,11 +321,6 @@ public class PlayerCharacter implements Inventory {
     public PlayerCharacter setEquipment(Equipment equipment) {
         this.equipment = equipment;
         return this;
-    }
-
-    @Override
-    public int getCapacity() {
-        return 18000;
     }
 
     public String toJSON(){
@@ -443,19 +435,11 @@ public class PlayerCharacter implements Inventory {
         this.getEquipment().unequip(Equipment.Slot.RIGHT_PALM);
     }
 
-    @Override
-    public double getWeightReduction() {
-        return 0;
-    }
 
     public PlayerCharacter(){
         for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
             attributes[i] = 5;
         setSkills(getPossibleSkills());
-
-        //TESTING!!!REMOVELATER
-        this.getInventory().add(new CustomItem("testing_item", "TESTING ITEM"));
-        //TESTING!!!REMOVELATER
-
+        getEquipment().equip(new SmallSatchel(), Equipment.Slot.BACK);
     }
 }

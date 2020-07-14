@@ -21,4 +21,8 @@
         android:id="@+id/nav_itemdb_selector"
         android:name="com.nerpage.oca.fragments.ItemDbSelector"
         android:label="ItemDbSelector" />
+    <fragment
+        android:id="@+id/nav_belongings"
+        android:name="com.nerpage.oca.fragments.BelongingsManagerFragment"
+        android:label="@string/belongings_manager_name"/>
 </navigation>

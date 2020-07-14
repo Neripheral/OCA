@@ -61,4 +61,6 @@
     <string name="dialog_remove_item_question">Usunąć %1$s?</string>
     <string name="cancel">Anuluj</string>
     <string name="inv_empty">Pusto</string>
+    <string name="equipment_editor_name">Ekwipunek</string>
+    <string name="belongings_manager_name">Dobytek</string>
 </resources>

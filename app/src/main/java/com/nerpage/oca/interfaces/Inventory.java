@@ -5,7 +5,7 @@ import com.nerpage.oca.classes.ItemStorage;
 
 public interface Inventory {
     public interface ParentInventoryNotifier{
-        public void onChildChanged();
+        public void onChildChanged(int position);
     }
 
     default boolean isOpen(){

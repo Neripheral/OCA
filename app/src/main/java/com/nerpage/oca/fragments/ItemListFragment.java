@@ -7,16 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.adapters.ItemListAdapter;
 import com.nerpage.oca.classes.ItemStorage;
-import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.misc.RecyclerViewClickListener;
@@ -29,16 +28,20 @@ import java.util.List;
 
 public class ItemListFragment extends Fragment implements Inventory.ParentInventoryNotifier{
     public interface LayoutListener extends RecyclerViewClickListener {}
+    public Runnable callback;
 
     private ItemStorage correspondingInventory = new ItemStorage();
     public View rootView = null;
-    public View selectedItem = null;
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+    }
 
     public static final class Layout{
         public static RecyclerView getRecycler(View rootView){
             return (RecyclerView) rootView.findViewById(R.id.inv_browser_recycler);
         }
-
     }
 
     public ItemListFragment setCorrespondingInventory(ItemStorage correspondingInventory) {
@@ -46,44 +49,65 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
         return this;
     }
 
-    public void refreshRecyclerData(){
-        for(int i = 0; i < getAdapter().dataset.size(); i++)
-            getAdapter().dataset.get(i).refreshData();
-        getAdapter().notifyDataSetChanged();
+    public void refreshRecyclerData(int position){
+        this.getAdapter().dataset.get(position).refreshData();
+        getAdapter().notifyItemChanged(position);
         if(getParentFragment() instanceof ItemListFragment){
-            ((Inventory.ParentInventoryNotifier)getParentFragment()).onChildChanged();
-        }
-    }
-
-    public void updateRecyclerHolder(int position){
-        if(position != -1){
-            ItemModel oldModel = getAdapter().dataset.get(position);
-            ItemModel newModel = composeDatasetEntryFor(oldModel.getItemRef().get());
-            getAdapter().dataset.set(position, newModel);
-            getAdapter().dataset.get(position).setNestedInvVisible(oldModel.isNestedInvVisible());
-            getAdapter().dataset.get(position).setNestedInventoryHolderId(oldModel.getNestedInventoryHolderId());
-            getAdapter().notifyItemChanged(position);
-        } else{
-            getAdapter().dataset = getDataset();
-            getAdapter().notifyDataSetChanged();
-        }
-
-        if(getParentFragment() instanceof ItemListFragment){
-            ((Inventory.ParentInventoryNotifier)getParentFragment()).onChildChanged();
+            this.callback.run();
         }
     }
 
     public void updateRecyclerHolder(){
-        this.updateRecyclerHolder(-1);
+        setupRecycler(false);
+
+        if(getParentFragment() instanceof ItemListFragment){
+            this.callback.run();
+        }
     }
 
     @Override
-    public void onChildChanged() {
-        refreshRecyclerData();
+    public void onChildChanged(int position) {
+        refreshRecyclerData(position);
+    }
+
+    public ItemListFragment setOnChildChangedCallback(Runnable callback){
+        this.callback = callback;
+        return this;
     }
 
     public void onRemoveButtonClick(int position){
-        AlertDialog dialog = this.getAdapter().dataset.get(position).getItemRef().get().removeByDialog(new AlertDialog.Builder(getActivity()), () -> {
+        AlertDialog dialog = this.getAdapter().dataset.get(position).getItemRef().get().removeByDialog(new AlertDialog.Builder(getActivity()), (Item removed) -> {
+            //getCorrespondingInventory().cleanEmptyItems();
+
+        });
+        if(dialog != null){
+            dialog.show();
+        }
+        //updateRecyclerHolder();
+    }
+
+    public void onNestedInventoryShowMoreButtonClick(int position){
+        ((Inventory)this.getAdapter().dataset.get(position).getItemRef().get()).setOpen(true);
+        refreshRecyclerData(position);
+    }
+
+    public void onNestedInventoryShowLessButtonClick(int position){
+        ((Inventory)this.getAdapter().dataset.get(position).getItemRef().get()).setOpen(false);
+        refreshRecyclerData(position);
+    }
+
+    public void moveToHands(Item item){
+        ((ItemListFragment)getParentFragment()).moveToHands(item);
+    }
+
+    public Item unequipFromHands(){
+        Item item = ((ItemListFragment)getParentFragment()).unequipFromHands();
+        return item;
+    }
+
+    public void onMoveToHandsPressed(int position){
+        AlertDialog dialog = this.getAdapter().dataset.get(position).getItemRef().get().moveByDialog(new AlertDialog.Builder(getActivity()), (Item moved) -> {
+            this.moveToHands(moved);
             getCorrespondingInventory().cleanEmptyItems();
             updateRecyclerHolder();
         });
@@ -92,26 +116,12 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
         }
     }
 
-    public void onNestedInventoryShowMoreButtonClick(int position){
-        ((Inventory)this.getAdapter().dataset.get(position).getItemRef().get()).setOpen(true);
-        refreshRecyclerData();
-    }
-
-    public void onNestedInventoryShowLessButtonClick(int position){
-        ((Inventory)this.getAdapter().dataset.get(position).getItemRef().get()).setOpen(false);
-        refreshRecyclerData();
-    }
-
-    public void moveToHands(Item item){
-        ((ItemListFragment)getParentFragment()).moveToHands(item);
-        updateRecyclerHolder();
-    }
-
-    public void onMoveToHandsPressed(int position){
-        this.moveToHands(getAdapter().dataset.get(position).getItemRef().get());
-    }
-
     public void onMoveFromHandsPressed(int position){
+        Item item = this.unequipFromHands();
+        if(item != null) {
+            ((Inventory) getAdapter().dataset.get(position).getItemRef().get()).getInventory().add(item);
+            updateRecyclerHolder();
+        }
     }
 
     public void clickOperator(View view, int position) {
@@ -150,7 +160,6 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
 
     public List<ItemModel> getDataset(){
         List<ItemModel> dataset = new ArrayList<>();
-
         ItemStorage itemStorage = getCorrespondingInventory();
         ArrayList<Item> items = itemStorage.getStoredItems();
         for(Item item : items){
@@ -168,11 +177,11 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
         super.onCreate(savedInstanceState);
     }
 
-    public int getAdapterWorkMode(){
-        return ItemListAdapter.WORKMODE_PCINVENTORY;
+    public ItemListAdapter.Workmode getAdapterWorkMode(){
+        return ItemListAdapter.Workmode.PCINVENTORY;
     }
 
-    public void setupRecycler(){
+    public void setupRecycler(boolean withDecoration){
         RecyclerView recyclerView = Layout.getRecycler(this.rootView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.rootView.getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -184,14 +193,16 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
             }
         }, this.getAdapterWorkMode());
         recyclerView.setAdapter(adapter);
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        if(withDecoration) {
+            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+            recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         this.rootView = inflater.inflate(R.layout.fragment_item_browser, container, false);
-        setupRecycler();
+        setupRecycler(true);
         return this.rootView;
     }
 

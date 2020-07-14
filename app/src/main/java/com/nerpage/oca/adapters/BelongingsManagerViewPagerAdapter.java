@@ -1,4 +1,4 @@
-package com.nerpage.oca.ui.pager;
+package com.nerpage.oca.adapters;
 
 import android.content.Context;
 
@@ -6,18 +6,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.nerpage.oca.fragments.SkillsFragment;
-import com.nerpage.oca.fragments.AttributesFragment;
-import com.nerpage.oca.fragments.BasicInfoFragment;
 import com.nerpage.oca.R;
+import com.nerpage.oca.fragments.EquipmentManagerFragment;
+import com.nerpage.oca.fragments.InventoryManagerFragment;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
-    public static final int ITEMS_NUMBER = 3;
+public class BelongingsManagerViewPagerAdapter extends FragmentStatePagerAdapter {
+    public static final int ITEMS_NUMBER = 2;
 
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_string_basicInfo, R.string.tab_string_attributes, R.string.tab_string_skills};
+    private static final int[] TAB_TITLES = new int[]{R.string.inventory_editor_name, R.string.equipment_editor_name};
     private final Context mContext;
 
-    public PagerAdapter(Context context, FragmentManager fm){
+    public BelongingsManagerViewPagerAdapter(Context context, FragmentManager fm){
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mContext = context;
     }
@@ -31,11 +30,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position){
         switch(position){
             case 0:
-                return new BasicInfoFragment();
+                return new InventoryManagerFragment();
             case 1:
-                return new AttributesFragment();
-            case 2:
-                return new SkillsFragment();
+                return new EquipmentManagerFragment();
         }
         return new Fragment();
     }

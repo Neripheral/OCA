@@ -1,12 +1,9 @@
 package com.nerpage.oca.classes;
 
-import com.nerpage.oca.interfaces.Equippable;
+import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.interfaces.Inventory;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Equipment {
@@ -16,9 +13,10 @@ public class Equipment {
 
     public enum Slot{
         BACK,
-        BELT,
-        LEFT_PALM,
-        RIGHT_PALM;
+        RIGHT_PALM,
+        SHIRT,
+        LEFT_HAND,
+        RIGHT_HAND;
     }
 
     //================================================================================
@@ -41,8 +39,9 @@ public class Equipment {
     }
 
     public Inventory getBoundInventory() {
-        return boundInventory;
+        return this.boundInventory;
     }
+
     public Equipment setBoundInventory(Inventory boundInventory) {
         this.boundInventory = boundInventory;
         return this;
@@ -65,13 +64,23 @@ public class Equipment {
     // Methods
     //================================================================================
 
-    public void unequip(Equipment.Slot slot){
+    public boolean isSlotEmpty(Equipment.Slot slot){
+        return getSlots().get(slot) == null;
+    }
+
+    public Item unequip(Equipment.Slot slot, boolean moveToDefaultInventory) {
         Item currentItem = getSlots().get(slot);
-        if(currentItem != null) {
-            if(getBoundInventory() != null)
-                getBoundInventory().getInventory().add((Item)currentItem);
+        if (currentItem != null) {
+            if(moveToDefaultInventory && !this.getSlots().containsKey(Slot.RIGHT_PALM)) {
+                this.getSlots().put(Slot.RIGHT_PALM, currentItem);
+            }
             getSlots().remove(slot);
         }
+        return currentItem;
+    }
+
+    public Item unequip(Equipment.Slot slot){
+        return this.unequip(slot, false);
     }
 
     public void equip(Item item, Slot slot){
@@ -79,7 +88,7 @@ public class Equipment {
         this.getSlots().put(slot, item);
     }
 
-    public void equip(Equippable item){
-        this.equip((Item)item, item.getEquippableSlot());
+    public void equip(Equipable item){
+        this.equip((Item)item, item.getEquipableSlot());
     }
 }

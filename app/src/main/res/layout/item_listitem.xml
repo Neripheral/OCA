@@ -165,49 +165,74 @@
             android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/inventory_item_move_from_hand_button"
+            <TextView
+                android:id="@+id/inventory_item_equip_button"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginEnd="1dp"
                 android:background="@color/dark"
-                android:rotation="180"
+                android:gravity="center|center_vertical"
+                android:paddingStart="2dp"
+                android:text="EQ"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/inventory_item_move_to_hand_button"
+                app:layout_constraintEnd_toStartOf="@+id/inventory_item_operation_space_controls_container"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/stat_sys_download" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/inventory_item_move_to_hand_button"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/inventory_item_operation_space_controls_container"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="1dp"
-                android:background="@color/dark"
-                android:rotation="180"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/inventory_item_remove_button"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/inventory_item_move_from_hand_button"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/stat_sys_upload" />
+                app:layout_constraintStart_toEndOf="@+id/inventory_item_equip_button"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/inventory_item_move_to_hand_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@color/dark"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/inventory_item_move_from_hand_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/stat_sys_upload" />
+
+                <ImageButton
+                    android:id="@+id/inventory_item_move_from_hand_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@color/dark"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/inventory_item_move_to_hand_button"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/stat_sys_download" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageButton
                 android:id="@+id/inventory_item_remove_button"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="1dp"
                 android:background="@color/dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/inventory_item_move_to_hand_button"
+                app:layout_constraintStart_toEndOf="@+id/inventory_item_operation_space_controls_container"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_input_delete" />
         </androidx.constraintlayout.widget.ConstraintLayout>

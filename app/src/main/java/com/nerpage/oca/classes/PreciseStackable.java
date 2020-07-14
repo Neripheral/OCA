@@ -60,4 +60,15 @@ public abstract class PreciseStackable extends Stackable {
     public int getWeight() {
         return (int)(this.getPreciseQuantity() * this.getUnitWeight());
     }
+
+    //================================================================================
+    // Item overrides
+    //================================================================================
+
+
+    @Override
+    public Item copy() {
+        return ((PreciseStackable)super.copy())
+                    .setPrecision(this.getPrecision());
+    }
 }

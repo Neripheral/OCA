@@ -5,13 +5,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Item;
-import com.nerpage.oca.classes.ItemDatabase;
+import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.fragments.ItemListFragment;
 import com.nerpage.oca.interfaces.Inventory;
 
@@ -55,6 +53,8 @@ public class ItemModel implements Comparable<ItemModel> {
             v.findViewById(R.id.inventory_item_nested_inv_menu_more_button).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_item_move_from_hand_button).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_item_move_to_hand_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_operation_space_controls_container).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_equip_button).setVisibility(View.GONE);
 
             ((TextView)v.findViewById(R.id.inventory_item_title)).setText(model.getTitle());
             ((ImageView)v.findViewById(R.id.inventory_item_mainTag_image)).setImageResource(model.getMainTagImageId());
@@ -71,18 +71,6 @@ public class ItemModel implements Comparable<ItemModel> {
         private void prepareNestedInventoryElements(){
             // Prepare visibility
             v.findViewById(R.id.inventory_item_nested_inv_menu_container).setVisibility(View.VISIBLE);
-
-            //fm.executePendingTransactions();
-
-            FragmentTransaction transaction = fm.beginTransaction();
-            View holder = v.findViewWithTag(ItemModel.HOLDER_TAG);
-            if(holder == null){
-                holder = v.findViewById(R.id.inventory_nested_inv_fragment_holder);
-                holder.setId(View.generateViewId());
-                holder.setTag(ItemModel.HOLDER_TAG);
-                transaction.add(holder.getId(), model.getNestedInventoryFragment());//(new ItemListFragment()).setCorrespondingInventory(((Inventory)model.getItemRef().get()).getInventory()));
-                transaction.commit();
-            }
 
             if(model.isNestedInvVisible()) {
                 v.findViewById(R.id.inventory_nested_inv_container).setVisibility(View.VISIBLE);
@@ -106,7 +94,7 @@ public class ItemModel implements Comparable<ItemModel> {
             if(!model.getQuantity().isEmpty())
                 prepareGroupableElements();
 
-            if(model.getNestedInventoryFragment() != null)
+            if(model.getBoundItemStorage() != null)
                 prepareNestedInventoryElements();
 
             return this;
@@ -123,12 +111,40 @@ public class ItemModel implements Comparable<ItemModel> {
             return this;
         }
 
-        public LayoutHelper showOperationSpaceTransferButtons(){
+        public LayoutHelper showGetFromOperationSpaceButton(){
             v.findViewById(R.id.inventory_item_move_from_hand_button).setVisibility(View.VISIBLE);
             v.findViewById(R.id.inventory_item_move_from_hand_button).setOnClickListener(listener);
+            return this;
+        }
+
+        public LayoutHelper showMoveToOperationSpaceButton(){
             v.findViewById(R.id.inventory_item_move_to_hand_button).setVisibility(View.VISIBLE);
             v.findViewById(R.id.inventory_item_move_to_hand_button).setOnClickListener(listener);
+            return this;
+        }
 
+        public LayoutHelper showOperationSpaceTransferButtons(){
+            v.findViewById(R.id.inventory_item_operation_space_controls_container).setVisibility(View.VISIBLE);
+            if(!model.isHiddenTransferToHandsButton())
+                this.showMoveToOperationSpaceButton();
+            if(this.model.getBoundItemStorage() != null)
+                this.showGetFromOperationSpaceButton();
+            return this;
+        }
+
+        public LayoutHelper showEquipButton(){
+            v.findViewById(R.id.inventory_item_equip_button).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.inventory_item_equip_button).setOnClickListener(listener);
+            return this;
+        }
+
+        public LayoutHelper hideAllButtons(){
+            v.findViewById(R.id.inventory_item_move_from_hand_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_move_to_hand_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_remove_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_nested_inv_menu_more_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_nested_inv_menu_less_button).setVisibility(View.GONE);
+            v.findViewById(R.id.inventory_item_equip_button).setVisibility(View.GONE);
             return this;
         }
 
@@ -157,13 +173,12 @@ public class ItemModel implements Comparable<ItemModel> {
     private String title = "";
     private String quantity = "";
     private int mainTagImageId = 0;
-    private Fragment nestedInventoryFragment = null;
-    private boolean nestedInvVisible;
+    private ItemStorage boundItemStorage = null;
+    private boolean nestedInvVisible = false;
     private double fullness = 0.0;
     private String weight = "";
     private String capacity = "";
-    private int nestedInventoryHolderId = -1;
-    public static final String HOLDER_TAG = "nestedInventory";
+    private boolean hiddenTransferToHandsButton = false;
 
     //================================================================================
     // Accessors
@@ -201,11 +216,12 @@ public class ItemModel implements Comparable<ItemModel> {
         return this;
     }
 
-    public Fragment getNestedInventoryFragment() {
-        return nestedInventoryFragment;
+    public ItemStorage getBoundItemStorage() {
+        return this.boundItemStorage;
     }
-    public ItemModel setNestedInventoryFragment(Fragment nestedInventoryFragment) {
-        this.nestedInventoryFragment = nestedInventoryFragment;
+
+    public ItemModel setBoundItemStorage(ItemStorage boundItemStorage) {
+        this.boundItemStorage = boundItemStorage;
         return this;
     }
 
@@ -245,11 +261,11 @@ public class ItemModel implements Comparable<ItemModel> {
         return this;
     }
 
-    public int getNestedInventoryHolderId() {
-        return nestedInventoryHolderId;
+    public boolean isHiddenTransferToHandsButton() {
+        return hiddenTransferToHandsButton;
     }
-    public ItemModel setNestedInventoryHolderId(int nestedInventoryHolderId) {
-        this.nestedInventoryHolderId = nestedInventoryHolderId;
+    public ItemModel setHiddenTransferToHandsButton(boolean hiddenTransferToHandsButton) {
+        this.hiddenTransferToHandsButton = hiddenTransferToHandsButton;
         return this;
     }
 
@@ -269,7 +285,7 @@ public class ItemModel implements Comparable<ItemModel> {
             this.setFullness(countFullnessFor((Inventory)item));
             this.setWeight(((Inventory) item).getContentWeightToDisplay());
             this.setCapacity(((Inventory) item).getCapacityToDisplay());
-            this.setNestedInventoryFragment((new ItemListFragment()).setCorrespondingInventory(((Inventory) item).getInventory()));
+            this.setBoundItemStorage(((Inventory) item).getInventory());
             this.setNestedInvVisible(((Inventory) item).isOpen());
         }
     }
@@ -297,11 +313,6 @@ public class ItemModel implements Comparable<ItemModel> {
             this.setNestedInvVisible(((Inventory) getItemRef().get()).isOpen());
             this.setWeight(((Inventory) getItemRef().get()).getContentWeightToDisplay());
         }
-    }
-
-    public void freeNestedInventory(View root){
-        //root.findViewById(this.getNestedInventoryHolderId()).setId(R.id.inventory_nested_inv_fragment_holder);
-        //this.setNestedInventoryHolderId(-1);
     }
 
     //================================================================================

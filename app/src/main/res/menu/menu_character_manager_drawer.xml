@@ -5,6 +5,6 @@
         android:id="@+id/nav_character"
         android:title="@string/character_editor_name" />
     <item
-        android:id="@+id/nav_inventory"
-        android:title="@string/inventory_editor_name" />
+        android:id="@+id/nav_belongings"
+        android:title="@string/belongings_manager_name" />
 </menu>

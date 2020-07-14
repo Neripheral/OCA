@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.ui.pager.PagerAdapter;
+import com.nerpage.oca.adapters.CharacterManagerViewPagerAdapter;
 
 public class CharacterManagerFragment extends Fragment {
-    private PagerAdapter adapter;
+    private CharacterManagerViewPagerAdapter adapter;
     private View rootView;
 
     public static class Layout{
@@ -34,7 +34,7 @@ public class CharacterManagerFragment extends Fragment {
         this.rootView = inflater.inflate(R.layout.fragment_character_manager, container, false);
         // initialize adapter
         FragmentManager fm = getChildFragmentManager();
-        this.adapter = new PagerAdapter(rootView.getContext(), fm);
+        this.adapter = new CharacterManagerViewPagerAdapter(rootView.getContext(), fm);
 
         // initialize pager
         ViewPager pager = Layout.getViewPager(rootView.findViewById(R.id.content).getRootView());

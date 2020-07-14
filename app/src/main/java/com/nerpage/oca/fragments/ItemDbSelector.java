@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
@@ -32,7 +31,7 @@ import java.util.Map;
 public class ItemDbSelector extends ItemListFragment {
     @Override
     public ItemStorage getCorrespondingInventory() {
-        return ((CharacterEditorActivity) getActivity()).pc.getInventory();
+        return ((CharacterEditorActivity) getActivity()).pc.getInventories().get(0).getInventory();
     }
 
     public List<ItemModel> getDataset(){
@@ -73,8 +72,8 @@ public class ItemDbSelector extends ItemListFragment {
     }
 
     @Override
-    public int getAdapterWorkMode() {
-        return ItemListAdapter.WORKMODE_ITEMDB;
+    public ItemListAdapter.Workmode getAdapterWorkMode() {
+        return ItemListAdapter.Workmode.ITEMDB;
     }
 
     @Override
@@ -104,7 +103,7 @@ public class ItemDbSelector extends ItemListFragment {
             @Override
             public void handleOnBackPressed() {
                 NavController controller = NavHostFragment.findNavController(f);
-                controller.navigate(R.id.nav_inventory);
+                controller.navigate(R.id.nav_belongings);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -113,7 +112,7 @@ public class ItemDbSelector extends ItemListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         this.rootView = inflater.inflate(R.layout.fragment_itemdb_selector, container, false);
-        this.setupRecycler();
+        this.setupRecycler(true);
         return this.rootView;
     }
 

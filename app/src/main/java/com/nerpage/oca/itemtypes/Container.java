@@ -33,6 +33,14 @@ public abstract class Container extends Item implements Inventory {
     }
 
     @Override
+    public Item copy() {
+        Container copy = ((Container)super.copy());
+        copy.setInventory(this.getInventory());
+        copy.setOpen(this.isOpen());
+        return copy;
+    }
+
+    @Override
     public AlertDialog initByDialog(AlertDialog.Builder builder, Runnable onSuccess) {
         BlackOpal opal = (BlackOpal) ItemDatabase.getItemById("blackOpal");
         WhiteOpal opal2 = (WhiteOpal) ItemDatabase.getItemById("whiteOpal");
