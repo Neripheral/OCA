@@ -1,10 +1,10 @@
 package com.nerpage.oca.itemtypes;
 
-import com.nerpage.oca.classes.Equipment;
+import com.nerpage.oca.classes.HumanEquipment;
 
 public abstract class RightGlove extends Glove {
     @Override
-    public Equipment.Slot getEquipableSlot() {
-        return Equipment.Slot.RIGHT_HAND;
+    public Object getEquipableSlot() {
+        return HumanEquipment.Slot.RIGHT_HAND;
     }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Equipment;
+import com.nerpage.oca.classes.HumanEquipment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,15 +55,15 @@ public class ArmorStandHumanFragment extends Fragment {
         }
     }
 
-    void setupFromEquipment(Equipment eq){
+    void setupFromEquipment(HumanEquipment eq){
         hideAllPieces();
-        Map<Equipment.Slot, Layout.ArmorStandSlot> map = new HashMap<>();
+        Map<HumanEquipment.Slot, Layout.ArmorStandSlot> map = new HashMap<>();
 
-        map.put(Equipment.Slot.SHIRT, Layout.ArmorStandSlot.SHIRT);
-        map.put(Equipment.Slot.RIGHT_HAND, Layout.ArmorStandSlot.RIGHT_GLOVE);
-        map.put(Equipment.Slot.LEFT_HAND, Layout.ArmorStandSlot.LEFT_GLOVE);
+        map.put(HumanEquipment.Slot.SHIRT, Layout.ArmorStandSlot.SHIRT);
+        map.put(HumanEquipment.Slot.RIGHT_HAND, Layout.ArmorStandSlot.RIGHT_GLOVE);
+        map.put(HumanEquipment.Slot.LEFT_HAND, Layout.ArmorStandSlot.LEFT_GLOVE);
 
-        for(Map.Entry<Equipment.Slot, Layout.ArmorStandSlot> entry : map.entrySet())
+        for(Map.Entry<HumanEquipment.Slot, Layout.ArmorStandSlot> entry : map.entrySet())
             if(eq.getSlots().containsKey(entry.getKey()))
                 entry.getValue().show(rootView);
 

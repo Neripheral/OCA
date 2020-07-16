@@ -56,7 +56,17 @@ public class PlayerCharacter {
     private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
     private ItemStorage inventory = new ItemStorage();
-    private Equipment equipment = new Equipment();
+    private HumanEquipment equipment = new HumanEquipment();
+    private Item heldItem;
+
+    public Item getHeldItem() {
+        return heldItem;
+    }
+
+    public PlayerCharacter setHeldItem(Item heldItem) {
+        this.heldItem = heldItem;
+        return this;
+    }
 
     public String getName() {
         return name;
@@ -314,11 +324,11 @@ public class PlayerCharacter {
         return toReturn;
     }
 
-    public Equipment getEquipment() {
+    public HumanEquipment getEquipment() {
         return equipment;
     }
 
-    public PlayerCharacter setEquipment(Equipment equipment) {
+    public PlayerCharacter setEquipment(HumanEquipment equipment) {
         this.equipment = equipment;
         return this;
     }
@@ -424,15 +434,15 @@ public class PlayerCharacter {
     }
 
     public Item getItemInHands(){
-        return this.getEquipment().getSlots().get(Equipment.Slot.RIGHT_PALM);
+        return this.getHeldItem();
     }
 
     public void equipInHands(Item item){
-        this.getEquipment().equip(item, Equipment.Slot.RIGHT_PALM);
+        this.setHeldItem(item);
     }
 
     public void unequipFromHands(){
-        this.getEquipment().unequip(Equipment.Slot.RIGHT_PALM);
+        this.setHeldItem(null);
     }
 
 
@@ -440,6 +450,6 @@ public class PlayerCharacter {
         for(int i = 0; i < ATTRIBUTES_AMOUNT; i++)
             attributes[i] = 5;
         setSkills(getPossibleSkills());
-        getEquipment().equip(new SmallSatchel(), Equipment.Slot.BACK);
+        getEquipment().equip(new SmallSatchel(), HumanEquipment.Slot.BACK);
     }
 }

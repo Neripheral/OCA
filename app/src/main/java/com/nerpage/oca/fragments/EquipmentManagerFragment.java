@@ -11,6 +11,7 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.adapters.ItemListAdapter;
 import com.nerpage.oca.classes.Equipment;
+import com.nerpage.oca.classes.HumanEquipment;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.classes.ItemDatabase;
 import com.nerpage.oca.classes.ItemStorage;
@@ -45,7 +46,7 @@ public class EquipmentManagerFragment extends ItemListFragment {
     public void onEquipButton(int position){
         Equipable item = (Equipable)getAdapter().dataset.get(position).getItemRef().get();
         if(getPCData().getItemInHands() == null)
-            getPCData().getEquipment().unequip(item.getEquipableSlot(), true);
+            getPCData().setHeldItem(getPCData().getEquipment().unequip(item.getEquipableSlot()));
         refresh();
     }
 
@@ -70,10 +71,10 @@ public class EquipmentManagerFragment extends ItemListFragment {
 
     @Override
     public List<ItemModel> getDataset() {
-        Map<Equipment.Slot, Item> slots = this.getPCData().getEquipment().getSlots();
+        Map<Object, Item> slots = this.getPCData().getEquipment().getSlots();
         List<ItemModel> dataset = new ArrayList<>();
-        for(Map.Entry<Equipment.Slot, Item> slot : slots.entrySet()){
-            if(slot.getKey() == Equipment.Slot.RIGHT_PALM)
+        for(Map.Entry<Object, Item> slot : slots.entrySet()){
+            if(slot.getKey() == HumanEquipment.Slot.RIGHT_PALM)
                 continue;
             dataset.add(new ItemModel(slot.getValue(), this.getContext()));
         }
