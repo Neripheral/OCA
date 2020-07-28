@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.entities.Human;
 import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.itemsdb.SmallSatchel;
 
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class PlayerCharacter {
+public class PlayerCharacter extends Human {
     public final boolean GENDER_MALE = true;
     public final boolean GENDER_FEMALE = false;
     public final String DEFAULT_FILENAME = "savedCharacter.opc";
@@ -55,8 +56,6 @@ public class PlayerCharacter {
     private int[] attributes = new int[ATTRIBUTES_AMOUNT];
     private boolean attributesCommitted = false;
     private Map<String, Skill> skills = new TreeMap<>();
-    private ItemStorage inventory = new ItemStorage();
-    private HumanEquipment equipment = new HumanEquipment();
     private Item heldItem;
 
     public Item getHeldItem() {
@@ -322,15 +321,6 @@ public class PlayerCharacter {
             }
         }
         return toReturn;
-    }
-
-    public HumanEquipment getEquipment() {
-        return equipment;
-    }
-
-    public PlayerCharacter setEquipment(HumanEquipment equipment) {
-        this.equipment = equipment;
-        return this;
     }
 
     public String toJSON(){

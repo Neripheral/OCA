@@ -6,7 +6,7 @@ import com.nerpage.oca.classes.HumanEquipment;
 import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.interfaces.Inventory;
 
-public abstract class Backpack extends Container implements Inventory, Equipable {
+public abstract class Backpack extends Container implements Equipable {
     @CallSuper
     @Override
     public void initTags() {

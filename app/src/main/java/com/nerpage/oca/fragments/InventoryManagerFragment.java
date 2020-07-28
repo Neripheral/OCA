@@ -73,7 +73,7 @@ public class InventoryManagerFragment extends ItemListFragment {
         else{
             Layout.showHoldingSpace(rootView);
             ItemModel model = new ItemModel(heldItem, this.getActivity());
-            ItemModel.LayoutHelper helper = model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView), getChildFragmentManager())
+            ItemModel.LayoutHelper helper = model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView))
                     .prepareHolder()
                     .showSideMenu()
                     .hideAllButtons()

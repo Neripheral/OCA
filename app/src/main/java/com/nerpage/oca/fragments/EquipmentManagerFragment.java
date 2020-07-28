@@ -36,7 +36,7 @@ public class EquipmentManagerFragment extends ItemListFragment {
 
     public void refresh(){
         this.updateRecyclerHolder();
-        this.armorStandFragment.setupFromEquipment(getPCData().getEquipment());
+        this.armorStandFragment.setupFromEquipment((HumanEquipment)getPCData().getEquipment());
     }
 
     public PlayerCharacter getPCData(){
@@ -86,7 +86,7 @@ public class EquipmentManagerFragment extends ItemListFragment {
         this.rootView = inflater.inflate(R.layout.fragment_equipment_manager, container, false);
         this.setupRecycler(true);
         this.armorStandFragment = (ArmorStandHumanFragment)getChildFragmentManager().findFragmentById(R.id.equipment_armor_stand_fragment);
-        this.armorStandFragment.setupFromEquipment(getPCData().getEquipment());
+        this.armorStandFragment.setupFromEquipment((HumanEquipment)getPCData().getEquipment());
         return this.rootView;
     }
 

@@ -17,7 +17,7 @@
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inventory_item_titleBar"
+        android:id="@+id/inventory_item_mainBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/divider_horizontal_textfield"
@@ -39,7 +39,7 @@
                 android:id="@+id/inventory_item_nested_inv_menu_container"
                 android:layout_width="70dp"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout2"
+                    android:id="@+id/inventory_item_nested_inv_expandControls"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="4dp"
@@ -156,13 +156,13 @@
             android:layout_marginBottom="6dp"
             android:scaleType="fitEnd"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toStartOf="@+id/inventory_item_operation_buttons"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6"
             app:srcCompat="@drawable/default_avatar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/inventory_item_operation_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
@@ -244,6 +244,7 @@
             android:fontFamily="sans-serif-thin"
             android:text="TextView"
             android:textSize="10sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/inventory_item_title"
             app:layout_constraintTop_toBottomOf="@+id/inventory_item_title" />
 
@@ -255,7 +256,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_item_titleBar">
+        app:layout_constraintTop_toBottomOf="@+id/inventory_item_mainBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/inventory_nested_inv_infobar"
@@ -267,6 +268,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/inventory_nested_inv_weightStats"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"

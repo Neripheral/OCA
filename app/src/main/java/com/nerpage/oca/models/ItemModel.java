@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.classes.ItemStorage;
-import com.nerpage.oca.fragments.ItemListFragment;
 import com.nerpage.oca.interfaces.Inventory;
 
 import java.lang.ref.WeakReference;
@@ -20,30 +19,116 @@ public class ItemModel implements Comparable<ItemModel> {
     // Inner classes
     //================================================================================
 
-    public class LayoutHelper{
+    public static class LayoutHelper{
+        //================================================================================
+        // Inner class
+        //================================================================================
+
+        enum ItemView{
+            MainBar(R.id.inventory_item_mainBar),
+                SideMenu(R.id.inventory_item_side_menu),
+                NestedInvSideMenu(R.id.inventory_item_nested_inv_menu_container),
+                    Fullness(R.id.inventory_item_nested_inv_fullness),
+                    ExpandControls(R.id.inventory_item_nested_inv_expandControls),
+                        NestedInvShowMoreBtn(R.id.inventory_item_nested_inv_menu_more_button),
+                        NestedInvShowLessBtn(R.id.inventory_item_nested_inv_menu_less_button),
+                QuantityContainer(R.id.inventory_item_quantity_container),
+                    Quantity(R.id.inventory_item_quantity),
+                Title(R.id.inventory_item_title),
+                MainTagImage(R.id.inventory_item_mainTag_image),
+                OperationButtons(R.id.inventory_item_operation_buttons),
+                    EquipButton(R.id.inventory_item_equip_button),
+                    OperationSpaceButtons(R.id.inventory_item_operation_space_controls_container),
+                        MoveToHandButton(R.id.inventory_item_move_to_hand_button),
+                        MoveFromHandButton(R.id.inventory_item_move_from_hand_button),
+                    RemoveButton(R.id.inventory_item_remove_button),
+            NestedInventoryContainer(R.id.inventory_nested_inv_container),
+                NestedInventoryInfobar(R.id.inventory_nested_inv_infobar),
+                    NestedInventoryWeightStats(R.id.inventory_nested_inv_weightStats),
+                        NestedInventoryContentWeight(R.id.inventory_nested_inv_contentweight),
+                        NestedInventoryCapacity(R.id.inventory_nested_inv_capacity),
+                NestedInventoryFragmentHolder(R.id.inventory_nested_inv_fragment_holder);
+
+            int id;
+
+            ItemView(int id){
+                this.id = id;
+            }
+        }
+
+        //================================================================================
+        // Fields
+        //================================================================================
+
         private ItemModel model;
         private View v;
         private View.OnClickListener listener;
-        private FragmentManager fm;
+
+        //================================================================================
+        // Accessors
+        //================================================================================
+
+        public ItemModel getModel() {
+            return model;
+        }
+
+        public LayoutHelper setModel(ItemModel newModel){
+            this.model = newModel;
+            return this;
+        }
+
+        public View getV() {
+            return v;
+        }
 
         public LayoutHelper setView(View newView){
             this.v = newView;
             return this;
         }
-        public LayoutHelper setModel(ItemModel newModel){
-            this.model = newModel;
-            return this;
+
+        public View.OnClickListener getListener() {
+            return listener;
         }
+
         public LayoutHelper setListener(View.OnClickListener listener){
             this.listener = listener;
             return this;
         }
-        public LayoutHelper setFragmentManager(FragmentManager fm){
-            this.fm = fm;
-            return this;
+
+        //================================================================================
+        // Methods
+        //================================================================================
+
+        public View getView(int id){
+            return v.findViewById(id);
+        }
+
+        public View getView(ItemView view){
+            return this.getView(view.id);
+        }
+
+        public void show(int id){
+            this.getView(id).setVisibility(View.VISIBLE);
+        }
+
+        public void show(ItemView view){
+            this.show(view.id);
+        }
+
+        public void hide(int id){
+            this.getView(id).setVisibility(View.GONE);
+        }
+
+        public void hide(ItemView view){
+            this.hide(view.id);
         }
 
         private void setupInitState(){
+            for(ItemView view : ItemView.values()){
+                hide(view);
+            }
+
+            /*
             v.findViewById(R.id.inventory_item_quantity_container).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_nested_inv_container).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_item_nested_inv_menu_container).setVisibility(View.GONE);
@@ -55,6 +140,7 @@ public class ItemModel implements Comparable<ItemModel> {
             v.findViewById(R.id.inventory_item_move_to_hand_button).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_item_operation_space_controls_container).setVisibility(View.GONE);
             v.findViewById(R.id.inventory_item_equip_button).setVisibility(View.GONE);
+             */
 
             ((TextView)v.findViewById(R.id.inventory_item_title)).setText(model.getTitle());
             ((ImageView)v.findViewById(R.id.inventory_item_mainTag_image)).setImageResource(model.getMainTagImageId());
@@ -106,6 +192,11 @@ public class ItemModel implements Comparable<ItemModel> {
             return this;
         }
 
+        public LayoutHelper hideSideMenu(){
+            v.findViewById(R.id.inventory_item_side_menu).setVisibility(View.GONE);
+            return this;
+        }
+
         public LayoutHelper showSideMenu(){
             v.findViewById(R.id.inventory_item_side_menu).setVisibility(View.VISIBLE);
             return this;
@@ -153,14 +244,9 @@ public class ItemModel implements Comparable<ItemModel> {
             return this;
         }
 
-        public LayoutHelper(ItemModel model, View v, FragmentManager fm){
+        public LayoutHelper(ItemModel model, View v){
             this.setModel(model);
             this.setView(v);
-            this.setFragmentManager(fm);
-        }
-
-        public LayoutHelper(ItemModel model, View v){
-            this(model, v, null);
         }
     }
 
@@ -302,8 +388,8 @@ public class ItemModel implements Comparable<ItemModel> {
         return String.valueOf((int)(getFullness()*100)) + "%";
     }
 
-    public LayoutHelper initLayoutHelperFor(View v, FragmentManager fm){
-        LayoutHelper lh = new LayoutHelper(this, v, fm);
+    public LayoutHelper initLayoutHelperFor(View v){
+        LayoutHelper lh = new LayoutHelper(this, v);
         return lh;
     }
 

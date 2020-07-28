@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.classes.CarryingSpace;
 import com.nerpage.oca.fragments.ItemListFragment;
 import com.nerpage.oca.models.ItemModel;
 
@@ -58,12 +59,14 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         ItemModel model = dataset.get(position);
         switch(this.workmode) {
             case PCINVENTORY:
-                model.initLayoutHelperFor(holder.rootView, parent.getChildFragmentManager())
-                        .setListener(holder)
-                        .prepareHolder()
-                        .showRemoveButton()
-                        .showOperationSpaceTransferButtons()
-                        .showSideMenu();
+                ItemModel.LayoutHelper helper = model.initLayoutHelperFor(holder.rootView)
+                            .setListener(holder)
+                            .prepareHolder()
+                            .showRemoveButton()
+                            .showOperationSpaceTransferButtons()
+                            .showSideMenu();
+                if(model.getItemRef().get() instanceof CarryingSpace)
+                    helper.hideSideMenu();
                 if(model.getBoundItemStorage() != null)
                     holder.nestedInventoryFragment =
                             new ItemListFragment()
@@ -73,13 +76,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                                     });
                 break;
             case ITEMDB:
-                model.initLayoutHelperFor(holder.rootView, parent.getChildFragmentManager())
+                model.initLayoutHelperFor(holder.rootView)
                         .setListener(holder)
                         .prepareHolder()
                         .setOverallListener();
                 break;
             case EQUIPMENT:
-                model.initLayoutHelperFor(holder.rootView, parent.getChildFragmentManager())
+                model.initLayoutHelperFor(holder.rootView)
                         .setListener(holder)
                         .prepareHolder()
                         .showEquipButton();
