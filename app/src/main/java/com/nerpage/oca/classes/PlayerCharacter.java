@@ -195,7 +195,7 @@ public class PlayerCharacter extends Human {
         List<String> reasons = new ArrayList<>();
 
         if(areAttributesCommitted())
-            reasons.add(context.getString(R.string.reason_attributes_are_already_commited));
+            reasons.add(context.getString(R.string.reason_attributes_are_already_committed));
 
         int points = ATTRIBUTES_POINTS - countCurrentMainAttributesAmount();
         if(points > 0)
