@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/inventory_itemContainer"
+    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorBackgroundFloating">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/item_indent"
         android:layout_width="4dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,18 +17,18 @@
         app:srcCompat="@android:drawable/screen_background_light" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inventory_item_mainBar"
+        android:id="@+id/item_synopsis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/divider_horizontal_textfield"
         android:padding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/item_indent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/inventory_item_side_menu"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_leftmenu"
+            android:layout_width="70dp"
             android:layout_height="0dp"
             android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,41 +36,45 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/inventory_item_nested_inv_menu_container"
-                android:layout_width="70dp"
+                android:id="@+id/item_inventory_menu"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/inventory_item_nested_inv_fullness"
+                    android:id="@+id/item_inventory_fullness"
                     android:layout_width="40dp"
-                    android:layout_height="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="2dp"
                     android:gravity="center"
-                    android:text="10%"
+                    android:text="100%"
                     android:textAllCaps="false"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/item_inventory_expansioncontrols"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/inventory_item_nested_inv_expandControls"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="4dp"
+                    android:id="@+id/item_inventory_expansioncontrols"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/inventory_item_nested_inv_fullness"
+                    app:layout_constraintEnd_toStartOf="@+id/item_inventory_fullness"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
 
                     <ImageButton
-                        android:id="@+id/inventory_item_nested_inv_menu_less_button"
+                        android:id="@+id/item_inventory_collapsebtn"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@android:drawable/screen_background_dark_transparent"
@@ -80,10 +84,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                        app:srcCompat="@android:drawable/ic_menu_more"
+                        tools:visibility="visible" />
 
                     <ImageButton
-                        android:id="@+id/inventory_item_nested_inv_menu_more_button"
+                        android:id="@+id/item_inventory_expandbtn"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@android:drawable/screen_background_dark_transparent"
@@ -92,23 +97,24 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                        app:srcCompat="@android:drawable/ic_menu_more"
+                        tools:visibility="visible" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/inventory_item_quantity_container"
+                android:id="@+id/item_quantity_container"
                 android:layout_width="70dp"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/inventory_item_multSign"
+                    android:id="@+id/item_quantity_suffix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="×"
@@ -119,22 +125,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/inventory_item_quantity"
+                    android:id="@+id/item_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="0"
+                    android:text="100kg"
                     android:textAlignment="textEnd"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/inventory_item_multSign"
+                    app:layout_constraintEnd_toStartOf="@+id/item_quantity_suffix"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/inventory_item_title"
+            android:id="@+id/item_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -144,11 +150,11 @@
             android:text="ExampleItem"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/inventory_item_side_menu"
+            app:layout_constraintStart_toEndOf="@+id/item_leftmenu"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/inventory_item_mainTag_image"
+            android:id="@+id/item_maintag"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="6dp"
@@ -156,13 +162,13 @@
             android:layout_marginBottom="6dp"
             android:scaleType="fitEnd"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/inventory_item_operation_buttons"
+            app:layout_constraintEnd_toStartOf="@+id/item_rightmenu"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6"
             app:srcCompat="@drawable/default_avatar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/inventory_item_operation_buttons"
+            android:id="@+id/item_rightmenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
@@ -171,7 +177,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/inventory_item_equip_button"
+                android:id="@+id/item_equipbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@color/dark"
@@ -182,23 +188,23 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/inventory_item_operation_space_controls_container"
+                app:layout_constraintEnd_toStartOf="@+id/item_holdingspace"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/inventory_item_operation_space_controls_container"
+                android:id="@+id/item_holdingspace"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/inventory_item_remove_button"
+                app:layout_constraintEnd_toStartOf="@+id/item_removebtn"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/inventory_item_equip_button"
+                app:layout_constraintStart_toEndOf="@+id/item_equipbtn"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/inventory_item_move_to_hand_button"
+                    android:id="@+id/item_holdingspace_givebtn"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@color/dark"
@@ -206,18 +212,18 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/inventory_item_move_from_hand_button"
+                    app:layout_constraintStart_toEndOf="@+id/item_holdingspace_takebtn"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@android:drawable/stat_sys_upload" />
 
                 <ImageButton
-                    android:id="@+id/inventory_item_move_from_hand_button"
+                    android:id="@+id/item_holdingspace_takebtn"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@color/dark"
                     android:rotation="180"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/inventory_item_move_to_hand_button"
+                    app:layout_constraintEnd_toStartOf="@+id/item_holdingspace_givebtn"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -225,41 +231,41 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageButton
-                android:id="@+id/inventory_item_remove_button"
+                android:id="@+id/item_removebtn"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@color/dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/inventory_item_operation_space_controls_container"
+                app:layout_constraintStart_toEndOf="@+id/item_holdingspace"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_input_delete" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/inventory_item_weight"
+            android:id="@+id/item_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
             android:text="TextView"
             android:textSize="10sp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/inventory_item_title"
-            app:layout_constraintTop_toBottomOf="@+id/inventory_item_title" />
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@+id/item_title"
+            app:layout_constraintTop_toBottomOf="@+id/item_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inventory_nested_inv_container"
+        android:id="@+id/item_inventory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/inventory_item_mainBar">
+        app:layout_constraintStart_toEndOf="@+id/item_indent"
+        app:layout_constraintTop_toBottomOf="@+id/item_synopsis">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/inventory_nested_inv_infobar"
+            android:id="@+id/item_inventory_infobar"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="@color/mainContainer"
@@ -268,7 +274,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/inventory_nested_inv_weightStats"
+                android:id="@+id/item_inventory_weightstats"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -277,19 +283,19 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/inventory_nested_inv_contentweight"
+                    android:id="@+id/item_inventory_weight"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2dp"
                     android:text="2"
                     android:textAlignment="textEnd"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/inventory_nested_inv_slash"
+                    app:layout_constraintEnd_toStartOf="@+id/item_inventory_weightstats_interfix"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/inventory_nested_inv_slash"
+                    android:id="@+id/item_inventory_weightstats_interfix"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="/"
@@ -299,27 +305,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/inventory_nested_inv_capacity"
+                    android:id="@+id/item_inventory_capacity"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:text="20"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/inventory_nested_inv_slash"
+                    app:layout_constraintStart_toEndOf="@+id/item_inventory_weightstats_interfix"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
-            android:id="@+id/inventory_nested_inv_fragment_holder"
+            android:id="@+id/item_inventory_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inventory_nested_inv_infobar" />
+            app:layout_constraintTop_toBottomOf="@+id/item_inventory_infobar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

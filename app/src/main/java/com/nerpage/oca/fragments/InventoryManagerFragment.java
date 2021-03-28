@@ -49,6 +49,7 @@ public class InventoryManagerFragment extends ItemListFragment {
     }
 
     public PlayerCharacter getPCData(){
+        assert getActivity() != null;
         return ((CharacterEditorActivity) getActivity()).pc;
     }
 
@@ -62,7 +63,7 @@ public class InventoryManagerFragment extends ItemListFragment {
     }
 
     public void onEquipButtonClicked(){
-        Item item = unequipFromHands();
+        Item item = moveFromHoldingSpace();
         getPCData().getEquipment().equip((Equipable)item);
     }
 
@@ -73,39 +74,33 @@ public class InventoryManagerFragment extends ItemListFragment {
         else{
             Layout.showHoldingSpace(rootView);
             ItemModel model = new ItemModel(heldItem, this.getActivity());
-            ItemModel.LayoutHelper helper = model.initLayoutHelperFor(Layout.getHoldingSpaceView(rootView))
-                    .prepareHolder()
-                    .showSideMenu()
-                    .hideAllButtons()
-                    .setListener(new View.OnClickListener() {
+            model.initLayoutHelperFor(
+                    Layout.getHoldingSpaceView(rootView),
+                    new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             switch(v.getId()){
-                                case R.id.inventory_item_remove_button:
+                                case R.id.item_removebtn:
                                     getPCData().unequipFromHands();
                                     break;
-                                case R.id.inventory_item_equip_button:
+                                case R.id.item_equipbtn:
                                     onEquipButtonClicked();
                             }
                             Log.e("debug", "test");
                         }
-                    });
-            if(model.getItemRef().get() instanceof Equipable){
-                if(getPCData().getEquipment().isSlotEmpty(((Equipable)model.getItemRef().get()).getEquipableSlot())){
-                   helper.showEquipButton();
-                }
-            }
+                    }
+            ).prepareHolder();
         }
     }
 
     @Override
-    public void moveToHands(Item item) {
+    public void moveToHoldingSpace(Item item) {
         getPCData().equipInHands(item);
         updateHoldingSpaceView();
     }
 
     @Override
-    public Item unequipFromHands() {
+    public Item moveFromHoldingSpace() {
         Item item = getPCData().getItemInHands();
         getPCData().unequipFromHands();
         updateHoldingSpaceView();
@@ -120,9 +115,10 @@ public class InventoryManagerFragment extends ItemListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getActivity() != null;
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.character_manager_toolbar);
+        DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+        Toolbar toolbar = getActivity().findViewById(R.id.character_manager_toolbar);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.CarryingSpace;
+import com.nerpage.oca.classes.ItemLayoutHelper;
 import com.nerpage.oca.fragments.ItemListFragment;
 import com.nerpage.oca.models.ItemModel;
 
@@ -59,14 +60,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         ItemModel model = dataset.get(position);
         switch(this.workmode) {
             case PCINVENTORY:
-                ItemModel.LayoutHelper helper = model.initLayoutHelperFor(holder.rootView)
-                            .setListener(holder)
-                            .prepareHolder()
-                            .showRemoveButton()
-                            .showOperationSpaceTransferButtons()
-                            .showSideMenu();
-                if(model.getItemRef().get() instanceof CarryingSpace)
-                    helper.hideSideMenu();
+                ItemLayoutHelper helper = model.initLayoutHelperFor(holder.rootView, holder)
+                            .prepareHolder();
                 if(model.getBoundItemStorage() != null)
                     holder.nestedInventoryFragment =
                             new ItemListFragment()
@@ -76,16 +71,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                                     });
                 break;
             case ITEMDB:
-                model.initLayoutHelperFor(holder.rootView)
-                        .setListener(holder)
+                model.initLayoutHelperFor(holder.rootView, holder)
                         .prepareHolder()
                         .setOverallListener();
                 break;
             case EQUIPMENT:
-                model.initLayoutHelperFor(holder.rootView)
-                        .setListener(holder)
-                        .prepareHolder()
-                        .showEquipButton();
+                model.initLayoutHelperFor(holder.rootView, holder)
+                        .prepareHolder();
                 break;
         }
     }
@@ -96,7 +88,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     }
 
     public void bindNestedInventoryFragment(View v, ItemListFragment fragment){
-        View fragmentHolder = v.findViewById(R.id.inventory_nested_inv_fragment_holder);
+        View fragmentHolder = v.findViewById(R.id.item_inventory_fragment);
         fragmentHolder.setId(View.generateViewId());
         fragmentHolder.setTag(NESTED_INVENTORY);
         parent.getChildFragmentManager().beginTransaction()
@@ -123,7 +115,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
         if(holder.nestedInventoryFragment != null) {
             this.releaseNestedInventoryFragment(holder.nestedInventoryFragment);
-            holder.rootView.findViewWithTag(NESTED_INVENTORY).setId(R.id.inventory_nested_inv_fragment_holder);
+            holder.rootView.findViewWithTag(NESTED_INVENTORY).setId(R.id.item_inventory_fragment);
         }
     }
 

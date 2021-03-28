@@ -96,18 +96,18 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
         refreshRecyclerData(position);
     }
 
-    public void moveToHands(Item item){
-        ((ItemListFragment)getParentFragment()).moveToHands(item);
+    public void moveToHoldingSpace(Item item){
+        ((ItemListFragment)getParentFragment()).moveToHoldingSpace(item);
     }
 
-    public Item unequipFromHands(){
-        Item item = ((ItemListFragment)getParentFragment()).unequipFromHands();
+    public Item moveFromHoldingSpace(){
+        Item item = ((ItemListFragment)getParentFragment()).moveFromHoldingSpace();
         return item;
     }
 
     public void onMoveToHandsPressed(int position){
         AlertDialog dialog = this.getAdapter().dataset.get(position).getItemRef().get().moveByDialog(new AlertDialog.Builder(getActivity()), (Item moved) -> {
-            this.moveToHands(moved);
+            this.moveToHoldingSpace(moved);
             getCorrespondingInventory().cleanEmptyItems();
             updateRecyclerHolder();
         });
@@ -117,7 +117,7 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
     }
 
     public void onMoveFromHandsPressed(int position){
-        Item item = this.unequipFromHands();
+        Item item = this.moveFromHoldingSpace();
         if(item != null) {
             ((Inventory) getAdapter().dataset.get(position).getItemRef().get()).getInventory().add(item);
             updateRecyclerHolder();
@@ -126,19 +126,19 @@ public class ItemListFragment extends Fragment implements Inventory.ParentInvent
 
     public void clickOperator(View view, int position) {
         switch(view.getId()){
-            case R.id.inventory_item_remove_button:
+            case R.id.item_removebtn:
                 this.onRemoveButtonClick(position);
                 break;
-            case R.id.inventory_item_nested_inv_menu_more_button:
+            case R.id.item_inventory_expandbtn:
                 this.onNestedInventoryShowMoreButtonClick(position);
                 break;
-            case R.id.inventory_item_nested_inv_menu_less_button:
+            case R.id.item_inventory_collapsebtn:
                 this.onNestedInventoryShowLessButtonClick(position);
                 break;
-            case R.id.inventory_item_move_to_hand_button:
+            case R.id.item_holdingspace_givebtn:
                 this.onMoveToHandsPressed(position);
                 break;
-            case R.id.inventory_item_move_from_hand_button:
+            case R.id.item_holdingspace_takebtn:
                 this.onMoveFromHandsPressed(position);
                 break;
         }

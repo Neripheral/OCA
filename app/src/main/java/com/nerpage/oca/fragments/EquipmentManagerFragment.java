@@ -5,16 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
-
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.adapters.ItemListAdapter;
-import com.nerpage.oca.classes.Equipment;
 import com.nerpage.oca.classes.HumanEquipment;
 import com.nerpage.oca.classes.Item;
-import com.nerpage.oca.classes.ItemDatabase;
-import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.models.ItemModel;
@@ -57,7 +52,7 @@ public class EquipmentManagerFragment extends ItemListFragment {
     @Override
     public void clickOperator(View view, int position) {
         switch(view.getId()){
-            case R.id.inventory_item_equip_button:
+            case R.id.item_equipbtn:
                 this.onEquipButton(position);
                 break;
         }
