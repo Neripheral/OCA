@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.entities.Human;
+import com.nerpage.oca.classes.entities.Human;
 import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.itemsdb.SmallSatchel;
 

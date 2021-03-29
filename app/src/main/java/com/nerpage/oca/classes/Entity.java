@@ -1,20 +1,37 @@
 package com.nerpage.oca.classes;
 
+import androidx.annotation.Nullable;
+
+import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.Status;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Entity{
     //================================================================================
     // Fields
     //================================================================================
 
+    private int blood;
     private Equipment equipment;
 
     //================================================================================
     // Accessors
     //================================================================================
+
+    public int getBlood() {
+        return blood;
+    }
+
+    public Entity setBlood(int blood) {
+        if(blood < this.getMinBlood())
+            blood = this.getMinBlood();
+        else if(blood > this.getMaxBlood())
+            blood = this.getMaxBlood();
+        this.blood = blood;
+        return this;
+    }
 
     public Equipment getEquipment() {
         return equipment;
@@ -25,14 +42,34 @@ public abstract class Entity{
         return this;
     }
 
-    //================================================================================
-    // Constructors
-    //================================================================================
-
-    public Entity(){}
 
     //================================================================================
     // Methods
     //================================================================================
 
+    public int getMinBlood(){
+        return 0;
+    }
+
+    abstract public int getMaxBlood();
+
+    public boolean isDead(){
+        return getBlood() == 0;
+    }
+
+    public void applyStatus(Status status){
+        if(status instanceof Status.onApplication)
+            ((Status.onApplication) status).onApplication(this);
+    }
+
+    @Nullable
+    public List<Action> getPossibleActions(){
+        return new ArrayList<>();
+    }
+
+    //================================================================================
+    // Constructors
+    //================================================================================
+
+    public Entity(){}
 }
