@@ -7,13 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.EquipmentManagerFragment;
 import com.nerpage.oca.fragments.InventoryManagerFragment;
 
 public class BelongingsManagerViewPagerAdapter extends FragmentStatePagerAdapter {
     public static final int ITEMS_NUMBER = 2;
 
-    private static final int[] TAB_TITLES = new int[]{R.string.inventory_editor_name, R.string.equipment_editor_name};
+    private static final int[] TAB_TITLES = new int[]{R.string.inventory_editor_name};
     private final Context mContext;
 
     public BelongingsManagerViewPagerAdapter(Context context, FragmentManager fm){
@@ -31,8 +30,6 @@ public class BelongingsManagerViewPagerAdapter extends FragmentStatePagerAdapter
         switch(position){
             case 0:
                 return new InventoryManagerFragment();
-            case 1:
-                return new EquipmentManagerFragment();
         }
         return new Fragment();
     }
