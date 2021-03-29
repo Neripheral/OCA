@@ -38,20 +38,20 @@ dependencies {
 }
 
 task buildItemDatabase {
-    doLast{
+    doLast {
         String resDir = android.sourceSets.main.res.srcDirs[0]
         resDir += '\\raw'
         String itemsDir = android.sourceSets.main.java.srcDirs[0]
         itemsDir += '\\com\\nerpage\\oca\\itemsdb'
         def names = []
         fileTree(itemsDir).visit { FileVisitDetails details ->
-            if(details.file.path.endsWith('.java')){
+            if (details.file.path.endsWith('.java')) {
                 names << details.file.name
             }
         }
 
         String namesStr = ""
-        names.each{
+        names.each {
             namesStr = namesStr + it.reverse().substring(5).reverse() + "\n"
         }
         println itemsDir
@@ -59,8 +59,8 @@ task buildItemDatabase {
     }
 }
 
-afterEvaluate{
-    android.applicationVariants.all{ variant ->
+afterEvaluate {
+    android.applicationVariants.all { variant ->
         variant.javaCompiler.dependsOn(buildItemDatabase)
     }
 }

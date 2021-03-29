@@ -5,6 +5,7 @@ public abstract class Entity implements Identifiable{
     // Fields
     //================================================================================
 
+    private int blood;
     private Equipment equipment;
 
     //================================================================================
@@ -17,6 +18,19 @@ public abstract class Entity implements Identifiable{
         return "entity";
     }
 
+    public int getBlood() {
+        return blood;
+    }
+
+    public Entity setBlood(int blood) {
+        if(blood < this.getMinBlood())
+            blood = this.getMinBlood();
+        else if(blood > this.getMaxBlood())
+            blood = this.getMaxBlood();
+        this.blood = blood;
+        return this;
+    }
+
     public Equipment getEquipment() {
         return equipment;
     }
@@ -26,14 +40,34 @@ public abstract class Entity implements Identifiable{
         return this;
     }
 
-    //================================================================================
-    // Constructors
-    //================================================================================
-
-    public Entity(){}
 
     //================================================================================
     // Methods
     //================================================================================
 
+    public int getMinBlood(){
+        return 0;
+    }
+
+    abstract public int getMaxBlood();
+
+    public boolean isDead(){
+        return getBlood() == 0;
+    }
+
+    public void applyStatus(Status status){
+        if(status instanceof Status.onApplication)
+            ((Status.onApplication) status).onApplication(this);
+    }
+
+    @Nullable
+    public List<Action> getPossibleActions(){
+        return new ArrayList<>();
+    }
+
+    //================================================================================
+    // Constructors
+    //================================================================================
+
+    public Entity(){}
 }
