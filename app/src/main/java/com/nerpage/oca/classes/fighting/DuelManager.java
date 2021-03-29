@@ -7,6 +7,24 @@ public class DuelManager {
     // Inner class
     //================================================================================
 
+    public abstract class Duelist{
+        Entity duelist;
+        abstract Action notifyYourTurn();
+
+        public Entity getDuelist() {
+            return duelist;
+        }
+
+        public Duelist setDuelist(Entity duelist) {
+            this.duelist = duelist;
+            return this;
+        }
+
+        public Duelist(Entity duelist){
+            this.setDuelist(duelist);
+        }
+    }
+
     public interface GoalChecking{
         boolean check(DuelManager duelManager);
     }
