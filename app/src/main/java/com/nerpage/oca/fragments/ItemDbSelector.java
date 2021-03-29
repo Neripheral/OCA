@@ -31,7 +31,7 @@ import java.util.Map;
 public class ItemDbSelector extends ItemListFragment {
     @Override
     public ItemStorage getCorrespondingInventory() {
-        return ((CharacterEditorActivity) getActivity()).pc.getInventories().get(0).getInventory();
+        return ((CharacterEditorActivity) getActivity()).getPc().getInventories().get(0).getInventory();
     }
 
     public List<ItemModel> getDataset(){

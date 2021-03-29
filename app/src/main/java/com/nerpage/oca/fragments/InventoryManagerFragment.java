@@ -50,7 +50,7 @@ public class InventoryManagerFragment extends ItemListFragment {
 
     public PlayerCharacter getPCData(){
         assert getActivity() != null;
-        return ((CharacterEditorActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).getPc();
     }
 
     @Override

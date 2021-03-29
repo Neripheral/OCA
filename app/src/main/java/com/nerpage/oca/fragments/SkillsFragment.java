@@ -162,7 +162,7 @@ public class SkillsFragment extends Fragment {
     }
 
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterEditorActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).getPc();
     }
 
     public SkillModel composeDatasetEntryFor(Skill skill){

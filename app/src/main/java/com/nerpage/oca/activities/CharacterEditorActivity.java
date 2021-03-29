@@ -27,7 +27,16 @@ import com.nerpage.oca.misc.LocaleHelper;
 public class CharacterEditorActivity extends AppCompatActivity {
 
     public AppBarConfiguration appBarConfiguration;
-    public PlayerCharacter pc;
+    private PlayerCharacter pc;
+
+    public PlayerCharacter getPc() {
+        return pc;
+    }
+
+    public CharacterEditorActivity setPc(PlayerCharacter pc) {
+        this.pc = pc;
+        return this;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +63,7 @@ public class CharacterEditorActivity extends AppCompatActivity {
         // initialize PlayerCharacter data
         PlayerCharacter newPc = new PlayerCharacter();
         newPc.initFromFile(this);
-        this.pc = newPc;
+        this.setPc(newPc);
     }
 
     @Override
@@ -76,7 +85,7 @@ public class CharacterEditorActivity extends AppCompatActivity {
     }
 
     public void saveChanges(){
-        this.pc.saveToFile(this);
+        this.getPc().saveToFile(this);
     }
 
     protected void onStop(){

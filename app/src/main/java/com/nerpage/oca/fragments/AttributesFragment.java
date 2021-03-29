@@ -67,7 +67,7 @@ public class AttributesFragment extends Fragment {
     }
 
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterEditorActivity) getActivity()).pc;
+        return ((CharacterEditorActivity) getActivity()).getPc();
     }
 
     private int getCorrespondingBalanceColor(int balance){

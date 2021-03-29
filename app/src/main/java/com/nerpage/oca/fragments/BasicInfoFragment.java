@@ -76,7 +76,7 @@ public class BasicInfoFragment extends Fragment {
      * @return
      */
     public PlayerCharacter getPlayerCharacterData(){
-        return ((CharacterEditorActivity)getActivity()).pc;
+        return ((CharacterEditorActivity)getActivity()).getPc();
     }
 
     /**
