@@ -9,7 +9,7 @@ import com.nerpage.oca.classes.fighting.actions.Punch;
 
 import java.util.List;
 
-public class Human extends Entity {
+public abstract class Human extends Entity {
 
     public final int PUNCH_POWER = 20;
 
