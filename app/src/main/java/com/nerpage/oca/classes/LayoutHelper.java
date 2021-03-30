@@ -1,6 +1,8 @@
 package com.nerpage.oca.classes;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public abstract class LayoutHelper {
     /**
@@ -34,7 +36,7 @@ public abstract class LayoutHelper {
     // Methods
     //================================================================================
 
-    public View getView(int id){
+    private View getView(int id){
         return this.getRoot().findViewById(id);
     }
 
@@ -42,28 +44,29 @@ public abstract class LayoutHelper {
         return this.getView(poi.getId());
     }
 
-    public View show(int id){
-        this.getView(id).setVisibility(View.VISIBLE);
-        return this.getView(id);
+    public TextView updateText(POI poi, String text){
+        ((TextView)this.getView(poi)).setText(text);
+        return ((TextView)this.getView(poi));
+    }
+
+    public ImageView updateImage(POI poi, int imgId){
+        ((ImageView)this.getView(poi)).setImageResource(imgId);
+        return ((ImageView)this.getView(poi));
     }
 
     public View show(POI poi){
-        return this.show(poi.getId());
+        this.getView(poi).setVisibility(View.VISIBLE);
+        return this.getView(poi);
     }
 
-    public void hide(int id){
-        this.getView(id).setVisibility(View.GONE);
-    }
-
-    public void hide(POI poi){
-        this.hide(poi.getId());
+    public View hide(POI poi){
+        this.getView(poi).setVisibility(View.GONE);
+        return this.getView(poi);
     }
 
     //================================================================================
     // Constructors
     //================================================================================
-
-    public LayoutHelper(){}
 
     public LayoutHelper(View root){
         this.setRoot(root);
