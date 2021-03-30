@@ -11,7 +11,7 @@ public class DuelManager {
     //================================================================================
 
     public interface OnYourTurnNotifier{
-        Action notifyYourTurn();
+        Action getNextActionAgainst(Entity enemy);
     }
 
     public static class Duelist {
@@ -134,6 +134,10 @@ public class DuelManager {
 
     public DuelManager enrollDuelist(Entity entity, OnYourTurnNotifier notifier){
         return this.enrollDuelist(new Duelist(entity, notifier));
+    }
+
+    public DuelManager enrollAI(DuelistAI ai){
+        return this.enrollDuelist((Entity)ai, ai::getNextAction);
     }
 
     //================================================================================
