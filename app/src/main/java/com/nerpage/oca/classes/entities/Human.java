@@ -1,5 +1,6 @@
 package com.nerpage.oca.classes.entities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nerpage.oca.classes.Entity;
@@ -21,14 +22,20 @@ public abstract class Human extends Entity {
     public int getMaxBlood() {
         return 100;
     }
-
-    @Nullable
+    
+    @NonNull
     @Override
     public List<Action> getPossibleActions() {
         List<Action> actions = super.getPossibleActions();
+        assert actions != null;
         actions.add(new Punch(PUNCH_POWER));
 
         return actions;
+    }
+
+    @Override
+    public Action getNextAction(Entity opponent) {
+        return this.getPossibleActions().get(0);
     }
 
     //================================================================================
