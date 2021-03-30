@@ -59,4 +59,13 @@ public abstract class LayoutHelper {
         this.hide(poi.getId());
     }
 
+    //================================================================================
+    // Constructors
+    //================================================================================
+
+    public LayoutHelper(){}
+
+    public LayoutHelper(View root){
+        this.setRoot(root);
+    }
 }

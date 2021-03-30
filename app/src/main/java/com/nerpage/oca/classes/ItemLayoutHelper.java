@@ -155,8 +155,8 @@ public class ItemLayoutHelper extends LayoutHelper {
     }
 
     public ItemLayoutHelper(ItemModel model, View root, View.OnClickListener listener){
+        super(root);
         this.setModel(model);
-        this.setRoot(root);
         this.setListener(listener);
     }
 
