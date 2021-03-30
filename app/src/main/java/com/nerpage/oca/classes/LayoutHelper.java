@@ -7,7 +7,7 @@ public abstract class LayoutHelper {
      * POI represents each View in Layout that is important.
      * As such each final LayoutHelper should have own enum implementing POI.
      */
-    interface POI{
+    public interface POI{
         int getId();
     }
 
