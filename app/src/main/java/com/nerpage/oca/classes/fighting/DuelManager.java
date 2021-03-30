@@ -2,47 +2,69 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DuelManager {
     //================================================================================
     // Inner class
     //================================================================================
 
-    public abstract class Duelist{
-        Entity duelist;
-        abstract Action notifyYourTurn();
+    public interface OnYourTurnNotifier{
+        Action notifyYourTurn();
+    }
 
-        public Entity getDuelist() {
-            return duelist;
+    public static class Duelist {
+        private Entity entity;
+        private OnYourTurnNotifier notifier;
+
+        public Entity getEntity() {
+            return entity;
         }
 
-        public Duelist setDuelist(Entity duelist) {
-            this.duelist = duelist;
+        public Duelist setEntity(Entity entity) {
+            this.entity = entity;
             return this;
         }
 
-        public Duelist(Entity duelist){
-            this.setDuelist(duelist);
+        public OnYourTurnNotifier getNotifier() {
+            return notifier;
+        }
+
+        public Duelist setNotifier(OnYourTurnNotifier notifier) {
+            this.notifier = notifier;
+            return this;
+        }
+
+        public Duelist(Entity entity, OnYourTurnNotifier notifier){
+            this.setEntity(entity);
+            this.setNotifier(notifier);
         }
     }
 
-    public interface GoalChecking{
+    public interface Referee {
         boolean check(DuelManager duelManager);
     }
 
     enum TurnStatus{
-        ALPHA_TURN,
-        BRAVO_TURN
+        ALPHA,
+        BRAVO
     }
 
     enum Goal{
+        /**
+         * True if any of the participants is dead.
+         */
         DEATH(
                 duelManager ->
-                        duelManager.getEntityAlpha().isDead() || duelManager.getEntityBravo().isDead()
+                    duelManager.getDuelists()
+                            .stream()
+                            .anyMatch(duelist -> duelist.getEntity().isDead())
         );
 
-        GoalChecking referee;
+        Referee referee;
 
-        Goal(GoalChecking referee){
+        Goal(Referee referee){
             this.referee = referee;
         }
 
@@ -52,8 +74,7 @@ public class DuelManager {
     // Fields
     //================================================================================
 
-    private Entity entityAlpha;
-    private Entity entityBravo;
+    private List<Duelist> duelists;
     private TurnStatus turnStatus;
     private Goal goal;
 
@@ -61,21 +82,12 @@ public class DuelManager {
     // Accessors
     //================================================================================
 
-    public Entity getEntityAlpha() {
-        return entityAlpha;
+    public List<Duelist> getDuelists(){
+        return new ArrayList<>(this.duelists);
     }
 
-    public DuelManager setEntityAlpha(Entity entityAlpha) {
-        this.entityAlpha = entityAlpha;
-        return this;
-    }
-
-    public Entity getEntityBravo() {
-        return entityBravo;
-    }
-
-    public DuelManager setEntityBravo(Entity entityBravo) {
-        this.entityBravo = entityBravo;
+    public DuelManager setDuelists(ArrayList<Duelist> duelists){
+        this.duelists = new ArrayList<>(duelists);
         return this;
     }
 
@@ -101,34 +113,33 @@ public class DuelManager {
     // Methods
     //================================================================================
 
-    public boolean checkForGoal(){
+    private boolean checkForGoal(){
         return this.getGoal().referee.check(this);
     }
 
     public void advanceTurn(){
-        if(this.getTurnStatus() == TurnStatus.ALPHA_TURN)
-            this.setTurnStatus(TurnStatus.BRAVO_TURN);
-        else
-            this.setTurnStatus(TurnStatus.ALPHA_TURN);
+        this.setTurnStatus(
+                TurnStatus.values()[
+                        (this.getTurnStatus().ordinal()+1) % TurnStatus.values().length
+                        ]
+        );
+    }
+
+    private DuelManager enrollDuelist(Duelist duelist){
+        ArrayList<Duelist> duelists = (ArrayList<Duelist>)this.getDuelists();
+        duelists.add(duelist);
+        this.setDuelists(duelists);
+        return this;
+    }
+
+    public DuelManager enrollDuelist(Entity entity, OnYourTurnNotifier notifier){
+        return this.enrollDuelist(new Duelist(entity, notifier));
     }
 
     //================================================================================
     // Constructors
     //================================================================================
 
-    public DuelManager(Entity alpha, Entity bravo, Goal goal, TurnStatus startingTurn){
-        this.setEntityAlpha(alpha);
-        this.setEntityBravo(bravo);
-        this.setGoal(goal);
-        this.setTurnStatus(startingTurn);
-    }
-
-    public DuelManager(Entity alpha, Entity bravo, Goal goal){
-        this(alpha, bravo, goal, TurnStatus.ALPHA_TURN);
-    }
-
-    public DuelManager(Entity alpha, Entity bravo){
-        this(alpha, bravo, Goal.DEATH);
-    }
+    public DuelManager(){}
 }
 
