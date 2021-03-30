@@ -91,7 +91,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="-4dp"
+            android:layout_marginBottom="-5dp"
             android:background="@color/mainBox"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent">
