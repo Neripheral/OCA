@@ -3,12 +3,13 @@ package com.nerpage.oca.classes;
 import androidx.annotation.Nullable;
 
 import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.DuelistAI;
 import com.nerpage.oca.classes.fighting.Status;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity{
+public abstract class Entity implements DuelistAI {
     //================================================================================
     // Fields
     //================================================================================
