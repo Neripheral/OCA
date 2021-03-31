@@ -114,8 +114,14 @@ public class DuelFragment extends Fragment {
     }
 
     private void updateModel(){
-        //TODO: wip
-        //this.getModel().setEnemyTitle(this.getDuelManager().getDuelists().get(1).getEntity().)
+        Entity pc = ((CharacterEditorActivity) this.requireActivity()).getPc();
+        this.getModel().setPcCurrentBlood(pc.getBlood());
+        this.getModel().setPcMaxBlood(pc.getMaxBlood());
+
+        Entity enemy = this.getDuelManager().getDuelists().get(1).getEntity();
+        this.getModel().setEnemyTitle(enemy.getName(getContext()));
+        this.getModel().setEnemyCurrentBlood(enemy.getBlood());
+        this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
     }
 
     //================================================================================

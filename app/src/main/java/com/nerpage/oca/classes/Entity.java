@@ -79,5 +79,7 @@ public abstract class Entity implements Identifiable{
     // Constructors
     //================================================================================
 
-    public Entity(){}
+    public Entity(){
+        this.setBlood(this.getMaxBlood());
+    }
 }
