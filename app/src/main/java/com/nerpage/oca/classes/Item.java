@@ -5,16 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
 
-import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
-public abstract class Item {
+public abstract class Item implements Identifiable{
     //================================================================================
     // Inner Classes
     //================================================================================
@@ -31,7 +30,6 @@ public abstract class Item {
         /**
          * Gets the String supposed to represent quantity of the group. It is only a visual representation
          * of a group's size and shouldn't serve any backend, logical purpose.
-         * @return
          */
         String getShownQuantity();
     }
@@ -118,19 +116,12 @@ public abstract class Item {
     public void discard(){
         this.toDiscard = true;
     }
-    public String getId(){
-        String className = this.getClass().getSimpleName();
-        return ( className.substring(0, 1).toLowerCase() + className.substring(1) );
+
+    @Override
+    public String getPrefix() {
+        return "item";
     }
-    public int getNameResId(Context context){
-        return context.getResources().getIdentifier("item_" + getId(), "string", context.getPackageName());
-    }
-    public String getName(Context context){
-        int id = getNameResId(context);
-        if(id == 0)
-            return this.getId();
-        return context.getResources().getString(id);
-    }
+
     public boolean equals(Item item){
         return this.getId().equals(item.getId());
     }
@@ -138,11 +129,10 @@ public abstract class Item {
         Item clone = null;
         try {
             clone = this.getClass().newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+        assert clone != null;
         clone.setToDiscard(this.getToDiscard());
         clone.setTags(new ArrayList<>(this.getTags()));
         return clone;
@@ -170,12 +160,7 @@ public abstract class Item {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(R.string.dialog_no, (dialog, which) -> dialog.dismiss());
         return builder.create();
     }
     public Item move(){
@@ -197,7 +182,7 @@ public abstract class Item {
     }
     public abstract int getWeight();
     public String getWeightToDisplay(){
-        return String.format("%.2f", (double)this.getWeight()/1000);
+        return String.format(Locale.getDefault(), "%.2f", (double)this.getWeight()/1000);
     }
 }
 
