@@ -30,33 +30,23 @@
 
         <LinearLayout
             android:id="@+id/duel_enemy_blood"
+            style="@style/TextAppearance.AppCompat.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/duel_enemy_title">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/duel_blood" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="2dp"
-                android:paddingEnd="5dp"
-                android:text=":"
-                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/duel_enemy_currentBlood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/blood"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="120" />
 
             <TextView
@@ -67,6 +57,9 @@
                 android:layout_marginEnd="2dp"
                 android:layout_weight="1"
                 android:text="/"
+                android:textColor="@color/blood"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -74,6 +67,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/blood"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:text="200" />
         </LinearLayout>
 
@@ -107,7 +103,9 @@
                     android:id="@+id/duel_pc_currentBlood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textColor="@color/blood"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:text="360" />
 
                 <TextView
@@ -117,6 +115,7 @@
                     android:layout_marginEnd="2dp"
                     android:layout_weight="1"
                     android:text="/"
+                    android:textColor="@color/blood"
                     android:textSize="14sp"
                     tools:ignore="HardcodedText" />
 
@@ -124,7 +123,9 @@
                     android:id="@+id/duel_pc_maxBlood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textColor="@color/blood"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:text="500" />
             </LinearLayout>
         </FrameLayout>

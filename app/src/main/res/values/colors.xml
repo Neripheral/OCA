@@ -13,4 +13,5 @@
     <color name="optionCorrect">#00CC00</color>
     <color name="optionWrong">#CC2222</color>
     <color name="optionSemiwrong">#7777FF</color>
+    <color name="blood">#660000</color>
 </resources>
