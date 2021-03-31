@@ -1,5 +1,13 @@
 package com.nerpage.oca.classes;
 
+import androidx.annotation.Nullable;
+
+import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.Status;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Entity implements Identifiable{
     //================================================================================
     // Fields
@@ -44,6 +52,8 @@ public abstract class Entity implements Identifiable{
     //================================================================================
     // Methods
     //================================================================================
+
+
 
     public int getMinBlood(){
         return 0;

@@ -2,7 +2,6 @@ package com.nerpage.oca.fragments;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,13 +13,12 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.NPCGenerator;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.DuelManager;
-import com.nerpage.oca.classes.fighting.EnemyGenerator;
+import com.nerpage.oca.classes.fighting.DuelistAI;
 import com.nerpage.oca.models.DuelViewModel;
-
-import java.util.Objects;
 
 public class DuelFragment extends Fragment {
     //================================================================================
@@ -46,6 +44,18 @@ public class DuelFragment extends Fragment {
                 this.id = id;
             }
         }
+
+        public void updateViewUsing(DuelViewModel model){
+            this.updateText( DuelPOI.ENEMY_TITLE,            model.getEnemyTitle());
+            this.updateText( DuelPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
+            this.updateText( DuelPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
+            this.updateText( DuelPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
+            this.updateText( DuelPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+        }
+
+        public DuelLayoutHelper(View rootView){
+            super(rootView);
+        }
     }
 
     //================================================================================
@@ -53,6 +63,8 @@ public class DuelFragment extends Fragment {
     //================================================================================
 
     private View rootView;
+    private DuelManager duelManager;
+    private DuelViewModel model;
 
     //================================================================================
     // Accessors
@@ -67,6 +79,24 @@ public class DuelFragment extends Fragment {
         return this;
     }
 
+    public DuelManager getDuelManager() {
+        return duelManager;
+    }
+
+    public DuelFragment setDuelManager(DuelManager duelManager) {
+        this.duelManager = duelManager;
+        return this;
+    }
+
+    public DuelViewModel getModel() {
+        return model;
+    }
+
+    public DuelFragment setModel(DuelViewModel model) {
+        this.model = model;
+        return this;
+    }
+
     //================================================================================
     // Methods
     //================================================================================
@@ -76,15 +106,16 @@ public class DuelFragment extends Fragment {
         return null;
     }
 
-    private void enrollDuelists(DuelManager duelManager){
-        PlayerCharacter pc = ((CharacterEditorActivity) Objects.requireNonNull(getActivity())).getPc();
-        duelManager.enrollDuelist(pc, this::onPlayerTurn);
-        Entity enemy = EnemyGenerator.generate();
-        duelManager.enrollAI(enemy);
+    private void enrollDuelists(){
+        PlayerCharacter pc = ((CharacterEditorActivity) requireActivity()).getPc();
+        this.getDuelManager().enrollDuelist(pc, this::onPlayerTurn);
+        DuelistAI enemy = NPCGenerator.generateEnemy();
+        this.getDuelManager().enrollAI(enemy);
     }
 
-    private void updateModel(DuelViewModel model, DuelManager duelManager){
-
+    private void updateModel(){
+        //TODO: wip
+        //this.getModel().setEnemyTitle(this.getDuelManager().getDuelists().get(1).getEntity().)
     }
 
     //================================================================================
@@ -95,20 +126,21 @@ public class DuelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // init duel
-        DuelManager duelManager = new DuelManager();
-        this.enrollDuelists(duelManager);
+        this.setDuelManager(new DuelManager());
+        this.enrollDuelists();
 
-        // init model
-        DuelViewModel model = new ViewModelProvider(requireActivity()).get(DuelViewModel.class);
-        //TODO: continue tomorrow
+        this.setModel(new ViewModelProvider(requireActivity()).get(DuelViewModel.class));
+        this.updateModel();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.rootView = inflater.inflate(R.layout.fragment_duel, container, false);
+        this.setRootView(inflater.inflate(R.layout.fragment_duel, container, false));
 
-        return this.rootView;
+        DuelLayoutHelper layout = new DuelLayoutHelper(this.getRootView());
+        layout.updateViewUsing(this.getModel());
+
+        return this.getRootView();
     }
 
     //================================================================================

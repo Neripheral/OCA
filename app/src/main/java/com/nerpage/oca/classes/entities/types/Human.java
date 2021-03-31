@@ -1,18 +1,42 @@
 package com.nerpage.oca.classes.entities.types;
 
+import androidx.annotation.NonNull;
+
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.HumanEquipment;
+import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.DuelistAI;
+import com.nerpage.oca.classes.fighting.actions.Punch;
 
-public class Human extends Entity {
+import java.util.List;
+
+public abstract class Human extends Entity implements DuelistAI {
+
+    public final int PUNCH_POWER = 20;
+
     //================================================================================
-    // Inner classes
+    // Overrides
     //================================================================================
 
-    /*public enum BodyPartKey {
-        HEAD,
-        NECK,
-        CHEST;
-    }*/
+    @Override
+    public int getMaxBlood() {
+        return 100;
+    }
+    
+    @NonNull
+    @Override
+    public List<Action> getPossibleActions() {
+        List<Action> actions = super.getPossibleActions();
+        assert actions != null;
+        actions.add(new Punch(PUNCH_POWER));
+
+        return actions;
+    }
+
+    @Override
+    public Action getNextAction(Entity opponent) {
+        return this.getPossibleActions().get(0);
+    }
 
     //================================================================================
     // Constructors
@@ -21,4 +45,6 @@ public class Human extends Entity {
     public Human(){
         this.setEquipment(new HumanEquipment());
     }
+
+
 }

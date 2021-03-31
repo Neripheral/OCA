@@ -74,7 +74,7 @@ public class DuelManager {
     // Fields
     //================================================================================
 
-    private List<Duelist> duelists;
+    private List<Duelist> duelists = new ArrayList<>();
     private TurnStatus turnStatus;
     private Goal goal;
 
