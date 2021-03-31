@@ -1,11 +1,6 @@
 package com.nerpage.oca.classes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public abstract class Entity{
+public abstract class Entity implements Identifiable{
     //================================================================================
     // Fields
     //================================================================================
@@ -15,6 +10,12 @@ public abstract class Entity{
     //================================================================================
     // Accessors
     //================================================================================
+
+
+    @Override
+    public String getPrefix() {
+        return "entity";
+    }
 
     public Equipment getEquipment() {
         return equipment;
