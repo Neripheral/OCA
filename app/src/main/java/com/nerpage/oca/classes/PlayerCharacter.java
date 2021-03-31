@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.entities.Human;
+import com.nerpage.oca.classes.entities.types.Human;
 import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.itemsdb.SmallSatchel;
 
@@ -404,7 +404,7 @@ public class PlayerCharacter extends Human {
             if(inputStream != null){
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
+                String receiveString;
                 StringBuilder stringBuilder = new StringBuilder();
                 while((receiveString = bufferedReader.readLine()) != null){
                     stringBuilder.append(receiveString);

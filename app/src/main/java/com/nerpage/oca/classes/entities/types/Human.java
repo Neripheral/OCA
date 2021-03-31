@@ -1,9 +1,7 @@
-package com.nerpage.oca.entities;
+package com.nerpage.oca.classes.entities.types;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.HumanEquipment;
-
-import java.util.Arrays;
 
 public class Human extends Entity {
     //================================================================================
