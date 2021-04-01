@@ -31,7 +31,8 @@ public class DuelFragment extends Fragment {
             ENEMY_CURRENT_BLOOD(R.id.duel_enemy_currentBlood),
             ENEMY_MAX_BLOOD(R.id.duel_enemy_maxBlood),
             PC_CURRENT_BLOOD(R.id.duel_pc_currentBlood),
-            PC_MAX_BLOOD(R.id.duel_pc_maxBlood);
+            PC_MAX_BLOOD(R.id.duel_pc_maxBlood),
+            ATTACK_BUTTON(R.id.duel_attackbtn);
 
             int id;
 
@@ -51,6 +52,10 @@ public class DuelFragment extends Fragment {
             this.updateText( DuelPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
             this.updateText( DuelPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
             this.updateText( DuelPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+        }
+
+        public void bindListener(View.OnClickListener listener){
+            this.getView(DuelPOI.ATTACK_BUTTON).setOnClickListener(listener);
         }
 
         public DuelLayoutHelper(View rootView){
@@ -101,6 +106,10 @@ public class DuelFragment extends Fragment {
     // Methods
     //================================================================================
 
+    public void onAttackButtonPressed(){
+        //TODO: add what to do when the button is pressed
+    }
+
     public Action onPlayerTurn(Entity enemy){
         //TODO: add what to do on player's turn
         return null;
@@ -145,6 +154,7 @@ public class DuelFragment extends Fragment {
 
         DuelLayoutHelper layout = new DuelLayoutHelper(this.getRootView());
         layout.updateViewUsing(this.getModel());
+        layout.bindListener(v->onAttackButtonPressed());
 
         return this.getRootView();
     }

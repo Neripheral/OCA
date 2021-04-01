@@ -84,7 +84,18 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/duel_attackbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attack"
+            app:layout_constraintBottom_toTopOf="@id/duel_pc_blood"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Attack" />
+
         <FrameLayout
+            android:id="@+id/duel_pc_blood"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="-5dp"
