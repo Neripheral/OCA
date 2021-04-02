@@ -4,6 +4,7 @@ import com.nerpage.oca.classes.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class DuelManager {
     //================================================================================
@@ -42,10 +43,6 @@ public class DuelManager {
         }
     }
 
-    public interface Referee {
-        boolean check(DuelManager duelManager);
-    }
-
     enum TurnStatus{
         ALPHA,
         BRAVO
@@ -62,10 +59,14 @@ public class DuelManager {
                             .anyMatch(duelist -> duelist.getEntity().isDead())
         );
 
-        Referee referee;
+        private Predicate<DuelManager> condition;
 
-        Goal(Referee referee){
-            this.referee = referee;
+        public boolean check(DuelManager duelManager){
+            return this.condition.test(duelManager);
+        }
+
+        Goal(Predicate<DuelManager> condition){
+            this.condition = condition;
         }
 
     }
@@ -114,7 +115,7 @@ public class DuelManager {
     //================================================================================
 
     private boolean checkForGoal(){
-        return this.getGoal().referee.check(this);
+        return this.getGoal().check(this);
     }
 
     public void advanceTurn(){
