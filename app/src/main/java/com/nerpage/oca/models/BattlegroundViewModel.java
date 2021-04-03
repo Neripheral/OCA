@@ -2,7 +2,7 @@ package com.nerpage.oca.models;
 
 import androidx.lifecycle.ViewModel;
 
-public class DuelViewModel extends ViewModel {
+public class BattlegroundViewModel extends ViewModel {
     //================================================================================
     // Fields
     //================================================================================
@@ -21,7 +21,7 @@ public class DuelViewModel extends ViewModel {
         return enemyTitle;
     }
 
-    public DuelViewModel setEnemyTitle(String enemyTitle) {
+    public BattlegroundViewModel setEnemyTitle(String enemyTitle) {
         this.enemyTitle = enemyTitle;
         return this;
     }
@@ -30,7 +30,7 @@ public class DuelViewModel extends ViewModel {
         return enemyCurrentBlood;
     }
 
-    public DuelViewModel setEnemyCurrentBlood(int enemyCurrentBlood) {
+    public BattlegroundViewModel setEnemyCurrentBlood(int enemyCurrentBlood) {
         this.enemyCurrentBlood = enemyCurrentBlood;
         return this;
     }
@@ -39,7 +39,7 @@ public class DuelViewModel extends ViewModel {
         return enemyMaxBlood;
     }
 
-    public DuelViewModel setEnemyMaxBlood(int enemyMaxBlood) {
+    public BattlegroundViewModel setEnemyMaxBlood(int enemyMaxBlood) {
         this.enemyMaxBlood = enemyMaxBlood;
         return this;
     }
@@ -48,7 +48,7 @@ public class DuelViewModel extends ViewModel {
         return pcCurrentBlood;
     }
 
-    public DuelViewModel setPcCurrentBlood(int pcCurrentBlood) {
+    public BattlegroundViewModel setPcCurrentBlood(int pcCurrentBlood) {
         this.pcCurrentBlood = pcCurrentBlood;
         return this;
     }
@@ -57,7 +57,7 @@ public class DuelViewModel extends ViewModel {
         return pcMaxBlood;
     }
 
-    public DuelViewModel setPcMaxBlood(int pcMaxBlood) {
+    public BattlegroundViewModel setPcMaxBlood(int pcMaxBlood) {
         this.pcMaxBlood = pcMaxBlood;
         return this;
     }

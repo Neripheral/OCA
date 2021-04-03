@@ -18,7 +18,7 @@ import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.DuelistAI;
-import com.nerpage.oca.models.DuelViewModel;
+import com.nerpage.oca.models.BattlegroundViewModel;
 
 public class DuelFragment extends Fragment {
     //================================================================================
@@ -46,7 +46,7 @@ public class DuelFragment extends Fragment {
             }
         }
 
-        public void updateViewUsing(DuelViewModel model){
+        public void updateViewUsing(BattlegroundViewModel model){
             this.updateText( DuelPOI.ENEMY_TITLE,            model.getEnemyTitle());
             this.updateText( DuelPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
             this.updateText( DuelPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
@@ -69,7 +69,7 @@ public class DuelFragment extends Fragment {
 
     private View rootView;
     private FightManager duelManager;
-    private DuelViewModel model;
+    private BattlegroundViewModel model;
 
     //================================================================================
     // Accessors
@@ -93,11 +93,11 @@ public class DuelFragment extends Fragment {
         return this;
     }
 
-    public DuelViewModel getModel() {
+    public BattlegroundViewModel getModel() {
         return model;
     }
 
-    public DuelFragment setModel(DuelViewModel model) {
+    public DuelFragment setModel(BattlegroundViewModel model) {
         this.model = model;
         return this;
     }
@@ -144,7 +144,7 @@ public class DuelFragment extends Fragment {
         this.setDuelManager(new FightManager());
         this.enrollDuelists();
 
-        this.setModel(new ViewModelProvider(requireActivity()).get(DuelViewModel.class));
+        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
         this.updateModel();
     }
 
