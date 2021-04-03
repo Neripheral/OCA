@@ -8,16 +8,10 @@ import java.util.function.Predicate;
 
 public class FightManager {
     //================================================================================
-    // Inner class
-    //================================================================================
-
-    public interface OnYourTurnNotifier{
-        Action getNextActionAgainst(Entity enemy);
-    }
+    // region //            Inner classes
 
     public static class Fighter {
         private Entity entity;
-        private OnYourTurnNotifier notifier;
 
         public Entity getEntity() {
             return entity;
@@ -28,24 +22,9 @@ public class FightManager {
             return this;
         }
 
-        public OnYourTurnNotifier getNotifier() {
-            return notifier;
-        }
-
-        public Fighter setNotifier(OnYourTurnNotifier notifier) {
-            this.notifier = notifier;
-            return this;
-        }
-
-        public Fighter(Entity entity, OnYourTurnNotifier notifier){
+        public Fighter(Entity entity){
             this.setEntity(entity);
-            this.setNotifier(notifier);
         }
-    }
-
-    enum TurnStatus{
-        ALPHA,
-        BRAVO
     }
 
     enum Goal{
@@ -54,9 +33,9 @@ public class FightManager {
          */
         DEATH(
                 fightManager ->
-                    fightManager.getFighters()
-                            .stream()
-                            .anyMatch(fighter -> fighter.getEntity().isDead())
+                        fightManager.getFighters()
+                                .stream()
+                                .anyMatch(fighter -> fighter.getEntity().isDead())
         );
 
         private Predicate<FightManager> condition;
@@ -71,17 +50,18 @@ public class FightManager {
 
     }
 
+    // endregion //         Inner classes
     //================================================================================
-    // Fields
     //================================================================================
+    // region //            Fields
 
     private List<Fighter> fighters = new ArrayList<>();
-    private TurnStatus turnStatus;
     private Goal goal;
 
+    // endregion //         Fields
     //================================================================================
-    // Accessors
     //================================================================================
+    // region //            Accessors
 
     public List<Fighter> getFighters(){
         return new ArrayList<>(this.fighters);
@@ -89,15 +69,6 @@ public class FightManager {
 
     public FightManager setFighters(ArrayList<Fighter> fighters){
         this.fighters = new ArrayList<>(fighters);
-        return this;
-    }
-
-    public TurnStatus getTurnStatus() {
-        return turnStatus;
-    }
-
-    public FightManager setTurnStatus(TurnStatus turnStatus) {
-        this.turnStatus = turnStatus;
         return this;
     }
 
@@ -110,20 +81,13 @@ public class FightManager {
         return this;
     }
 
+    // endregion //         Accessors
     //================================================================================
-    // Methods
     //================================================================================
+    // region //            Methods
 
     private boolean checkForGoal(){
         return this.getGoal().check(this);
-    }
-
-    public void advanceTurn(){
-        this.setTurnStatus(
-                TurnStatus.values()[
-                        (this.getTurnStatus().ordinal()+1) % TurnStatus.values().length
-                        ]
-        );
     }
 
     private FightManager enrollFighter(Fighter fighter){
@@ -133,18 +97,23 @@ public class FightManager {
         return this;
     }
 
-    public FightManager enrollFighter(Entity entity, OnYourTurnNotifier notifier){
-        return this.enrollFighter(new Fighter(entity, notifier));
+    public FightManager enrollFighter(Entity entity){
+        return this.enrollFighter(new Fighter(entity));
     }
 
-    public FightManager enrollAI(DuelistAI ai){
-        return this.enrollFighter((Entity)ai, ai::getNextAction);
+    public FightManager enrollAI(){
+        //TODO: how to enroll an ai
+        return this;
     }
 
+    // endregion //         Methods
     //================================================================================
-    // Constructors
     //================================================================================
+    // region //            Constructors
 
     public FightManager(){}
+
+    // endregion //         Constructors
+    //================================================================================
 }
 
