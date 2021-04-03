@@ -8,6 +8,6 @@
         android:id="@+id/nav_belongings"
         android:title="@string/belongings_manager_name" />
     <item
-        android:id="@+id/nav_duel"
-        android:title="@string/nav_duel_name" />
+        android:id="@+id/nav_battlground"
+        android:title="@string/nav_battlground_name" />
 </menu>

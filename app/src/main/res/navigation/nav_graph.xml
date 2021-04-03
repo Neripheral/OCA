@@ -26,7 +26,7 @@
         android:name="com.nerpage.oca.fragments.BelongingsManagerFragment"
         android:label="@string/belongings_manager_name"/>
     <fragment
-        android:id="@+id/nav_duel"
+        android:id="@+id/nav_battlground"
         android:name="com.nerpage.oca.fragments.DuelFragment"
-        android:label="@string/nav_duel_name" />
+        android:label="@string/nav_battlground_name" />
 </navigation>

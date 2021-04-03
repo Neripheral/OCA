@@ -27,12 +27,12 @@ public class DuelFragment extends Fragment {
 
     public static class DuelLayoutHelper extends LayoutHelper{
         public enum DuelPOI implements LayoutHelper.POI{
-            ENEMY_TITLE(R.id.duel_enemy_title),
-            ENEMY_CURRENT_BLOOD(R.id.duel_enemy_currentBlood),
-            ENEMY_MAX_BLOOD(R.id.duel_enemy_maxBlood),
-            PC_CURRENT_BLOOD(R.id.duel_pc_currentBlood),
-            PC_MAX_BLOOD(R.id.duel_pc_maxBlood),
-            ATTACK_BUTTON(R.id.duel_attackbtn);
+            ENEMY_TITLE(R.id.battlground_enemy_title),
+            ENEMY_CURRENT_BLOOD(R.id.battlground_enemy_currentBlood),
+            ENEMY_MAX_BLOOD(R.id.battlground_enemy_maxBlood),
+            PC_CURRENT_BLOOD(R.id.battlground_pc_currentBlood),
+            PC_MAX_BLOOD(R.id.battlground_pc_maxBlood),
+            ATTACK_BUTTON(R.id.battlground_attackbtn);
 
             int id;
 
@@ -150,7 +150,7 @@ public class DuelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.setRootView(inflater.inflate(R.layout.fragment_duel, container, false));
+        this.setRootView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
         DuelLayoutHelper layout = new DuelLayoutHelper(this.getRootView());
         layout.updateViewUsing(this.getModel());

@@ -63,8 +63,8 @@
     <string name="inv_empty">Pusto</string>
     <string name="equipment_editor_name">Ekwipunek</string>
     <string name="belongings_manager_name">Dobytek</string>
-    <string name="duel_enemy">Przeciwnik</string>
-    <string name="duel_you">Ty</string>
-    <string name="duel_blood">Krew</string>
-    <string name="nav_duel_name">Duel</string>
+    <string name="battlground_enemy">Przeciwnik</string>
+    <string name="battlground_you">Ty</string>
+    <string name="battlground_blood">Krew</string>
+    <string name="nav_battlground_name">Duel</string>
 </resources>

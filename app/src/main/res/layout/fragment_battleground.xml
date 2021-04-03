@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/duel_enemy"
+        android:id="@+id/battleground_enemy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -18,18 +18,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/duel_enemy_title"
+            android:id="@+id/battleground_enemy_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/duel_enemy"
-            app:layout_constraintBottom_toTopOf="@+id/duel_enemy_blood"
+            android:text="@string/battleground_enemy"
+            app:layout_constraintBottom_toTopOf="@+id/battleground_enemy_blood"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/duel_enemy_blood"
+            android:id="@+id/battleground_enemy_blood"
             style="@style/TextAppearance.AppCompat.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -37,10 +37,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/duel_enemy_title">
+            app:layout_constraintTop_toBottomOf="@+id/battleground_enemy_title">
 
             <TextView
-                android:id="@+id/duel_enemy_currentBlood"
+                android:id="@+id/battleground_enemy_currentBlood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,7 +63,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/duel_enemy_maxBlood"
+                android:id="@+id/battleground_enemy_maxBlood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -76,7 +76,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/duel_pc"
+        android:id="@+id/battleground_pc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -85,17 +85,17 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/duel_attackbtn"
+            android:id="@+id/battleground_attackbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Attack"
-            app:layout_constraintBottom_toTopOf="@id/duel_pc_blood"
+            app:layout_constraintBottom_toTopOf="@id/battleground_pc_blood"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Attack" />
 
         <FrameLayout
-            android:id="@+id/duel_pc_blood"
+            android:id="@+id/battleground_pc_blood"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="-5dp"
@@ -111,7 +111,7 @@
                 android:padding="8dp">
 
                 <TextView
-                    android:id="@+id/duel_pc_currentBlood"
+                    android:id="@+id/battleground_pc_currentBlood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blood"
@@ -131,7 +131,7 @@
                     tools:ignore="HardcodedText" />
 
                 <TextView
-                    android:id="@+id/duel_pc_maxBlood"
+                    android:id="@+id/battleground_pc_maxBlood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blood"

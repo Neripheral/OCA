@@ -65,8 +65,8 @@
     <string name="inv_empty">Empty</string>
     <string name="equipment_editor_name">Equipment</string>
     <string name="belongings_manager_name">Belongings</string>
-    <string name="duel_enemy">Enemy</string>
-    <string name="duel_you">You</string>
-    <string name="duel_blood">Blood</string>
-    <string name="nav_duel_name">Duel</string>
+    <string name="battlground_enemy">Enemy</string>
+    <string name="battlground_you">You</string>
+    <string name="battlground_blood">Blood</string>
+    <string name="nav_battlground_name">Duel</string>
 </resources>
