@@ -10,23 +10,6 @@ public class FightManager {
     //================================================================================
     // region //            Inner classes
 
-    public static class Fighter {
-        private Entity entity;
-
-        public Entity getEntity() {
-            return entity;
-        }
-
-        public Fighter setEntity(Entity entity) {
-            this.entity = entity;
-            return this;
-        }
-
-        public Fighter(Entity entity){
-            this.setEntity(entity);
-        }
-    }
-
     enum Goal{
         /**
          * True if any of the participants is dead.
