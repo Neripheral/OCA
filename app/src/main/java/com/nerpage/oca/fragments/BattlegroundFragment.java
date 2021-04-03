@@ -13,26 +13,23 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.LayoutHelper;
-import com.nerpage.oca.classes.NPCGenerator;
-import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.FightManager;
-import com.nerpage.oca.classes.fighting.DuelistAI;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
-public class DuelFragment extends Fragment {
+public class BattlegroundFragment extends Fragment {
     //================================================================================
     // Inner class
     //================================================================================
 
-    public static class DuelLayoutHelper extends LayoutHelper{
-        public enum DuelPOI implements LayoutHelper.POI{
-            ENEMY_TITLE(R.id.battlground_enemy_title),
-            ENEMY_CURRENT_BLOOD(R.id.battlground_enemy_currentBlood),
-            ENEMY_MAX_BLOOD(R.id.battlground_enemy_maxBlood),
-            PC_CURRENT_BLOOD(R.id.battlground_pc_currentBlood),
-            PC_MAX_BLOOD(R.id.battlground_pc_maxBlood),
-            ATTACK_BUTTON(R.id.battlground_attackbtn);
+    public static class BattlegroundLayoutHelper extends LayoutHelper{
+        public enum BattlegroundPOI implements LayoutHelper.POI{
+            ENEMY_TITLE(R.id.battleground_enemy_title),
+            ENEMY_CURRENT_BLOOD(R.id.battleground_enemy_currentBlood),
+            ENEMY_MAX_BLOOD(R.id.battleground_enemy_maxBlood),
+            PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
+            PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
+            ATTACK_BUTTON(R.id.battleground_attackbtn);
 
             int id;
 
@@ -41,24 +38,24 @@ public class DuelFragment extends Fragment {
                 return id;
             }
 
-            DuelPOI(int id){
+            BattlegroundPOI(int id){
                 this.id = id;
             }
         }
 
         public void updateViewUsing(BattlegroundViewModel model){
-            this.updateText( DuelPOI.ENEMY_TITLE,            model.getEnemyTitle());
-            this.updateText( DuelPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
-            this.updateText( DuelPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
-            this.updateText( DuelPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
-            this.updateText( DuelPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+            this.updateText( BattlegroundPOI.ENEMY_TITLE,            model.getEnemyTitle());
+            this.updateText( BattlegroundPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
+            this.updateText( BattlegroundPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
+            this.updateText( BattlegroundPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
+            this.updateText( BattlegroundPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
         }
 
         public void bindListener(View.OnClickListener listener){
-            this.getView(DuelPOI.ATTACK_BUTTON).setOnClickListener(listener);
+            this.getView(BattlegroundPOI.ATTACK_BUTTON).setOnClickListener(listener);
         }
 
-        public DuelLayoutHelper(View rootView){
+        public BattlegroundLayoutHelper(View rootView){
             super(rootView);
         }
     }
@@ -68,7 +65,7 @@ public class DuelFragment extends Fragment {
     //================================================================================
 
     private View rootView;
-    private FightManager duelManager;
+    private FightManager fightManager;
     private BattlegroundViewModel model;
 
     //================================================================================
@@ -79,17 +76,17 @@ public class DuelFragment extends Fragment {
         return rootView;
     }
 
-    public DuelFragment setRootView(View rootView) {
+    public BattlegroundFragment setRootView(View rootView) {
         this.rootView = rootView;
         return this;
     }
 
-    public FightManager getDuelManager() {
-        return duelManager;
+    public FightManager getFightManager() {
+        return fightManager;
     }
 
-    public DuelFragment setDuelManager(FightManager duelManager) {
-        this.duelManager = duelManager;
+    public BattlegroundFragment setFightManager(FightManager fightManager) {
+        this.fightManager = fightManager;
         return this;
     }
 
@@ -97,7 +94,7 @@ public class DuelFragment extends Fragment {
         return model;
     }
 
-    public DuelFragment setModel(BattlegroundViewModel model) {
+    public BattlegroundFragment setModel(BattlegroundViewModel model) {
         this.model = model;
         return this;
     }
@@ -115,11 +112,8 @@ public class DuelFragment extends Fragment {
         return null;
     }
 
-    private void enrollDuelists(){
-        PlayerCharacter pc = ((CharacterEditorActivity) requireActivity()).getPc();
-        this.getDuelManager().enrollFighter(pc, this::onPlayerTurn);
-        DuelistAI enemy = NPCGenerator.generateEnemy();
-        this.getDuelManager().enrollAI(enemy);
+    private void enrollFighters(){
+        //TODO: enrolling fighters
     }
 
     private void updateModel(){
@@ -127,7 +121,7 @@ public class DuelFragment extends Fragment {
         this.getModel().setPcCurrentBlood(pc.getBlood());
         this.getModel().setPcMaxBlood(pc.getMaxBlood());
 
-        Entity enemy = this.getDuelManager().getFighters().get(1).getEntity();
+        Entity enemy = this.getFightManager().getFighters().get(1).getEntity();
         this.getModel().setEnemyTitle(enemy.getName(getContext()));
         this.getModel().setEnemyCurrentBlood(enemy.getBlood());
         this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
@@ -141,8 +135,8 @@ public class DuelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setDuelManager(new FightManager());
-        this.enrollDuelists();
+        this.setFightManager(new FightManager());
+        this.enrollFighters();
 
         this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
         this.updateModel();
@@ -152,7 +146,7 @@ public class DuelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setRootView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
-        DuelLayoutHelper layout = new DuelLayoutHelper(this.getRootView());
+        BattlegroundLayoutHelper layout = new BattlegroundLayoutHelper(this.getRootView());
         layout.updateViewUsing(this.getModel());
         layout.bindListener(v->onAttackButtonPressed());
 
@@ -163,7 +157,7 @@ public class DuelFragment extends Fragment {
     // Constructors
     //================================================================================
 
-    public DuelFragment() {
+    public BattlegroundFragment() {
         // Required empty public constructor
     }
 }

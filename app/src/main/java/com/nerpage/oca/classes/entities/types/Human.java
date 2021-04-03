@@ -10,7 +10,7 @@ import com.nerpage.oca.classes.fighting.actions.Punch;
 
 import java.util.List;
 
-public abstract class Human extends Entity implements DuelistAI {
+public abstract class Human extends Entity {
 
     public final int PUNCH_POWER = 20;
 
@@ -31,11 +31,6 @@ public abstract class Human extends Entity implements DuelistAI {
         actions.add(new Punch(PUNCH_POWER));
 
         return actions;
-    }
-
-    @Override
-    public Action getNextAction(Entity opponent) {
-        return this.getPossibleActions().get(0);
     }
 
     //================================================================================
