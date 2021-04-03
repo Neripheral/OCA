@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class DuelManager {
+public class FightManager {
     //================================================================================
     // Inner class
     //================================================================================
@@ -15,7 +15,7 @@ public class DuelManager {
         Action getNextActionAgainst(Entity enemy);
     }
 
-    public static class Duelist {
+    public static class Fighter {
         private Entity entity;
         private OnYourTurnNotifier notifier;
 
@@ -23,7 +23,7 @@ public class DuelManager {
             return entity;
         }
 
-        public Duelist setEntity(Entity entity) {
+        public Fighter setEntity(Entity entity) {
             this.entity = entity;
             return this;
         }
@@ -32,12 +32,12 @@ public class DuelManager {
             return notifier;
         }
 
-        public Duelist setNotifier(OnYourTurnNotifier notifier) {
+        public Fighter setNotifier(OnYourTurnNotifier notifier) {
             this.notifier = notifier;
             return this;
         }
 
-        public Duelist(Entity entity, OnYourTurnNotifier notifier){
+        public Fighter(Entity entity, OnYourTurnNotifier notifier){
             this.setEntity(entity);
             this.setNotifier(notifier);
         }
@@ -53,19 +53,19 @@ public class DuelManager {
          * True if any of the participants is dead.
          */
         DEATH(
-                duelManager ->
-                    duelManager.getDuelists()
+                fightManager ->
+                    fightManager.getFighters()
                             .stream()
-                            .anyMatch(duelist -> duelist.getEntity().isDead())
+                            .anyMatch(fighter -> fighter.getEntity().isDead())
         );
 
-        private Predicate<DuelManager> condition;
+        private Predicate<FightManager> condition;
 
-        public boolean check(DuelManager duelManager){
-            return this.condition.test(duelManager);
+        public boolean check(FightManager fightManager){
+            return this.condition.test(fightManager);
         }
 
-        Goal(Predicate<DuelManager> condition){
+        Goal(Predicate<FightManager> condition){
             this.condition = condition;
         }
 
@@ -75,7 +75,7 @@ public class DuelManager {
     // Fields
     //================================================================================
 
-    private List<Duelist> duelists = new ArrayList<>();
+    private List<Fighter> fighters = new ArrayList<>();
     private TurnStatus turnStatus;
     private Goal goal;
 
@@ -83,12 +83,12 @@ public class DuelManager {
     // Accessors
     //================================================================================
 
-    public List<Duelist> getDuelists(){
-        return new ArrayList<>(this.duelists);
+    public List<Fighter> getFighters(){
+        return new ArrayList<>(this.fighters);
     }
 
-    public DuelManager setDuelists(ArrayList<Duelist> duelists){
-        this.duelists = new ArrayList<>(duelists);
+    public FightManager setFighters(ArrayList<Fighter> fighters){
+        this.fighters = new ArrayList<>(fighters);
         return this;
     }
 
@@ -96,7 +96,7 @@ public class DuelManager {
         return turnStatus;
     }
 
-    public DuelManager setTurnStatus(TurnStatus turnStatus) {
+    public FightManager setTurnStatus(TurnStatus turnStatus) {
         this.turnStatus = turnStatus;
         return this;
     }
@@ -105,7 +105,7 @@ public class DuelManager {
         return goal;
     }
 
-    public DuelManager setGoal(Goal goal) {
+    public FightManager setGoal(Goal goal) {
         this.goal = goal;
         return this;
     }
@@ -126,25 +126,25 @@ public class DuelManager {
         );
     }
 
-    private DuelManager enrollDuelist(Duelist duelist){
-        ArrayList<Duelist> duelists = (ArrayList<Duelist>)this.getDuelists();
-        duelists.add(duelist);
-        this.setDuelists(duelists);
+    private FightManager enrollFighter(Fighter fighter){
+        ArrayList<Fighter> fighters = (ArrayList<Fighter>)this.getFighters();
+        fighters.add(fighter);
+        this.setFighters(fighters);
         return this;
     }
 
-    public DuelManager enrollDuelist(Entity entity, OnYourTurnNotifier notifier){
-        return this.enrollDuelist(new Duelist(entity, notifier));
+    public FightManager enrollFighter(Entity entity, OnYourTurnNotifier notifier){
+        return this.enrollFighter(new Fighter(entity, notifier));
     }
 
-    public DuelManager enrollAI(DuelistAI ai){
-        return this.enrollDuelist((Entity)ai, ai::getNextAction);
+    public FightManager enrollAI(DuelistAI ai){
+        return this.enrollFighter((Entity)ai, ai::getNextAction);
     }
 
     //================================================================================
     // Constructors
     //================================================================================
 
-    public DuelManager(){}
+    public FightManager(){}
 }
 

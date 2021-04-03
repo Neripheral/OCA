@@ -16,7 +16,7 @@ import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.classes.NPCGenerator;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
-import com.nerpage.oca.classes.fighting.DuelManager;
+import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.DuelistAI;
 import com.nerpage.oca.models.DuelViewModel;
 
@@ -68,7 +68,7 @@ public class DuelFragment extends Fragment {
     //================================================================================
 
     private View rootView;
-    private DuelManager duelManager;
+    private FightManager duelManager;
     private DuelViewModel model;
 
     //================================================================================
@@ -84,11 +84,11 @@ public class DuelFragment extends Fragment {
         return this;
     }
 
-    public DuelManager getDuelManager() {
+    public FightManager getDuelManager() {
         return duelManager;
     }
 
-    public DuelFragment setDuelManager(DuelManager duelManager) {
+    public DuelFragment setDuelManager(FightManager duelManager) {
         this.duelManager = duelManager;
         return this;
     }
@@ -117,7 +117,7 @@ public class DuelFragment extends Fragment {
 
     private void enrollDuelists(){
         PlayerCharacter pc = ((CharacterEditorActivity) requireActivity()).getPc();
-        this.getDuelManager().enrollDuelist(pc, this::onPlayerTurn);
+        this.getDuelManager().enrollFighter(pc, this::onPlayerTurn);
         DuelistAI enemy = NPCGenerator.generateEnemy();
         this.getDuelManager().enrollAI(enemy);
     }
@@ -127,7 +127,7 @@ public class DuelFragment extends Fragment {
         this.getModel().setPcCurrentBlood(pc.getBlood());
         this.getModel().setPcMaxBlood(pc.getMaxBlood());
 
-        Entity enemy = this.getDuelManager().getDuelists().get(1).getEntity();
+        Entity enemy = this.getDuelManager().getFighters().get(1).getEntity();
         this.getModel().setEnemyTitle(enemy.getName(getContext()));
         this.getModel().setEnemyCurrentBlood(enemy.getBlood());
         this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
@@ -141,7 +141,7 @@ public class DuelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setDuelManager(new DuelManager());
+        this.setDuelManager(new FightManager());
         this.enrollDuelists();
 
         this.setModel(new ViewModelProvider(requireActivity()).get(DuelViewModel.class));
