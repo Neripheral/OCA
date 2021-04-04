@@ -13,9 +13,17 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
+import com.nerpage.oca.classes.fighting.Fighter;
+import com.nerpage.oca.classes.fighting.actions.Punch;
+import com.nerpage.oca.classes.fighting.behaviors.PlayerFightingBehavior;
+import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
 import com.nerpage.oca.models.BattlegroundViewModel;
+
+import java.util.List;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
@@ -107,13 +115,26 @@ public class BattlegroundFragment extends Fragment {
         //TODO: add what to do when the button is pressed
     }
 
-    public Action onPlayerTurn(Entity enemy){
+    public Action onPlayerTurn(List<Fighter> otherFighters){
         //TODO: add what to do on player's turn
-        return null;
+
+        return new Punch(20);
+    }
+
+    private PlayerCharacter getPlayerCharacter(){
+        return ((CharacterEditorActivity)this.requireActivity()).getPc();
     }
 
     private void enrollFighters(){
-        //TODO: enrolling fighters
+        // enroll player
+        this.getFightManager().enrollFighter(
+                this.getPlayerCharacter(),
+                new PlayerFightingBehavior(
+                    (fighter, otherFighters) -> this.onPlayerTurn(otherFighters)
+        ));
+
+        // enroll enemy
+        this.getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy());
     }
 
     private void updateModel(){
