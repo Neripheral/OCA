@@ -37,4 +37,5 @@ public abstract class Action {
     //================================================================================
 
     public abstract Status getAppliedStatus();
+    public abstract int getTimeSpan();
 }
