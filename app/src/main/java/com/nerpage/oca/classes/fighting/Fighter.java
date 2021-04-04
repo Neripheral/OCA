@@ -9,7 +9,8 @@ public class Fighter {
     // region //            Fields
 
     private Entity entity;
-    private Action pendingAction;
+    private Action selectedAction; // Action that fighter want to execute the next
+    private Action pendingAction; // Action already scheduled for execution. It is later replaced by selectedAction.
     private FightingBehavior behavior;
     private int stopwatchTime;
 
@@ -33,6 +34,15 @@ public class Fighter {
 
     public Fighter setPendingAction(Action pendingAction) {
         this.pendingAction = pendingAction;
+        return this;
+    }
+
+    public Action getSelectedAction() {
+        return selectedAction;
+    }
+
+    public Fighter setSelectedAction(Action selectedAction) {
+        this.selectedAction = selectedAction;
         return this;
     }
 
@@ -63,6 +73,11 @@ public class Fighter {
         return this.getBehavior().promptAction(this, otherFighters);
     }
 
+    public void pushActionToPending(){
+        this.setPendingAction(this.getSelectedAction());
+        this.setSelectedAction(null);
+    }
+
     // endregion //         Methods
     //================================================================================
     //================================================================================
@@ -70,6 +85,7 @@ public class Fighter {
 
     public Fighter(Entity entity, FightingBehavior behavior){
         this.entity = entity;
+        this.selectedAction = null;
         this.pendingAction = null;
         this.behavior = behavior;
         this.stopwatchTime = 0;
