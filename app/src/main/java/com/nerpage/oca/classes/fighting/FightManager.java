@@ -69,11 +69,11 @@ public class FightManager {
     //================================================================================
     // region //            Methods
 
-    private boolean checkForGoal(){
+    public boolean didFightEnd(){
         return this.getGoal().check(this);
     }
 
-    private FightManager enrollFighter(Fighter fighter){
+    public FightManager enrollFighter(Fighter fighter){
         ArrayList<Fighter> fighters = (ArrayList<Fighter>)this.getFighters();
         fighters.add(fighter);
         this.setFighters(fighters);
