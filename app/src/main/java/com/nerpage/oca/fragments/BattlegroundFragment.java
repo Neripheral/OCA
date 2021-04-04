@@ -111,14 +111,26 @@ public class BattlegroundFragment extends Fragment {
     // Methods
     //================================================================================
 
-    public void onAttackButtonPressed(){
-        //TODO: add what to do when the button is pressed
+    private BattlegroundLayoutHelper refreshFragmentData(){
+        this.updateModel();
+
+        BattlegroundLayoutHelper layout = new BattlegroundLayoutHelper(this.getRootView());
+        layout.updateViewUsing(this.getModel());
+        return layout;
     }
 
-    public Action onPlayerTurn(List<Fighter> otherFighters){
-        //TODO: add what to do on player's turn
+    private void submitPlayerActionChoice(){
+        Punch action = new Punch(20);
+        action.setSource(this.getFightManager().getPlayerFighter().getEntity());
+        action.setTarget(this.getFightManager().getFightersWithout(this.getFightManager().getPlayerFighter()).get(0).getEntity());
+        this.getFightManager().getPlayerFighter().setSelectedAction(action);
+        this.getFightManager().advanceTurn();
+        this.refreshFragmentData();
+    }
 
-        return new Punch(20);
+    public void onAttackButtonPressed(){
+        //TODO: add what to do when the button is pressed
+        this.submitPlayerActionChoice();
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -127,11 +139,7 @@ public class BattlegroundFragment extends Fragment {
 
     private void enrollFighters(){
         // enroll player
-        this.getFightManager().enrollFighter(
-                this.getPlayerCharacter(),
-                new PlayerFightingBehavior(
-                    (fighter, otherFighters) -> this.onPlayerTurn(otherFighters)
-        ));
+        this.getFightManager().enrollPlayer(this.getPlayerCharacter());
 
         // enroll enemy
         this.getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy());
@@ -158,6 +166,8 @@ public class BattlegroundFragment extends Fragment {
 
         this.setFightManager(new FightManager());
         this.enrollFighters();
+        this.getFightManager().startFight();
+        while(this.getFightManager().advanceTurn());
 
         this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
         this.updateModel();
@@ -167,9 +177,8 @@ public class BattlegroundFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setRootView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
-        BattlegroundLayoutHelper layout = new BattlegroundLayoutHelper(this.getRootView());
-        layout.updateViewUsing(this.getModel());
-        layout.bindListener(v->onAttackButtonPressed());
+        this.refreshFragmentData()
+                .bindListener(v->onAttackButtonPressed());
 
         return this.getRootView();
     }

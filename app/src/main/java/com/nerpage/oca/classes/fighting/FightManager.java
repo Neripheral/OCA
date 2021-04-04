@@ -107,7 +107,7 @@ public class FightManager {
         return this;
     }
 
-    private List<Fighter> getFightersWithout(Fighter fighter){
+    public List<Fighter> getFightersWithout(Fighter fighter){
         // \/\/\/\/\/\/
         List<Fighter> toReturn = new ArrayList<>(this.getFighters());
         toReturn.remove(fighter);
@@ -138,13 +138,13 @@ public class FightManager {
                         getFightersWithout(activeFighter)
                 )
         );
-        activeFighter.pushActionToPending();
     }
 
     // returns true if successful or false if not (probably it's player's turn)
     public boolean advanceTurn(){
         Fighter activeFighter = this.getActiveFighter();
 
+        activeFighter.pushActionToPending();
         this.executePendingAction(activeFighter);
 
         if(activeFighter.getBehavior() != null) {
