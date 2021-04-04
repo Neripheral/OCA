@@ -42,7 +42,7 @@ public class FightManager {
 
     private List<Fighter> fighters = new ArrayList<>();
     private Goal goal;
-    private boolean playerTurn;
+    private Fighter playerFighter;
 
     // endregion //         Fields
     //================================================================================
@@ -67,12 +67,12 @@ public class FightManager {
         return this;
     }
 
-    public boolean isPlayerTurn() {
-        return playerTurn;
+    public Fighter getPlayerFighter() {
+        return playerFighter;
     }
 
-    public FightManager setPlayerTurn(boolean playerTurn) {
-        this.playerTurn = playerTurn;
+    public FightManager setPlayerFighter(Fighter playerFighter) {
+        this.playerFighter = playerFighter;
         return this;
     }
 
@@ -99,6 +99,12 @@ public class FightManager {
 
     public FightManager enrollFighter(Entity entity, FightingBehavior behavior){
         return this.enrollFighter(new Fighter(entity, behavior));
+    }
+
+    public FightManager enrollPlayer(Entity player){
+        this.setPlayerFighter(new Fighter(player,null));
+        this.enrollFighter(this.getPlayerFighter());
+        return this;
     }
 
     private List<Fighter> getFightersWithout(Fighter fighter){
@@ -144,10 +150,8 @@ public class FightManager {
         if(activeFighter.getBehavior() != null) {
             this.askAIForNextAction(activeFighter);
             return true;
-        }else{
-            this.setPlayerTurn(true);
+        }else
             return false;
-        }
     }
 
     public void startFight(){
