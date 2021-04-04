@@ -78,6 +78,10 @@ public class Fighter {
         this.setSelectedAction(null);
     }
 
+    public void addToStopwatch(int time){
+        this.setStopwatchTime(this.getStopwatchTime() + time);
+    }
+
     // endregion //         Methods
     //================================================================================
     //================================================================================
