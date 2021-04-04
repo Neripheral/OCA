@@ -70,8 +70,7 @@ public abstract class Entity implements Identifiable{
             ((Status.onApplication) status).onApplication(this);
     }
 
-    @Nullable
-    public List<Action> getPossibleActions(){
+    public List<Class<? extends Action>> getPossibleActions(){
         return new ArrayList<>();
     }
 

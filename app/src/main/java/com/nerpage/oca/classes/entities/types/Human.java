@@ -25,11 +25,10 @@ public abstract class Human extends Entity {
     
     @NonNull
     @Override
-    public List<Action> getPossibleActions() {
-        List<Action> actions = super.getPossibleActions();
+    public List<Class<? extends Action>> getPossibleActions() {
+        List<Class<? extends Action>> actions = super.getPossibleActions();
         assert actions != null;
-        actions.add(new Punch(PUNCH_POWER));
-
+        actions.add(Punch.class);
         return actions;
     }
 
