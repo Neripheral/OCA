@@ -123,7 +123,7 @@ public class BattlegroundFragment extends Fragment {
         Punch action = new Punch(20);
         action.setSource(this.getFightManager().getPlayerFighter().getEntity());
         action.setTarget(this.getFightManager().getFightersWithout(this.getFightManager().getPlayerFighter()).get(0).getEntity());
-        this.getFightManager().getPlayerFighter().setSelectedAction(action);
+        this.getFightManager().registerSelectedAction(this.getFightManager().getPlayerFighter(), action);
         this.getFightManager().advanceTurn();
         this.refreshFragmentData();
     }

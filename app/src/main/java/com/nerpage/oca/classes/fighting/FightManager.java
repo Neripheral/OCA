@@ -123,6 +123,15 @@ public class FightManager {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    public void registerSelectedAction(Fighter fighter, Action action){
+        if(action != null) {
+            fighter.setSelectedAction(action);
+            fighter.addToStopwatch(action.getTimeSpan());
+        }else{
+            fighter.setSelectedAction(null);
+        }
+    }
+
     private void executePendingAction(Fighter activeFighter){
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
@@ -132,7 +141,7 @@ public class FightManager {
     }
 
     private void askAIForNextAction(Fighter activeFighter){
-        activeFighter.setSelectedAction(
+        this.registerSelectedAction(activeFighter,
                 activeFighter.getBehavior().promptAction(
                         activeFighter,
                         getFightersWithout(activeFighter)
