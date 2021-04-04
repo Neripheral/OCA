@@ -42,6 +42,7 @@ public class FightManager {
 
     private List<Fighter> fighters = new ArrayList<>();
     private Goal goal;
+    private boolean playerTurn;
 
     // endregion //         Fields
     //================================================================================
@@ -66,6 +67,15 @@ public class FightManager {
         return this;
     }
 
+    public boolean isPlayerTurn() {
+        return playerTurn;
+    }
+
+    public FightManager setPlayerTurn(boolean playerTurn) {
+        this.playerTurn = playerTurn;
+        return this;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
@@ -76,7 +86,7 @@ public class FightManager {
         this.getFighters().forEach(fighter -> fighter.setStopwatchTime(0));
     }
 
-    private boolean didFightEnd(){
+    public boolean didFightEnd(){
         return this.getGoal().check(this);
     }
 
@@ -107,23 +117,41 @@ public class FightManager {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    private void advanceTurn(){
-        Fighter activeFighter = this.getActiveFighter();
-
+    private void executePendingAction(Fighter activeFighter){
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
             //TODO: clashing Actions
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
         }
+    }
 
-        Action chosenAction = activeFighter.promptAction(this.getFightersWithout(activeFighter));
-        activeFighter.setPendingAction(chosenAction);
+    private void askAIForNextAction(Fighter activeFighter){
+        activeFighter.setSelectedAction(
+                activeFighter.getBehavior().promptAction(
+                        activeFighter,
+                        getFightersWithout(activeFighter)
+                )
+        );
+        activeFighter.pushActionToPending();
+    }
+
+    // returns true if successful or false if not (probably it's player's turn)
+    public boolean advanceTurn(){
+        Fighter activeFighter = this.getActiveFighter();
+
+        this.executePendingAction(activeFighter);
+
+        if(activeFighter.getBehavior() != null) {
+            this.askAIForNextAction(activeFighter);
+            return true;
+        }else{
+            this.setPlayerTurn(true);
+            return false;
+        }
     }
 
     public void startFight(){
         this.calibrateStopwatches();
-        while(!this.didFightEnd())
-            this.advanceTurn();
     }
 
     // endregion //         Methods
