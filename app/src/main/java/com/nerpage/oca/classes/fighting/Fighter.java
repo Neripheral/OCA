@@ -9,6 +9,7 @@ public class Fighter {
     private Entity entity;
     private Action pendingAction;
     private FightingBehavior behavior;
+    private int stopwatchTime;
 
     // endregion //         Fields
     //================================================================================
@@ -42,6 +43,15 @@ public class Fighter {
         return this;
     }
 
+    public int getStopwatchTime() {
+        return stopwatchTime;
+    }
+
+    public Fighter setStopwatchTime(int stopwatchTime) {
+        this.stopwatchTime = stopwatchTime;
+        return this;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
@@ -49,7 +59,9 @@ public class Fighter {
 
     public Fighter(Entity entity, FightingBehavior behavior){
         this.entity = entity;
+        this.pendingAction = null;
         this.behavior = behavior;
+        this.stopwatchTime = 0;
     }
 
     // endregion //         Constructors
