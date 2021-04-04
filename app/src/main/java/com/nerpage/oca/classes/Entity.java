@@ -62,7 +62,7 @@ public abstract class Entity implements Identifiable{
     abstract public int getMaxBlood();
 
     public boolean isDead(){
-        return getBlood() == 0;
+        return getBlood() == this.getMinBlood();
     }
 
     public void applyStatus(Status status){
