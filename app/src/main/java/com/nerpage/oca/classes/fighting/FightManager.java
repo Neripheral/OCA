@@ -80,13 +80,8 @@ public class FightManager {
         return this;
     }
 
-    public FightManager enrollFighter(Entity entity){
-        return this.enrollFighter(new Fighter(entity));
-    }
-
-    public FightManager enrollAI(){
-        //TODO: how to enroll an ai
-        return this;
+    public FightManager enrollFighter(Entity entity, FightingBehavior behavior){
+        return this.enrollFighter(new Fighter(entity, behavior));
     }
 
     // endregion //         Methods

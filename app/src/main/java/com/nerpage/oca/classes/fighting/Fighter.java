@@ -47,8 +47,9 @@ public class Fighter {
     //================================================================================
     // region //            Constructors
 
-    public Fighter(Entity entity){
-        this.setEntity(entity);
+    public Fighter(Entity entity, FightingBehavior behavior){
+        this.entity = entity;
+        this.behavior = behavior;
     }
 
     // endregion //         Constructors
