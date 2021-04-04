@@ -2,6 +2,8 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
 
+import java.util.List;
+
 public class Fighter {
     //================================================================================
     // region //            Fields
@@ -53,6 +55,15 @@ public class Fighter {
     }
 
     // endregion //         Accessors
+    //================================================================================
+    //================================================================================
+    // region //            Methods
+
+    public Action promptAction(List<Fighter> otherFighters){
+        return this.getBehavior().promptAction(this, otherFighters);
+    }
+
+    // endregion //         Methods
     //================================================================================
     //================================================================================
     // region //            Constructors

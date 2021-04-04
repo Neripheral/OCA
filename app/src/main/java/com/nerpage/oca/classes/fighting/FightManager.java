@@ -3,7 +3,9 @@ package com.nerpage.oca.classes.fighting;
 import com.nerpage.oca.classes.Entity;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class FightManager {
@@ -69,7 +71,12 @@ public class FightManager {
     //================================================================================
     // region //            Methods
 
-    public boolean didFightEnd(){
+    private void calibrateStopwatches(){
+        //TODO: initializing stopwatches
+        this.getFighters().forEach(fighter -> fighter.setStopwatchTime(0));
+    }
+
+    private boolean didFightEnd(){
         return this.getGoal().check(this);
     }
 
@@ -82,6 +89,41 @@ public class FightManager {
 
     public FightManager enrollFighter(Entity entity, FightingBehavior behavior){
         return this.enrollFighter(new Fighter(entity, behavior));
+    }
+
+    private List<Fighter> getFightersWithout(Fighter fighter){
+        // \/\/\/\/\/\/
+        List<Fighter> toReturn = new ArrayList<>(this.getFighters());
+        toReturn.remove(fighter);
+        return toReturn;
+        // /\/\/\/\/\/\
+        //TODO: make sure this works
+    }
+
+    private Fighter getActiveFighter(){
+        return this.getFighters()
+                .stream()
+                .min(Comparator.comparing(Fighter::getStopwatchTime))
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    private void advanceTurn(){
+        Fighter activeFighter = this.getActiveFighter();
+
+        Action pendingAction = activeFighter.getPendingAction();
+        if(pendingAction != null){
+            //TODO: clashing Actions
+            pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
+        }
+
+        Action chosenAction = activeFighter.promptAction(this.getFightersWithout(activeFighter));
+        activeFighter.setPendingAction(chosenAction);
+    }
+
+    public void startFight(){
+        this.calibrateStopwatches();
+        while(!this.didFightEnd())
+            this.advanceTurn();
     }
 
     // endregion //         Methods
