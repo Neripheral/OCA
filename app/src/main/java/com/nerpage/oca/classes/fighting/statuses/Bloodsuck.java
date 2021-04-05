@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting.statuses;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.fighting.Status;
 
-public class Bloodsuck extends Status implements Status.onApplication {
+public class Bloodsuck extends Status {
     //================================================================================
     // Fields
     //================================================================================
