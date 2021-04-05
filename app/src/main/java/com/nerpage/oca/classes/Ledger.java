@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class Ledger {
     //================================================================================
@@ -50,27 +52,60 @@ public class Ledger {
     //================================================================================
     // region //            Fields
 
+    List<Row> rows;
+    List<Consumer<String>> onRowAddedListeners;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
+    public List<Row> getRows() {
+        return rows;
+    }
 
+    private Ledger setRows(List<Row> rows) {
+        this.rows = rows;
+        return this;
+    }
+
+    public List<Consumer<String>> getOnRowAddedListeners() {
+        return onRowAddedListeners;
+    }
+
+    private Ledger setOnRowAddedListeners(List<Consumer<String>> onRowAddedListeners) {
+        this.onRowAddedListeners = onRowAddedListeners;
+        return this;
+    }
 
     // endregion //         Accessors
     //================================================================================
     //================================================================================
     // region //            Methods
 
+    public Ledger addOnRowAddedListener(Consumer<String> listener){
+        this.getOnRowAddedListeners().add(listener);
+        return this;
+    }
 
+    public Ledger addRow(Row newRow){
+        this.getRows().add(newRow);
+        return this;
+    }
 
     // endregion //         Methods
     //================================================================================
     //================================================================================
     // region //            Constructors
 
+    public Ledger(List<Row> rows) {
+        this.rows = rows;
+        this.onRowAddedListeners = new ArrayList<>();
+    }
 
+    public Ledger(){
+        this(new ArrayList<>());
+    }
 
     // endregion //         Constructors
     //================================================================================

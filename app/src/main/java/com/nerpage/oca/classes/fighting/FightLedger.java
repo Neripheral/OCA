@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Ledger;
 
-import java.util.ArrayList;
-
 public class FightLedger extends Ledger {
     //================================================================================
     // region //            Inner classes
