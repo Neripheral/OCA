@@ -1,5 +1,7 @@
 package com.nerpage.oca.classes.fighting;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Ledger;
@@ -36,8 +38,12 @@ public class FightLedger extends Ledger {
         @NonNull
         @Override
         public String toString() {
-            //TODO: continue
-            return "";
+            return this.getAction().getId();
+        }
+
+        @Override
+        public String toString(Context context) {
+            return this.getAction().getName(context);
         }
 
         public ActionRow(Action action) {
@@ -68,6 +74,4 @@ public class FightLedger extends Ledger {
 
     // endregion //         Methods
     //================================================================================
-
-
 }
