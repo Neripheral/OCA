@@ -68,7 +68,9 @@ public class FightLedger extends Ledger {
     //================================================================================
     // region //            Methods
 
-
+    protected Ledger addRow(Action action) {
+        return super.addRow(new ActionRow(action));
+    }
 
     // endregion //         Methods
     //================================================================================

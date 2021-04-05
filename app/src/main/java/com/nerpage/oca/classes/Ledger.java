@@ -88,9 +88,13 @@ public class Ledger {
         return this;
     }
 
-    public Ledger addRow(Row newRow){
+    protected Ledger addRow(Row newRow){
         this.getRows().add(newRow);
         return this;
+    }
+
+    public Ledger addRow(String string){
+        return this.addRow(new StringRow(string));
     }
 
     // endregion //         Methods
