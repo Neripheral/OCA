@@ -1,5 +1,7 @@
 package com.nerpage.oca.classes.fighting.statuses;
 
+import androidx.annotation.NonNull;
+
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.fighting.Status;
 
@@ -30,6 +32,14 @@ public class Bloodsuck extends Status {
     @Override
     public void onApplication(Entity entity) {
         entity.setBlood(entity.getBlood() - suckStrength);
+    }
+
+    @NonNull
+    @Override
+    public Bloodsuck clone() {
+        Bloodsuck toReturn = (Bloodsuck)super.clone();
+        toReturn.setSuckStrength(this.getSuckStrength());
+        return toReturn;
     }
 
     //================================================================================
