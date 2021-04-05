@@ -1,5 +1,7 @@
 package com.nerpage.oca.classes.fighting.actions;
 
+import androidx.annotation.NonNull;
+
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.Status;
 import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
@@ -16,7 +18,7 @@ public class Punch extends Action {
     //================================================================================
 
     @Override
-    public Status getAppliedStatus() {
+    public Bloodsuck getAppliedStatus() {
         return this.appliedStatus;
     }
 
@@ -28,6 +30,14 @@ public class Punch extends Action {
     @Override
     public int getTimeSpan() {
         return 1000;
+    }
+
+    @NonNull
+    @Override
+    public Punch clone() {
+        Punch toReturn = (Punch)super.clone();
+        toReturn.setAppliedStatus(this.getAppliedStatus().clone());
+        return toReturn;
     }
 
     //================================================================================

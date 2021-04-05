@@ -1,8 +1,10 @@
 package com.nerpage.oca.classes.fighting;
 
+import androidx.annotation.NonNull;
+
 import com.nerpage.oca.classes.Entity;
 
-public abstract class Action {
+public abstract class Action implements Cloneable{
     //================================================================================
     // region //            Fields
 
@@ -35,6 +37,20 @@ public abstract class Action {
 
     // endregion //         Accessors
     //================================================================================
+
+
+    @NonNull
+    @Override
+    public Action clone() {
+        try {
+            Action toReturn = (Action)super.clone();
+            toReturn.setTarget(this.getTarget());
+            toReturn.setSource(this.getSource());
+            return toReturn;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public abstract Status getAppliedStatus();
     public abstract int getTimeSpan();
