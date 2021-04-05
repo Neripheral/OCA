@@ -3,8 +3,9 @@ package com.nerpage.oca.classes.fighting;
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.Identifiable;
 
-public abstract class Action implements Cloneable{
+public abstract class Action implements Cloneable, Identifiable {
     //================================================================================
     // region //            Fields
 
@@ -37,7 +38,14 @@ public abstract class Action implements Cloneable{
 
     // endregion //         Accessors
     //================================================================================
+    //================================================================================
+    // region //            Methods
 
+
+    @Override
+    public String getPrefix() {
+        return "action";
+    }
 
     @NonNull
     @Override
@@ -54,4 +62,7 @@ public abstract class Action implements Cloneable{
 
     public abstract Status getAppliedStatus();
     public abstract int getTimeSpan();
+
+    // endregion //         Methods
+    //================================================================================
 }
