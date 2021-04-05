@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,6 @@ public class BattlegroundFragment extends Fragment {
 
     private BattlegroundLayoutHelper refreshFragmentData(){
         this.updateModel();
-
         BattlegroundLayoutHelper layout = new BattlegroundLayoutHelper(this.getRootView());
         layout.updateViewUsing(this.getModel());
         return layout;
@@ -156,6 +156,11 @@ public class BattlegroundFragment extends Fragment {
         this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
     }
 
+    public void onProgressRegistered(String string){
+        Log.e("Ledger", string);
+        this.refreshFragmentData();
+    }
+
     //================================================================================
     // Fragment overrides
     //================================================================================
@@ -165,6 +170,7 @@ public class BattlegroundFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         this.setFightManager(new FightManager());
+        this.getFightManager().addProgressListener(this::onProgressRegistered);
         this.enrollFighters();
         this.getFightManager().startFight();
         this.getFightManager().continueFight();

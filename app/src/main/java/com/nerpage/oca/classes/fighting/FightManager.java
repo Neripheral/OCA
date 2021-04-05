@@ -1,11 +1,13 @@
 package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.Ledger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class FightManager {
@@ -43,6 +45,7 @@ public class FightManager {
     private List<Fighter> fighters = new ArrayList<>();
     private Goal goal;
     private Fighter playerFighter;
+    private FightLedger ledger = new FightLedger();
 
     // endregion //         Fields
     //================================================================================
@@ -73,6 +76,15 @@ public class FightManager {
 
     public FightManager setPlayerFighter(Fighter playerFighter) {
         this.playerFighter = playerFighter;
+        return this;
+    }
+
+    public FightLedger getLedger() {
+        return ledger;
+    }
+
+    public FightManager setLedger(FightLedger ledger) {
+        this.ledger = ledger;
         return this;
     }
 
@@ -137,6 +149,7 @@ public class FightManager {
         if(pendingAction != null){
             //TODO: clashing Actions
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
+            this.getLedger().addRow(pendingAction);
         }
     }
 
@@ -165,6 +178,10 @@ public class FightManager {
 
     public void continueFight(){
         while(this.advanceTurn());
+    }
+
+    public void addProgressListener(Consumer<String> listener){
+        this.getLedger().addOnRowAddedListener(listener);
     }
 
     public void startFight(){
