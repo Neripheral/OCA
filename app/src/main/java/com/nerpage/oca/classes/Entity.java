@@ -10,32 +10,23 @@ import java.util.List;
 
 public abstract class Entity implements Identifiable{
     //================================================================================
-    // Fields
-    //================================================================================
+    // region //            Fields
 
     private int blood;
     private Equipment equipment;
 
+    // endregion //         Fields
     //================================================================================
-    // Accessors
     //================================================================================
-
-
-    @Override
-    public String getPrefix() {
-        return "entity";
-    }
+    // region //            Accessors
 
     public int getBlood() {
         return blood;
     }
 
     public Entity setBlood(int blood) {
-        if(blood < this.getMinBlood())
-            blood = this.getMinBlood();
-        else if(blood > this.getMaxBlood())
-            blood = this.getMaxBlood();
-        this.blood = blood;
+        this.blood = Math.max(blood, this.getMinBlood());
+        this.blood = Math.min(blood, this.getMaxBlood());
         return this;
     }
 
@@ -48,12 +39,15 @@ public abstract class Entity implements Identifiable{
         return this;
     }
 
-
+    // endregion //         Accessors
     //================================================================================
-    // Methods
     //================================================================================
+    // region //            Methods
 
-
+    @Override
+    public String getPrefix() {
+        return "entity";
+    }
 
     public int getMinBlood(){
         return 0;
@@ -69,15 +63,19 @@ public abstract class Entity implements Identifiable{
         status.onApplication(this);
     }
 
-    public List<Class<? extends Action>> getPossibleActions(){
+    public List<Action> getPossibleActions(){
         return new ArrayList<>();
     }
 
+    // endregion //         Methods
     //================================================================================
-    // Constructors
     //================================================================================
+    // region //            Constructors
 
     public Entity(){
         this.setBlood(this.getMaxBlood());
     }
+
+    // endregion //         Constructors
+    //================================================================================
 }
