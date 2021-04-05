@@ -66,8 +66,7 @@ public abstract class Entity implements Identifiable{
     }
 
     public void applyStatus(Status status){
-        if(status instanceof Status.onApplication)
-            ((Status.onApplication) status).onApplication(this);
+        status.onApplication(this);
     }
 
     public List<Class<? extends Action>> getPossibleActions(){
