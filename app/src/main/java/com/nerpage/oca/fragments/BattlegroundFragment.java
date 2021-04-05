@@ -14,6 +14,7 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
@@ -156,8 +157,8 @@ public class BattlegroundFragment extends Fragment {
         this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
     }
 
-    public void onProgressRegistered(String string){
-        Log.e("Ledger", string);
+    public void onProgressRegistered(Ledger.Row data){
+        Log.e("Ledger", data.toString(this.getContext()));
         this.refreshFragmentData();
     }
 
@@ -171,6 +172,7 @@ public class BattlegroundFragment extends Fragment {
 
         this.setFightManager(new FightManager());
         this.getFightManager().addProgressListener(this::onProgressRegistered);
+        this.getFightManager().setGoal(FightManager.Goal.DEATH);
         this.enrollFighters();
         this.getFightManager().startFight();
         this.getFightManager().continueFight();

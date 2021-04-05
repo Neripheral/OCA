@@ -14,7 +14,7 @@ public class FightManager {
     //================================================================================
     // region //            Inner classes
 
-    enum Goal{
+    public enum Goal{
         /**
          * True if any of the participants is dead.
          */
@@ -99,7 +99,11 @@ public class FightManager {
     }
 
     public boolean didFightEnd(){
-        return this.getGoal().check(this);
+        if(this.getGoal().check(this)){
+            this.getLedger().addEndOfFightRow();
+            return true;
+        }
+        return false;
     }
 
     public FightManager enrollFighter(Fighter fighter){
@@ -139,6 +143,7 @@ public class FightManager {
         if(action != null) {
             fighter.setSelectedAction(action);
             fighter.addToStopwatch(action.getTimeSpan());
+            this.getLedger().addSelectedActionRow(action);
         }else{
             fighter.setSelectedAction(null);
         }
@@ -149,7 +154,7 @@ public class FightManager {
         if(pendingAction != null){
             //TODO: clashing Actions
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
-            this.getLedger().addRow(pendingAction);
+            this.getLedger().addExecutedActionRow(pendingAction);
         }
     }
 
@@ -168,6 +173,8 @@ public class FightManager {
 
         activeFighter.pushActionToPending();
         this.executePendingAction(activeFighter);
+        if(didFightEnd())
+            return false;
 
         if(activeFighter.getBehavior() != null) {
             this.askAIForNextAction(activeFighter);
@@ -180,7 +187,7 @@ public class FightManager {
         while(this.advanceTurn());
     }
 
-    public void addProgressListener(Consumer<String> listener){
+    public void addProgressListener(Consumer<Ledger.Row> listener){
         this.getLedger().addOnRowAddedListener(listener);
     }
 

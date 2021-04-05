@@ -67,4 +67,8 @@
     <string name="battleground_you">Ty</string>
     <string name="battleground_blood">Krew</string>
     <string name="nav_battlground_name">Duel</string>
+    <string name="ledger_entity_used_action_on_entity">%s wykonał %s na %s</string>
+    <string name="ledger_entity_enrolled">%s dołączył do walki</string>
+    <string name="ledger_entity_chose_action">%s zamierza użyć %s na %s</string>
+    <string name="ledger_fight_finished">Walka zakończona</string>
 </resources>

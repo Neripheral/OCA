@@ -53,7 +53,7 @@ public class Ledger {
     // region //            Fields
 
     List<Row> rows;
-    List<Consumer<String>> onRowAddedListeners;
+    List<Consumer<Row>> onRowAddedListeners;
 
     // endregion //         Fields
     //================================================================================
@@ -69,11 +69,11 @@ public class Ledger {
         return this;
     }
 
-    public List<Consumer<String>> getOnRowAddedListeners() {
+    public List<Consumer<Row>> getOnRowAddedListeners() {
         return onRowAddedListeners;
     }
 
-    private Ledger setOnRowAddedListeners(List<Consumer<String>> onRowAddedListeners) {
+    private Ledger setOnRowAddedListeners(List<Consumer<Row>> onRowAddedListeners) {
         this.onRowAddedListeners = onRowAddedListeners;
         return this;
     }
@@ -83,14 +83,14 @@ public class Ledger {
     //================================================================================
     // region //            Methods
 
-    public Ledger addOnRowAddedListener(Consumer<String> listener){
+    public Ledger addOnRowAddedListener(Consumer<Row> listener){
         this.getOnRowAddedListeners().add(listener);
         return this;
     }
 
     protected Ledger addRow(Row newRow){
         this.getRows().add(newRow);
-        this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow.toString()));
+        this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow));
         return this;
     }
 
