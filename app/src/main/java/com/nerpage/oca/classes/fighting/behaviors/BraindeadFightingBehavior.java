@@ -14,21 +14,15 @@ public class BraindeadFightingBehavior extends FightingBehavior {
         Random rand = new Random();
 
         // picking one random action to perform
-        List<Class<? extends Action>> possibleActions = host.getEntity().getPossibleActions();
-        Class<? extends Action> actionToPerform = possibleActions.get(rand.nextInt(possibleActions.size()));
+        List<Action> possibleActions = host.getEntity().getPossibleActions();
+        Action actionToPerform = possibleActions.get(rand.nextInt(possibleActions.size())).clone();
 
         // picking one random enemy
         Fighter pickedOpponent = others.get(rand.nextInt(others.size()));
 
-        // Get Action object
-        Action toReturn = null;
-        try {
-            toReturn = actionToPerform.getDeclaredConstructor().newInstance();
-            toReturn.setSource(host.getEntity());
-            toReturn.setTarget(pickedOpponent.getEntity());
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return toReturn;
+        actionToPerform.setSource(host.getEntity());
+        actionToPerform.setTarget(pickedOpponent.getEntity());
+
+        return actionToPerform;
     }
 }
