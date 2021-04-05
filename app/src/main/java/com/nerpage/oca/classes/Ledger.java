@@ -90,6 +90,7 @@ public class Ledger {
 
     protected Ledger addRow(Row newRow){
         this.getRows().add(newRow);
+        this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow.toString()));
         return this;
     }
 
