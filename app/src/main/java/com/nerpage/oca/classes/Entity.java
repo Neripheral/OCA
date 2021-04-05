@@ -25,8 +25,9 @@ public abstract class Entity implements Identifiable{
     }
 
     public Entity setBlood(int blood) {
-        this.blood = Math.max(blood, this.getMinBlood());
-        this.blood = Math.min(blood, this.getMaxBlood());
+        blood = Math.max(blood, this.getMinBlood());
+        blood = Math.min(blood, this.getMaxBlood());
+        this.blood = blood;
         return this;
     }
 

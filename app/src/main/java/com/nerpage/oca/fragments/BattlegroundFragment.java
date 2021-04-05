@@ -124,7 +124,7 @@ public class BattlegroundFragment extends Fragment {
         action.setSource(this.getFightManager().getPlayerFighter().getEntity());
         action.setTarget(this.getFightManager().getFightersWithout(this.getFightManager().getPlayerFighter()).get(0).getEntity());
         this.getFightManager().registerSelectedAction(this.getFightManager().getPlayerFighter(), action);
-        this.getFightManager().advanceTurn();
+        this.getFightManager().continueFight();
         this.refreshFragmentData();
     }
 
@@ -167,7 +167,7 @@ public class BattlegroundFragment extends Fragment {
         this.setFightManager(new FightManager());
         this.enrollFighters();
         this.getFightManager().startFight();
-        while(this.getFightManager().advanceTurn());
+        this.getFightManager().continueFight();
 
         this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
         this.updateModel();

@@ -163,6 +163,10 @@ public class FightManager {
             return false;
     }
 
+    public void continueFight(){
+        while(this.advanceTurn());
+    }
+
     public void startFight(){
         this.calibrateStopwatches();
     }
