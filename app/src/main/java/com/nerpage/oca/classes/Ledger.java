@@ -52,8 +52,9 @@ public class Ledger {
     //================================================================================
     // region //            Fields
 
-    List<Row> rows;
-    List<Consumer<Row>> onRowAddedListeners;
+    private List<Row> rows;
+    private List<Consumer<Row>> onRowAddedListeners;
+    private boolean ledgerOpened = true;
 
     // endregion //         Fields
     //================================================================================
@@ -78,24 +79,44 @@ public class Ledger {
         return this;
     }
 
+    public boolean isLedgerOpened() {
+        return ledgerOpened;
+    }
+
+    private Ledger setLedgerOpened(boolean ledgerOpened) {
+        this.ledgerOpened = ledgerOpened;
+        return this;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
     // region //            Methods
 
     public Ledger addOnRowAddedListener(Consumer<Row> listener){
-        this.getOnRowAddedListeners().add(listener);
+        if(this.isLedgerOpened())
+            this.getOnRowAddedListeners().add(listener);
         return this;
     }
 
     protected Ledger addRow(Row newRow){
-        this.getRows().add(newRow);
-        this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow));
+        if(this.isLedgerOpened()) {
+            this.getRows().add(newRow);
+            this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow));
+        }
         return this;
     }
 
     public Ledger addRow(String string){
         return this.addRow(new StringRow(string));
+    }
+
+    public void open(){
+        this.setLedgerOpened(true);
+    }
+
+    public void close(){
+        this.setLedgerOpened(false);
     }
 
     // endregion //         Methods

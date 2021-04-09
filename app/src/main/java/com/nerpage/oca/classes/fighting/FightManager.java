@@ -101,6 +101,7 @@ public class FightManager {
     public boolean didFightEnd(){
         if(this.getGoal().check(this)){
             this.getLedger().addEndOfFightRow();
+            this.getLedger().close();
             return true;
         }
         return false;

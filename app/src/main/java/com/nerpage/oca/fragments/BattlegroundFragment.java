@@ -174,16 +174,15 @@ public class BattlegroundFragment extends Fragment {
         this.getFightManager().addProgressListener(this::onProgressRegistered);
         this.getFightManager().setGoal(FightManager.Goal.DEATH);
         this.enrollFighters();
-        this.getFightManager().startFight();
-        this.getFightManager().continueFight();
-
-        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
-        this.updateModel();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setRootView(inflater.inflate(R.layout.fragment_battleground, container, false));
+        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
+
+        this.getFightManager().startFight();
+        this.getFightManager().continueFight();
 
         this.refreshFragmentData()
                 .bindListener(v->onAttackButtonPressed());
