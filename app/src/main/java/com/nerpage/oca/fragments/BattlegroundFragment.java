@@ -36,11 +36,11 @@ public class BattlegroundFragment extends Fragment {
             ENEMY_MAX_BLOOD(R.id.battleground_enemy_maxBlood),
             PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
             PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
-            ATTACK_BUTTON(R.id.battleground_attackbtn),
             BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
             BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
             BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
-            BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn);
+            BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
+            ACTIONS_RECYCLER(R.id.battleground_actions_recycler);
 
             int id;
 
@@ -60,11 +60,6 @@ public class BattlegroundFragment extends Fragment {
             this.updateText( BattlegroundPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
             this.updateText( BattlegroundPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
             this.updateText( BattlegroundPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
-            return this;
-        }
-
-        public BattlegroundLayoutHelper bindClickListener(View.OnClickListener listener){
-            this.getView(BattlegroundPOI.ATTACK_BUTTON).setOnClickListener(listener);
             return this;
         }
 
@@ -191,8 +186,7 @@ public class BattlegroundFragment extends Fragment {
     }
 
     private void initView(){
-        BattlegroundLayoutHelper layout = this.refreshFragmentData()
-                .bindClickListener(v->onAttackButtonPressed());
+        BattlegroundLayoutHelper layout = this.refreshFragmentData();
 
         ((BottomNavigationView)layout.getView(BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_NAVBAR))
                 .setOnNavigationItemSelectedListener(this::onBehaviorItemSelected);

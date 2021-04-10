@@ -84,16 +84,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/battleground_attackbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/battleground_attack"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/battleground_actions_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/battleground_pc_infobar"
-            app:layout_constraintEnd_toEndOf="@+id/battleground_pc_infobar"
-            app:layout_constraintStart_toStartOf="@+id/battleground_pc_infobar"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Attack" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/battleground_pc_infobar"
@@ -101,8 +100,9 @@
             android:layout_height="60dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/battleground_attackbtn">
+            app:layout_constraintTop_toBottomOf="@+id/battleground_actions_recycler">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -180,8 +180,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/battleground_pc_infobar"
-            tools:layout_editor_absoluteX="21dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/battleground_pc_infobar">
 
             <ImageView
                 android:id="@+id/imageView2"
