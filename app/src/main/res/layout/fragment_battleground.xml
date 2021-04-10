@@ -196,6 +196,7 @@
                 tools:ignore="ContentDescription" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/battleground_behavior_navbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"

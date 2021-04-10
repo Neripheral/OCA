@@ -7,25 +7,22 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
-import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
-import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Punch;
-import com.nerpage.oca.classes.fighting.behaviors.PlayerFightingBehavior;
-import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
 import com.nerpage.oca.models.BattlegroundViewModel;
-
-import java.util.List;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
@@ -39,7 +36,11 @@ public class BattlegroundFragment extends Fragment {
             ENEMY_MAX_BLOOD(R.id.battleground_enemy_maxBlood),
             PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
             PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
-            ATTACK_BUTTON(R.id.battleground_attackbtn);
+            ATTACK_BUTTON(R.id.battleground_attackbtn),
+            BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
+            BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
+            BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
+            BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn);
 
             int id;
 
@@ -53,16 +54,18 @@ public class BattlegroundFragment extends Fragment {
             }
         }
 
-        public void updateViewUsing(BattlegroundViewModel model){
+        public BattlegroundLayoutHelper updateViewUsing(BattlegroundViewModel model){
             this.updateText( BattlegroundPOI.ENEMY_TITLE,            model.getEnemyTitle());
             this.updateText( BattlegroundPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
             this.updateText( BattlegroundPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
             this.updateText( BattlegroundPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
             this.updateText( BattlegroundPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+            return this;
         }
 
-        public void bindListener(View.OnClickListener listener){
+        public BattlegroundLayoutHelper bindClickListener(View.OnClickListener listener){
             this.getView(BattlegroundPOI.ATTACK_BUTTON).setOnClickListener(listener);
+            return this;
         }
 
         public BattlegroundLayoutHelper(View rootView){
@@ -130,7 +133,6 @@ public class BattlegroundFragment extends Fragment {
     }
 
     public void onAttackButtonPressed(){
-        //TODO: add what to do when the button is pressed
         this.submitPlayerActionChoice();
     }
 
@@ -162,6 +164,41 @@ public class BattlegroundFragment extends Fragment {
         this.refreshFragmentData();
     }
 
+    private void onBehaviorSurrenderSelected(){
+        //TODO: On surrender
+    }
+
+    private void onBehaviorAttackSelected(){
+        //TODO: On attack
+    }
+
+    private void onBehaviorDefendSelected(){
+        //TODO: On defend
+    }
+
+    private boolean onBehaviorItemSelected(MenuItem itemId){
+        if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
+            this.onBehaviorSurrenderSelected();
+            return true;
+        }else if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_ATTACK_BUTTON.getId()) {
+            this.onBehaviorAttackSelected();
+            return true;
+        }else if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_DEFEND_BUTTON.getId()) {
+            this.onBehaviorDefendSelected();
+            return true;
+        }
+        return false;
+    }
+
+    private void initView(){
+        BattlegroundLayoutHelper layout = this.refreshFragmentData()
+                .bindClickListener(v->onAttackButtonPressed());
+
+        ((BottomNavigationView)layout.getView(BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_NAVBAR))
+                .setOnNavigationItemSelectedListener(this::onBehaviorItemSelected);
+
+    }
+
     //================================================================================
     // Fragment overrides
     //================================================================================
@@ -184,8 +221,7 @@ public class BattlegroundFragment extends Fragment {
         this.getFightManager().startFight();
         this.getFightManager().continueFight();
 
-        this.refreshFragmentData()
-                .bindListener(v->onAttackButtonPressed());
+        this.initView();
 
         return this.getRootView();
     }
