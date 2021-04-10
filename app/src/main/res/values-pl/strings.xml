@@ -71,4 +71,5 @@
     <string name="ledger_entity_enrolled">%s dołączył do walki</string>
     <string name="ledger_entity_chose_action">%s zamierza użyć %s na %s</string>
     <string name="ledger_fight_finished">Walka zakończona</string>
+    <string name="attack">Atak</string>
 </resources>

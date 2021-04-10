@@ -77,7 +77,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/battleground_pc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,59 +88,125 @@
             android:id="@+id/battleground_attackbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attack"
-            app:layout_constraintBottom_toTopOf="@id/battleground_pc_blood"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/attack"
+            app:layout_constraintBottom_toTopOf="@+id/battleground_pc_infobar"
+            app:layout_constraintEnd_toEndOf="@+id/battleground_pc_infobar"
+            app:layout_constraintStart_toStartOf="@+id/battleground_pc_infobar"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Attack" />
 
-        <FrameLayout
-            android:id="@+id/battleground_pc_blood"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="-5dp"
-            android:background="@color/mainBox"
-            android:padding="4dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/battleground_pc_infobar"
+            android:layout_width="411dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/battleground_attackbtn">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:scaleType="matrix"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/leather_bg"
+                tools:ignore="ContentDescription" />
+
+            <FrameLayout
+                android:id="@+id/battleground_pc_blood"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:background="@color/mainBox"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/blood"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/battleground_pc_currentBlood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="@color/black"
+                        android:textColor="@color/mainFont"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="360" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="6"
+                        android:text="/"
+                        android:textColor="@color/mainFont"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/battleground_pc_maxBlood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="@color/black"
+                        android:textColor="@color/mainFont"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="500" />
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/battleground_pc_infobar"
+            tools:layout_editor_absoluteX="21dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="matrix"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/steel_bg"
+                tools:ignore="ContentDescription" />
+
+            <FrameLayout
+                android:id="@+id/battleground_behavior_navbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/mainContainer"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </FrameLayout>
 
-                <TextView
-                    android:id="@+id/battleground_pc_currentBlood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/blood"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="360" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:text="/"
-                    android:textColor="@color/blood"
-                    android:textSize="14sp"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/battleground_pc_maxBlood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/blood"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="500" />
-            </LinearLayout>
-        </FrameLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
