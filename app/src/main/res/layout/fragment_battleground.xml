@@ -88,7 +88,7 @@
             android:id="@+id/battleground_attackbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/attack"
+            android:text="@string/battleground_attack"
             app:layout_constraintBottom_toTopOf="@+id/battleground_pc_infobar"
             app:layout_constraintEnd_toEndOf="@+id/battleground_pc_infobar"
             app:layout_constraintStart_toStartOf="@+id/battleground_pc_infobar"
@@ -195,16 +195,17 @@
                 app:srcCompat="@drawable/steel_bg"
                 tools:ignore="ContentDescription" />
 
-            <FrameLayout
-                android:id="@+id/battleground_behavior_navbar"
+            <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                app:elevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </FrameLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/battleground_behavior_navbar" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

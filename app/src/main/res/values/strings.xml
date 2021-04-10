@@ -73,5 +73,7 @@
     <string name="ledger_entity_enrolled">%s joined the fight</string>
     <string name="ledger_entity_chose_action">%s will use %s on %s</string>
     <string name="ledger_fight_finished">The fight has ended</string>
-    <string name="attack">Attack</string>
+    <string name="battleground_attack">Attack</string>
+    <string name="battleground_surrender">Surrender</string>
+    <string name="battleground_defend">Defend</string>
 </resources>

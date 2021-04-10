@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/battleground_behavior_surrenderbtn"
+        android:icon="@drawable/battleground_surrender"
+        android:title="@string/battleground_surrender" />
+    <item
+        android:id="@+id/battleground_behavior_attackbtn"
+        android:icon="@drawable/battleground_attack"
+        android:title="@string/battleground_attack" />
+    <item
+        android:id="@+id/battleground_behavior_defendbtn"
+        android:icon="@drawable/battleground_defend"
+        android:title="@string/battleground_defend" />
+</menu>
