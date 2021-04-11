@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
@@ -26,8 +25,7 @@ import com.nerpage.oca.models.BattlegroundViewModel;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
-    // Inner class
-    //================================================================================
+    // region //            Inner classes
 
     public static class BattlegroundLayoutHelper extends LayoutHelper{
         public enum BattlegroundPOI implements LayoutHelper.POI{
@@ -68,17 +66,19 @@ public class BattlegroundFragment extends Fragment {
         }
     }
 
+    // endregion //         Inner classes
     //================================================================================
-    // Fields
     //================================================================================
+    // region //            Fields
 
     private View rootView;
     private FightManager fightManager;
     private BattlegroundViewModel model;
 
+    // endregion //         Fields
     //================================================================================
-    // Accessors
     //================================================================================
+    // region //            Accessors
 
     public View getRootView() {
         return rootView;
@@ -107,9 +107,10 @@ public class BattlegroundFragment extends Fragment {
         return this;
     }
 
+    // endregion //         Accessors
     //================================================================================
-    // Methods
     //================================================================================
+    // region //            Private Methods
 
     private BattlegroundLayoutHelper refreshFragmentData(){
         this.updateModel();
@@ -125,10 +126,6 @@ public class BattlegroundFragment extends Fragment {
         this.getFightManager().registerSelectedAction(this.getFightManager().getPlayerFighter(), action);
         this.getFightManager().continueFight();
         this.refreshFragmentData();
-    }
-
-    public void onAttackButtonPressed(){
-        this.submitPlayerActionChoice();
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -152,11 +149,6 @@ public class BattlegroundFragment extends Fragment {
         this.getModel().setEnemyTitle(enemy.getName(getContext()));
         this.getModel().setEnemyCurrentBlood(enemy.getBlood());
         this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
-    }
-
-    public void onProgressRegistered(Ledger.Row data){
-        Log.e("Ledger", data.toString(this.getContext()));
-        this.refreshFragmentData();
     }
 
     private void onBehaviorSurrenderSelected(){
@@ -193,9 +185,19 @@ public class BattlegroundFragment extends Fragment {
 
     }
 
+    // endregion //         Private Methods
     //================================================================================
-    // Fragment overrides
     //================================================================================
+    // region //            Public Methods
+
+    public void onAttackButtonPressed(){
+        this.submitPlayerActionChoice();
+    }
+
+    public void onProgressRegistered(Ledger.Row data){
+        Log.e("Ledger", data.toString(this.getContext()));
+        this.refreshFragmentData();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,11 +222,15 @@ public class BattlegroundFragment extends Fragment {
         return this.getRootView();
     }
 
+    // endregion //         Public Methods
     //================================================================================
-    // Constructors
     //================================================================================
+    // region //            Constructors
 
     public BattlegroundFragment() {
         // Required empty public constructor
     }
+
+    // endregion //         Constructors
+    //================================================================================
 }
