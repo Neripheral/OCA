@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.nerpage.oca.interfaces.HasLayout;
 
 public abstract class LayoutHelper implements HasLayout {
-    interface POI extends HasLayout.POI{}
+    public interface POI extends HasLayout.POI{}
 
     //================================================================================
     // Fields
