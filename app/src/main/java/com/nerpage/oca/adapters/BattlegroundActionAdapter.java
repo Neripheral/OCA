@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.interfaces.HasLayout;
+import com.nerpage.oca.models.ActionCardModel;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,69 +20,6 @@ import java.util.function.Consumer;
 public class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionViewHolder> {
     //================================================================================
     // region //            Inner classes
-
-    public static class ActionViewModel {
-        //================================================================================
-        // region //            ActionViewModel: Fields
-
-        private String title;
-        private int thumbnailImageId;
-        private String description;
-
-        // endregion //         ActionViewModel: Fields
-        //================================================================================
-        //================================================================================
-        // region //            ActionViewModel: Accessors
-
-        public String getTitle() {
-            return title;
-        }
-
-        public ActionViewModel setTitle(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public int getThumbnailImageId() {
-            return thumbnailImageId;
-        }
-
-        public ActionViewModel setThumbnailImageId(int thumbnailImageId) {
-            this.thumbnailImageId = thumbnailImageId;
-            return this;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public ActionViewModel setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-
-        // endregion //         ActionViewModel: Accessors
-        //================================================================================
-        //================================================================================
-        // region //            ActionViewModel: Methods
-
-
-
-        // endregion //         ActionViewModel: Methods
-        //================================================================================
-        //================================================================================
-        // region //            ActionViewModel: Constructors
-
-        public ActionViewModel(String title, int thumbnailImageId, String description) {
-            this.title = title;
-            this.thumbnailImageId = thumbnailImageId;
-            this.description = description;
-        }
-
-        // endregion //         ActionViewModel: Constructors
-        //================================================================================
-    }
 
     public static class ActionViewHolder extends RecyclerView.ViewHolder implements HasLayout {
         //================================================================================
@@ -142,7 +80,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
         //================================================================================
         // region //           ActionViewHolder: Methods
 
-        public void updateWithModel(ActionViewModel model){
+        public void updateWithModel(ActionCardModel model){
             ((ImageView)this.getView(POI.THUMBNAIL)).setImageResource(model.getThumbnailImageId());
             ((TextView)this.getView(POI.TITLE)).setText(model.getTitle());
             ((TextView)this.getView(POI.DESCRIPTION)).setText(model.getDescription());
@@ -166,18 +104,18 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     //================================================================================
     // region //            Fields
 
-    private List<ActionViewModel> dataset;
+    private List<ActionCardModel> dataset;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    public List<ActionViewModel> getDataset() {
+    public List<ActionCardModel> getDataset() {
         return dataset;
     }
 
-    public BattlegroundActionAdapter setDataset(List<ActionViewModel> dataset) {
+    public BattlegroundActionAdapter setDataset(List<ActionCardModel> dataset) {
         this.dataset = dataset;
         return this;
     }
@@ -214,7 +152,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     //================================================================================
     // region //            Constructors
 
-    public BattlegroundActionAdapter(List<ActionViewModel> dataset) {
+    public BattlegroundActionAdapter(List<ActionCardModel> dataset) {
         this.dataset = dataset;
     }
 
