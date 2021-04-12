@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,64 +15,22 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
+import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.Entity;
-import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.actions.Punch;
+import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
-    // region //            Inner classes
-
-    public static class BattlegroundLayoutHelper extends LayoutHelper{
-        public enum BattlegroundPOI implements LayoutHelper.POI{
-            ENEMY_TITLE(R.id.battleground_enemy_title),
-            ENEMY_CURRENT_BLOOD(R.id.battleground_enemy_currentBlood),
-            ENEMY_MAX_BLOOD(R.id.battleground_enemy_maxBlood),
-            PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
-            PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
-            BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
-            BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
-            BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
-            BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
-            ACTIONS_RECYCLER(R.id.battleground_actions_recycler);
-
-            int id;
-
-            @Override
-            public int getId() {
-                return id;
-            }
-
-            BattlegroundPOI(int id){
-                this.id = id;
-            }
-        }
-
-        public BattlegroundLayoutHelper updateViewUsing(BattlegroundViewModel model){
-            this.updateText( BattlegroundPOI.ENEMY_TITLE,            model.getEnemyTitle());
-            this.updateText( BattlegroundPOI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
-            this.updateText( BattlegroundPOI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
-            this.updateText( BattlegroundPOI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
-            this.updateText( BattlegroundPOI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
-            return this;
-        }
-
-        public BattlegroundLayoutHelper(View rootView){
-            super(rootView);
-        }
-    }
-
-    // endregion //         Inner classes
-    //================================================================================
-    //================================================================================
     // region //            Fields
 
     private View rootView;
+    private BattlegroundLayoutHelper layout;
     private FightManager fightManager;
     private BattlegroundViewModel model;
 
@@ -80,12 +39,17 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Accessors
 
-    public View getRootView() {
-        return rootView;
-    }
-
     public BattlegroundFragment setRootView(View rootView) {
         this.rootView = rootView;
+        return this;
+    }
+
+    public BattlegroundLayoutHelper getLayout() {
+        return layout;
+    }
+
+    public BattlegroundFragment setLayout(BattlegroundLayoutHelper layout) {
+        this.layout = layout;
         return this;
     }
 
@@ -114,8 +78,7 @@ public class BattlegroundFragment extends Fragment {
 
     private BattlegroundLayoutHelper refreshFragmentData(){
         this.updateModel();
-        BattlegroundLayoutHelper layout = new BattlegroundLayoutHelper(this.getRootView());
-        layout.updateViewUsing(this.getModel());
+        this.getLayout().updateViewUsing(this.getModel());
         return layout;
     }
 
@@ -164,25 +127,31 @@ public class BattlegroundFragment extends Fragment {
     }
 
     private boolean onBehaviorItemSelected(MenuItem itemId){
-        if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
+        if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
             this.onBehaviorSurrenderSelected();
             return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_ATTACK_BUTTON.getId()) {
+        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_ATTACK_BUTTON.getId()) {
             this.onBehaviorAttackSelected();
             return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_DEFEND_BUTTON.getId()) {
+        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_DEFEND_BUTTON.getId()) {
             this.onBehaviorDefendSelected();
             return true;
         }
         return false;
     }
 
-    private void initView(){
-        BattlegroundLayoutHelper layout = this.refreshFragmentData();
+    private void initView(View rootView){
+        this.setLayout(new BattlegroundLayoutHelper(rootView));
+        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
 
-        ((BottomNavigationView)layout.getView(BattlegroundLayoutHelper.BattlegroundPOI.BEHAVIOR_NAVBAR))
+        //init behavior bar
+        ((BottomNavigationView)layout.getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
                 .setOnNavigationItemSelectedListener(this::onBehaviorItemSelected);
 
+        /*//init actions recycler
+        RecyclerView recycler = (RecyclerView) this.getLayout().getView(BattlegroundLayoutHelper.POI.ACTIONS_RECYCLER);
+        recycler.setAdapter(new BattlegroundActionAdapter());*/
+        refreshFragmentData();
     }
 
     // endregion //         Private Methods
@@ -211,15 +180,12 @@ public class BattlegroundFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.setRootView(inflater.inflate(R.layout.fragment_battleground, container, false));
-        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
+        this.initView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
         this.getFightManager().startFight();
         this.getFightManager().continueFight();
 
-        this.initView();
-
-        return this.getRootView();
+        return this.getLayout().getRoot();
     }
 
     // endregion //         Public Methods
