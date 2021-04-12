@@ -1,14 +1,12 @@
 package com.nerpage.oca.models;
 
-import com.nerpage.oca.adapters.BattlegroundActionAdapter;
-
 public class ActionCardModel {
     //================================================================================
     // region //            ActionViewModel: Fields
 
-    private String title;
-    private int thumbnailImageId;
-    private String description;
+    private String title = "";
+    private int thumbnailResId = 0;
+    private String description = "";
 
     // endregion //         ActionViewModel: Fields
     //================================================================================
@@ -24,12 +22,12 @@ public class ActionCardModel {
         return this;
     }
 
-    public int getThumbnailImageId() {
-        return thumbnailImageId;
+    public int getThumbnailResId() {
+        return thumbnailResId;
     }
 
-    public ActionCardModel setThumbnailImageId(int thumbnailImageId) {
-        this.thumbnailImageId = thumbnailImageId;
+    public ActionCardModel setThumbnailResId(int thumbnailResId) {
+        this.thumbnailResId = thumbnailResId;
         return this;
     }
 
@@ -41,7 +39,6 @@ public class ActionCardModel {
         this.description = description;
         return this;
     }
-
 
     // endregion //         ActionViewModel: Accessors
     //================================================================================
@@ -55,11 +52,7 @@ public class ActionCardModel {
     //================================================================================
     // region //            ActionViewModel: Constructors
 
-    public ActionCardModel(String title, int thumbnailImageId, String description) {
-        this.title = title;
-        this.thumbnailImageId = thumbnailImageId;
-        this.description = description;
-    }
+    public ActionCardModel(){}
 
     // endregion //         ActionViewModel: Constructors
     //================================================================================
