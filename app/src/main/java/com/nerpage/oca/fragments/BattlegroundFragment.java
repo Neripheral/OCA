@@ -23,29 +23,23 @@ import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.actions.Punch;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
+import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Fields
 
-    private View rootView;
     private BattlegroundLayoutHelper layout;
     private FightManager fightManager;
-    private BattlegroundViewModel model;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    public BattlegroundFragment setRootView(View rootView) {
-        this.rootView = rootView;
-        return this;
-    }
-
     public BattlegroundLayoutHelper getLayout() {
-        return layout;
+        return this.layout;
     }
 
     public BattlegroundFragment setLayout(BattlegroundLayoutHelper layout) {
@@ -54,20 +48,11 @@ public class BattlegroundFragment extends Fragment {
     }
 
     public FightManager getFightManager() {
-        return fightManager;
+        return this.fightManager;
     }
 
     public BattlegroundFragment setFightManager(FightManager fightManager) {
         this.fightManager = fightManager;
-        return this;
-    }
-
-    public BattlegroundViewModel getModel() {
-        return model;
-    }
-
-    public BattlegroundFragment setModel(BattlegroundViewModel model) {
-        this.model = model;
         return this;
     }
 
@@ -76,42 +61,34 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Private Methods
 
-    private BattlegroundLayoutHelper refreshFragmentData(){
-        this.updateModel();
-        this.getLayout().updateViewUsing(this.getModel());
-        return layout;
+    private void refreshFragmentData(){
+        BattlegroundViewModel model = BattlegroundViewModelFactory.generateFreshModel(
+                requireContext(),
+                getPlayerCharacter(),
+                getFightManager().getFighters().get(1).getEntity());
+
+        getLayout().updateViewUsing(model);
     }
 
     private void submitPlayerActionChoice(){
         Punch action = new Punch(20);
-        action.setSource(this.getFightManager().getPlayerFighter().getEntity());
-        action.setTarget(this.getFightManager().getFightersWithout(this.getFightManager().getPlayerFighter()).get(0).getEntity());
-        this.getFightManager().registerSelectedAction(this.getFightManager().getPlayerFighter(), action);
-        this.getFightManager().continueFight();
-        this.refreshFragmentData();
+        action.setSource(getFightManager().getPlayerFighter().getEntity());
+        action.setTarget(getFightManager().getFightersWithout(getFightManager().getPlayerFighter()).get(0).getEntity());
+        getFightManager().registerSelectedAction(getFightManager().getPlayerFighter(), action);
+        getFightManager().continueFight();
+        refreshFragmentData();
     }
 
     private PlayerCharacter getPlayerCharacter(){
-        return ((CharacterEditorActivity)this.requireActivity()).getPc();
+        return ((CharacterEditorActivity)requireActivity()).getPc();
     }
 
     private void enrollFighters(){
         // enroll player
-        this.getFightManager().enrollPlayer(this.getPlayerCharacter());
+        getFightManager().enrollPlayer(getPlayerCharacter());
 
         // enroll enemy
-        this.getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy());
-    }
-
-    private void updateModel(){
-        Entity pc = ((CharacterEditorActivity) this.requireActivity()).getPc();
-        this.getModel().setPcCurrentBlood(pc.getBlood());
-        this.getModel().setPcMaxBlood(pc.getMaxBlood());
-
-        Entity enemy = this.getFightManager().getFighters().get(1).getEntity();
-        this.getModel().setEnemyTitle(enemy.getName(getContext()));
-        this.getModel().setEnemyCurrentBlood(enemy.getBlood());
-        this.getModel().setEnemyMaxBlood(enemy.getMaxBlood());
+        getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy());
     }
 
     private void onBehaviorSurrenderSelected(){
@@ -128,29 +105,25 @@ public class BattlegroundFragment extends Fragment {
 
     private boolean onBehaviorItemSelected(MenuItem itemId){
         if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
-            this.onBehaviorSurrenderSelected();
+            onBehaviorSurrenderSelected();
             return true;
         }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_ATTACK_BUTTON.getId()) {
-            this.onBehaviorAttackSelected();
+            onBehaviorAttackSelected();
             return true;
         }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_DEFEND_BUTTON.getId()) {
-            this.onBehaviorDefendSelected();
+            onBehaviorDefendSelected();
             return true;
         }
         return false;
     }
 
     private void initView(View rootView){
-        this.setLayout(new BattlegroundLayoutHelper(rootView));
-        this.setModel(new ViewModelProvider(requireActivity()).get(BattlegroundViewModel.class));
+        BattlegroundLayoutHelper newLayout = new BattlegroundLayoutHelper(
+                rootView,
+                this::onBehaviorItemSelected
+        );
+        setLayout(newLayout);
 
-        //init behavior bar
-        ((BottomNavigationView)layout.getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
-                .setOnNavigationItemSelectedListener(this::onBehaviorItemSelected);
-
-        /*//init actions recycler
-        RecyclerView recycler = (RecyclerView) this.getLayout().getView(BattlegroundLayoutHelper.POI.ACTIONS_RECYCLER);
-        recycler.setAdapter(new BattlegroundActionAdapter());*/
         refreshFragmentData();
     }
 
@@ -160,32 +133,32 @@ public class BattlegroundFragment extends Fragment {
     // region //            Public Methods
 
     public void onAttackButtonPressed(){
-        this.submitPlayerActionChoice();
+        submitPlayerActionChoice();
     }
 
     public void onProgressRegistered(Ledger.Row data){
-        Log.e("Ledger", data.toString(this.getContext()));
-        this.refreshFragmentData();
+        Log.e("Ledger", data.toString(getContext()));
+        refreshFragmentData();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setFightManager(new FightManager());
-        this.getFightManager().addProgressListener(this::onProgressRegistered);
-        this.getFightManager().setGoal(FightManager.Goal.DEATH);
-        this.enrollFighters();
+        setFightManager(new FightManager());
+        getFightManager().addProgressListener(this::onProgressRegistered);
+        getFightManager().setGoal(FightManager.Goal.DEATH);
+        enrollFighters();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.initView(inflater.inflate(R.layout.fragment_battleground, container, false));
+        initView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
-        this.getFightManager().startFight();
-        this.getFightManager().continueFight();
+        getFightManager().startFight();
+        getFightManager().continueFight();
 
-        return this.getLayout().getRoot();
+        return getLayout().getRoot();
     }
 
     // endregion //         Public Methods

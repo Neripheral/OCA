@@ -2,9 +2,17 @@ package com.nerpage.oca.layouts;
 
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
+import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.models.ActionCardModel;
 import com.nerpage.oca.models.BattlegroundViewModel;
+
+import java.util.ArrayList;
 
 public class BattlegroundLayoutHelper extends LayoutHelper {
     public enum POI implements LayoutHelper.POI {
@@ -31,16 +39,30 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         }
     }
 
+    private RecyclerView findRecycler(){
+        return (RecyclerView)getView(POI.ACTIONS_RECYCLER);
+    }
+
     public BattlegroundLayoutHelper updateViewUsing(BattlegroundViewModel model){
-        this.updateText( POI.ENEMY_TITLE,            model.getEnemyTitle());
-        this.updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
-        this.updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
-        this.updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
-        this.updateText( POI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+        updateText( POI.ENEMY_TITLE,            model.getEnemyTitle());
+        updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
+        updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
+        updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
+        updateText( POI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+
+        ((BattlegroundActionAdapter) findRecycler().getAdapter())
+                .setDataset(new ArrayList<>(model.getPossibleActions()));
+        findRecycler().getAdapter().notifyDataSetChanged();
+
         return this;
     }
 
-    public BattlegroundLayoutHelper(View rootView){
+    public BattlegroundLayoutHelper(View rootView, BottomNavigationView.OnNavigationItemSelectedListener listener){
         super(rootView);
+        findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+        findRecycler().setAdapter(new BattlegroundActionAdapter());
+
+        ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
+                .setOnNavigationItemSelectedListener(listener);
     }
 }

@@ -83,6 +83,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
 
         public ActionViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.root = itemView;
         }
 
         // endregion //        ActionViewHolder: Constructors
