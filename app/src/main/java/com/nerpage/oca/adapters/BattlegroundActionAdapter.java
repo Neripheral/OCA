@@ -49,7 +49,6 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
         // region //           ActionViewHolder: Fields
 
         private View root;
-        private Consumer<View> listener;
 
         // endregion //        ActionViewHolder: Fields
         //================================================================================
@@ -66,22 +65,13 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
             return this;
         }
 
-        public Consumer<View> getListener() {
-            return listener;
-        }
-
-        public ActionViewHolder setListener(Consumer<View> listener) {
-            this.listener = listener;
-            return this;
-        }
-
         // endregion //        ActionViewHolder: Accessors
         //================================================================================
         //================================================================================
         // region //           ActionViewHolder: Methods
 
         public void updateWithModel(ActionCardModel model){
-            ((ImageView)this.getView(POI.THUMBNAIL)).setImageResource(model.getThumbnailImageId());
+            ((ImageView)this.getView(POI.THUMBNAIL)).setImageResource(model.getThumbnailResId());
             ((TextView)this.getView(POI.TITLE)).setText(model.getTitle());
             ((TextView)this.getView(POI.DESCRIPTION)).setText(model.getDescription());
         }
