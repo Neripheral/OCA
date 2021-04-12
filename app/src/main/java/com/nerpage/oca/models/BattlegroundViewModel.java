@@ -2,20 +2,24 @@ package com.nerpage.oca.models;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BattlegroundViewModel extends ViewModel {
     //================================================================================
-    // Fields
-    //================================================================================
+    // region //            Fields
 
     private String enemyTitle = "missing_enemy_title";
     private int enemyCurrentBlood = 0;
     private int enemyMaxBlood = 0;
     private int pcCurrentBlood = 0;
     private int pcMaxBlood = 0;
+    private List<ActionCardModel> possibleActions = new ArrayList<>();
 
+    // endregion //         Fields
     //================================================================================
-    // Accessors
     //================================================================================
+    // region //            Accessors
 
     public String getEnemyTitle() {
         return enemyTitle;
@@ -61,4 +65,16 @@ public class BattlegroundViewModel extends ViewModel {
         this.pcMaxBlood = pcMaxBlood;
         return this;
     }
+
+    public List<ActionCardModel> getPossibleActions() {
+        return possibleActions;
+    }
+
+    public BattlegroundViewModel setPossibleActions(List<ActionCardModel> possibleActions) {
+        this.possibleActions = possibleActions;
+        return this;
+    }
+
+    // endregion //         Accessors
+    //================================================================================
 }
