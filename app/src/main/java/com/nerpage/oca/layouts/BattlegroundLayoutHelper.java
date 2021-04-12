@@ -3,6 +3,7 @@ package com.nerpage.oca.layouts;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,6 +62,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         super(rootView);
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter());
+        (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
         ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
                 .setOnNavigationItemSelectedListener(listener);
