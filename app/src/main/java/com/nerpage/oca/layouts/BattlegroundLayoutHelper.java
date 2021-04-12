@@ -9,7 +9,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.LayoutHelper;
-import com.nerpage.oca.models.ActionCardModel;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
@@ -50,16 +49,17 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
         updateText( POI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
 
-        ((BattlegroundActionAdapter) findRecycler().getAdapter())
-                .setDataset(new ArrayList<>(model.getPossibleActions()));
-        findRecycler().getAdapter().notifyDataSetChanged();
+        BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) findRecycler().getAdapter());
+        assert adapter != null;
+        adapter.setDataset(new ArrayList<>(model.getPossibleActions()));
+        adapter.notifyDataSetChanged();
 
         return this;
     }
 
     public BattlegroundLayoutHelper(View rootView, BottomNavigationView.OnNavigationItemSelectedListener listener){
         super(rootView);
-        findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+        findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter());
 
         ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
