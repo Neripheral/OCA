@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.interfaces.HasLayout;
+import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.ActionCardModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionViewHolder> {
+public class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionViewHolder>{
     //================================================================================
     // region //            Inner classes
 
-    public static class ActionViewHolder extends RecyclerView.ViewHolder implements HasLayout {
+    public static class ActionViewHolder extends RecyclerView.ViewHolder implements HasLayout, View.OnClickListener{
         //================================================================================
         // region //           ActionViewHolder: Inner classes
 
@@ -49,6 +50,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
         // region //           ActionViewHolder: Fields
 
         private View root;
+        private OnRecyclerItemClicked listener;
 
         // endregion //        ActionViewHolder: Fields
         //================================================================================
@@ -65,6 +67,15 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
             return this;
         }
 
+        public OnRecyclerItemClicked getListener() {
+            return listener;
+        }
+
+        public ActionViewHolder setListener(OnRecyclerItemClicked listener) {
+            this.listener = listener;
+            return this;
+        }
+
         // endregion //        ActionViewHolder: Accessors
         //================================================================================
         //================================================================================
@@ -76,14 +87,21 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
             ((TextView)this.getView(POI.DESCRIPTION)).setText(model.getDescription());
         }
 
+        @Override
+        public void onClick(View v) {
+            getListener().onRecyclerItemClicked(v, getAdapterPosition());
+        }
+
         // endregion //        ActionViewHolder: Methods
         //================================================================================
         //================================================================================
         // region //           ActionViewHolder: Constructors
 
-        public ActionViewHolder(@NonNull View itemView) {
+        public ActionViewHolder(@NonNull View itemView, OnRecyclerItemClicked listener) {
             super(itemView);
             this.root = itemView;
+            this.listener = listener;
+            itemView.setOnClickListener(this);
         }
 
         // endregion //        ActionViewHolder: Constructors
@@ -96,6 +114,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     // region //            Fields
 
     private List<ActionCardModel> dataset;
+    private OnRecyclerItemClicked onRecyclerItemClicked;
 
     // endregion //         Fields
     //================================================================================
@@ -108,6 +127,15 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
 
     public BattlegroundActionAdapter setDataset(List<ActionCardModel> dataset) {
         this.dataset = dataset;
+        return this;
+    }
+
+    public OnRecyclerItemClicked getOnRecyclerItemClicked() {
+        return onRecyclerItemClicked;
+    }
+
+    public BattlegroundActionAdapter setOnRecyclerItemClicked(OnRecyclerItemClicked onRecyclerItemClicked) {
+        this.onRecyclerItemClicked = onRecyclerItemClicked;
         return this;
     }
 
@@ -124,13 +152,12 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
                 .inflate(R.layout.battleground_action_listitem,
                         parent,
                         false);
-        return new ActionViewHolder(v);
+        return new ActionViewHolder(v, getOnRecyclerItemClicked());
     }
 
     @Override
     public void onBindViewHolder(@NonNull ActionViewHolder holder, int position) {
         holder.updateWithModel(this.getDataset().get(position));
-
     }
 
     @Override
@@ -143,12 +170,13 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     //================================================================================
     // region //            Constructors
 
-    public BattlegroundActionAdapter(List<ActionCardModel> dataset) {
+    public BattlegroundActionAdapter(List<ActionCardModel> dataset, OnRecyclerItemClicked listener) {
         this.dataset = dataset;
+        this.onRecyclerItemClicked = listener;
     }
 
-    public BattlegroundActionAdapter() {
-        this(new ArrayList<>());
+    public BattlegroundActionAdapter(OnRecyclerItemClicked listener) {
+        this(new ArrayList<>(), listener);
     }
 
     // endregion //         Constructors

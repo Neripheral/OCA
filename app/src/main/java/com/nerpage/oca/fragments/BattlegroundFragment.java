@@ -19,6 +19,7 @@ import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.actions.Punch;
@@ -70,8 +71,7 @@ public class BattlegroundFragment extends Fragment {
         getLayout().updateViewUsing(model);
     }
 
-    private void submitPlayerActionChoice(){
-        Punch action = new Punch(20);
+    private void submitPlayerActionChoice(Action action){
         action.setSource(getFightManager().getPlayerFighter().getEntity());
         action.setTarget(getFightManager().getFightersWithout(getFightManager().getPlayerFighter()).get(0).getEntity());
         getFightManager().registerSelectedAction(getFightManager().getPlayerFighter(), action);
@@ -117,10 +117,15 @@ public class BattlegroundFragment extends Fragment {
         return false;
     }
 
+    private void onActionItemClicked(View v, int position){
+        submitPlayerActionChoice(getPlayerCharacter().getPossibleActions().get(position));
+    }
+
     private void initView(View rootView){
         BattlegroundLayoutHelper newLayout = new BattlegroundLayoutHelper(
                 rootView,
-                this::onBehaviorItemSelected
+                this::onBehaviorItemSelected,
+                this::onActionItemClicked
         );
         setLayout(newLayout);
 
@@ -131,10 +136,6 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     //================================================================================
     // region //            Public Methods
-
-    public void onAttackButtonPressed(){
-        submitPlayerActionChoice();
-    }
 
     public void onProgressRegistered(Ledger.Row data){
         Log.e("Ledger", data.toString(getContext()));

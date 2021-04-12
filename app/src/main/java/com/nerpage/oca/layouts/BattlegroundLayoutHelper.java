@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
@@ -58,13 +59,13 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         return this;
     }
 
-    public BattlegroundLayoutHelper(View rootView, BottomNavigationView.OnNavigationItemSelectedListener listener){
+    public BattlegroundLayoutHelper(View rootView, BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener, OnRecyclerItemClicked onRecyclerItemClicked){
         super(rootView);
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        findRecycler().setAdapter(new BattlegroundActionAdapter());
+        findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
         (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
         ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
-                .setOnNavigationItemSelectedListener(listener);
+                .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 }
