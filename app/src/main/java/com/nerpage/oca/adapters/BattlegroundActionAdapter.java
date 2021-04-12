@@ -148,7 +148,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     }
 
     public BattlegroundActionAdapter() {
-        dataset = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     // endregion //         Constructors
