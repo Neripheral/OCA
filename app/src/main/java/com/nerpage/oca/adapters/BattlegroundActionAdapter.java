@@ -14,8 +14,8 @@ import com.nerpage.oca.classes.LayoutHelper;
 import com.nerpage.oca.interfaces.HasLayout;
 import com.nerpage.oca.models.ActionCardModel;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionViewHolder> {
     //================================================================================
@@ -144,6 +144,10 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
 
     public BattlegroundActionAdapter(List<ActionCardModel> dataset) {
         this.dataset = dataset;
+    }
+
+    public BattlegroundActionAdapter() {
+        dataset = new ArrayList<>();
     }
 
     // endregion //         Constructors
