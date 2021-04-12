@@ -76,4 +76,5 @@
     <string name="battleground_attack">Attack</string>
     <string name="battleground_surrender">Surrender</string>
     <string name="battleground_defend">Defend</string>
+    <string name="action_punch_description" >-</string>
 </resources>

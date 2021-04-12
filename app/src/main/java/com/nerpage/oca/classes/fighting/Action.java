@@ -1,5 +1,7 @@
 package com.nerpage.oca.classes.fighting;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Entity;
@@ -62,6 +64,12 @@ public abstract class Action implements Cloneable, Identifiable {
 
     public abstract Status getAppliedStatus();
     public abstract int getTimeSpan();
+    public abstract int getThumbnailResId();
+    public abstract int getDescriptionResId();
+
+    public String getDescription(Context context){
+        return context.getString(getDescriptionResId());
+    }
 
     // endregion //         Methods
     //================================================================================

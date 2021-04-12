@@ -2,6 +2,7 @@ package com.nerpage.oca.classes.fighting.actions;
 
 import androidx.annotation.NonNull;
 
+import com.nerpage.oca.R;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.Status;
 import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
@@ -30,6 +31,16 @@ public class Punch extends Action {
     @Override
     public int getTimeSpan() {
         return 1000;
+    }
+
+    @Override
+    public int getThumbnailResId() {
+        return R.drawable.action_punch;
+    }
+
+    @Override
+    public int getDescriptionResId() {
+        return R.string.action_punch_description;
     }
 
     @NonNull
