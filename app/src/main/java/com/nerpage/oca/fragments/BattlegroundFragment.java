@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,17 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
-import com.nerpage.oca.adapters.BattlegroundActionAdapter;
-import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
-import com.nerpage.oca.classes.fighting.actions.Punch;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
@@ -170,7 +165,7 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Public Methods
 
-    public void onProgressRegistered(Ledger.Row data){
+    public void onProgressRegistered(Ledger.Event data){
         Log.e("Ledger", data.toString(getContext()));
         refreshFragmentData();
     }

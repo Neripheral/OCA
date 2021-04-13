@@ -13,7 +13,7 @@ public class Ledger {
     //================================================================================
     // region //            Inner classes
 
-    public abstract class Row{
+    public static abstract class Event {
         @NonNull
         @Override
         public abstract String toString();
@@ -24,14 +24,14 @@ public class Ledger {
         }
     }
 
-    public class StringRow extends Row{
+    public class StringEvent extends Event {
         private String data;
 
         public String getData() {
             return data;
         }
 
-        public StringRow setData(String data) {
+        public StringEvent setData(String data) {
             this.data = data;
             return this;
         }
@@ -42,7 +42,7 @@ public class Ledger {
             return this.getData();
         }
 
-        public StringRow(String data) {
+        public StringEvent(String data) {
             this.data = data;
         }
     }
@@ -52,8 +52,8 @@ public class Ledger {
     //================================================================================
     // region //            Fields
 
-    private List<Row> rows;
-    private List<Consumer<Row>> onRowAddedListeners;
+    private List<Event> events;
+    private List<Consumer<Event>> onEventAddedListeners;
     private boolean ledgerOpened = true;
 
     // endregion //         Fields
@@ -61,21 +61,21 @@ public class Ledger {
     //================================================================================
     // region //            Accessors
 
-    public List<Row> getRows() {
-        return rows;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    private Ledger setRows(List<Row> rows) {
-        this.rows = rows;
+    private Ledger setEvents(List<Event> events) {
+        this.events = events;
         return this;
     }
 
-    public List<Consumer<Row>> getOnRowAddedListeners() {
-        return onRowAddedListeners;
+    public List<Consumer<Event>> getOnEventAddedListeners() {
+        return onEventAddedListeners;
     }
 
-    private Ledger setOnRowAddedListeners(List<Consumer<Row>> onRowAddedListeners) {
-        this.onRowAddedListeners = onRowAddedListeners;
+    private Ledger setOnEventAddedListeners(List<Consumer<Event>> onEventAddedListeners) {
+        this.onEventAddedListeners = onEventAddedListeners;
         return this;
     }
 
@@ -93,22 +93,23 @@ public class Ledger {
     //================================================================================
     // region //            Methods
 
-    public Ledger addOnRowAddedListener(Consumer<Row> listener){
+    public Ledger addOnEventAddedListener(Consumer<Event> listener){
         if(this.isLedgerOpened())
-            this.getOnRowAddedListeners().add(listener);
+            this.getOnEventAddedListeners().add(listener);
         return this;
     }
 
-    protected Ledger addRow(Row newRow){
+    protected Ledger addEvent(Event newEvent){
         if(this.isLedgerOpened()) {
-            this.getRows().add(newRow);
-            this.getOnRowAddedListeners().forEach(listener -> listener.accept(newRow));
+            this.getEvents().add(newEvent);
+            for(Consumer<Event> listener : this.getOnEventAddedListeners())
+                listener.accept(newEvent);
         }
         return this;
     }
 
-    public Ledger addRow(String string){
-        return this.addRow(new StringRow(string));
+    public Ledger addEvent(String string){
+        return this.addEvent(new StringEvent(string));
     }
 
     public void open(){
@@ -124,9 +125,9 @@ public class Ledger {
     //================================================================================
     // region //            Constructors
 
-    public Ledger(List<Row> rows) {
-        this.rows = rows;
-        this.onRowAddedListeners = new ArrayList<>();
+    public Ledger(List<Event> events) {
+        this.events = events;
+        this.onEventAddedListeners = new ArrayList<>();
     }
 
     public Ledger(){

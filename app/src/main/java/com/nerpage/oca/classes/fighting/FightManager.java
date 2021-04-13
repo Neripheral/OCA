@@ -2,6 +2,7 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Ledger;
+import com.nerpage.oca.classes.fighting.ledger.FightLedger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,7 +26,7 @@ public class FightManager {
                                 .anyMatch(fighter -> fighter.getEntity().isDead())
         );
 
-        private Predicate<FightManager> condition;
+        private final Predicate<FightManager> condition;
 
         public boolean check(FightManager fightManager){
             return this.condition.test(fightManager);
@@ -100,7 +101,7 @@ public class FightManager {
 
     public boolean didFightEnd(){
         if(this.getGoal().check(this)){
-            this.getLedger().addEndOfFightRow();
+            this.getLedger().addFightEndedEvent();
             this.getLedger().close();
             return true;
         }
@@ -144,7 +145,7 @@ public class FightManager {
         if(action != null) {
             fighter.setSelectedAction(action);
             fighter.addToStopwatch(action.getTimeSpan());
-            this.getLedger().addSelectedActionRow(action);
+            this.getLedger().addSelectedActionEvent(action);
         }else{
             fighter.setSelectedAction(null);
         }
@@ -155,7 +156,7 @@ public class FightManager {
         if(pendingAction != null){
             //TODO: clashing Actions
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
-            this.getLedger().addExecutedActionRow(pendingAction);
+            this.getLedger().addPerformedActionEvent(pendingAction);
         }
     }
 
@@ -188,8 +189,8 @@ public class FightManager {
         while(this.advanceTurn());
     }
 
-    public void addProgressListener(Consumer<Ledger.Row> listener){
-        this.getLedger().addOnRowAddedListener(listener);
+    public void addProgressListener(Consumer<Ledger.Event> listener){
+        this.getLedger().addOnEventAddedListener(listener);
     }
 
     public void startFight(){
