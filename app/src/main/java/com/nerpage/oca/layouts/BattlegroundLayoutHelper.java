@@ -59,10 +59,14 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         return this;
     }
 
-    public BattlegroundLayoutHelper(View rootView, BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener, OnRecyclerItemClicked onRecyclerItemClicked){
+    public BattlegroundLayoutHelper(View rootView,
+                                    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
+                                    OnRecyclerItemClicked onRecyclerItemClicked,
+                                    RecyclerView.OnScrollListener onScrollListener){
         super(rootView);
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
+        findRecycler().addOnScrollListener(onScrollListener);
         (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
         ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))

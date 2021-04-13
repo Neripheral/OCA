@@ -2,8 +2,10 @@ package com.nerpage.oca.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -121,11 +123,42 @@ public class BattlegroundFragment extends Fragment {
         submitPlayerActionChoice(getPlayerCharacter().getPossibleActions().get(position));
     }
 
+    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder){
+        if(firstHolder == lastHolder){
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
+        }else{
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+        }
+    }
+
+    private void onRecyclerScrolled(RecyclerView recyclerView){
+        assert recyclerView.getLayoutManager() != null;
+        LinearLayoutManager manager = ((LinearLayoutManager)recyclerView.getLayoutManager());
+
+        RecyclerView.ViewHolder firstHolder =
+                recyclerView.findViewHolderForLayoutPosition(
+                        manager.findFirstVisibleItemPosition());
+        RecyclerView.ViewHolder lastHolder =
+                recyclerView.findViewHolderForLayoutPosition(
+                        manager.findLastVisibleItemPosition());
+        assert firstHolder != null;
+        assert lastHolder != null;
+
+        changeInfoBoxVisibility(firstHolder, lastHolder);
+    }
+
     private void initView(View rootView){
         BattlegroundLayoutHelper newLayout = new BattlegroundLayoutHelper(
                 rootView,
                 this::onBehaviorItemSelected,
-                this::onActionItemClicked
+                this::onActionItemClicked,
+                new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        onRecyclerScrolled(recyclerView);
+                    }
+                }
         );
         setLayout(newLayout);
 
