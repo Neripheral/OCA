@@ -101,7 +101,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
             super(itemView);
             this.root = itemView;
             this.listener = listener;
-            itemView.setOnClickListener(this);
+            itemView.findViewById(R.id.action_container).setOnClickListener(this);
         }
 
         // endregion //        ActionViewHolder: Constructors
