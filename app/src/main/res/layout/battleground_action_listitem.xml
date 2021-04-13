@@ -15,17 +15,42 @@
         android:background="@color/mainFont">
 
 
+        <LinearLayout
+            android:id="@+id/action_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/action_main_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/action_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                tools:text="Punching is Lorem Ipsum, stuff and +20 to damage" />
+
+            <ImageView
+                android:id="@+id/action_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/action_main_bar"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:layout_height="25dp"
             android:elevation="10dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/action_info"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/action_thumbnail"
@@ -58,33 +83,6 @@
                 tools:text="Punch" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <LinearLayout
-            android:id="@+id/action_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/action_main_bar">
-
-            <ImageView
-                android:id="@+id/action_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <TextView
-                android:id="@+id/action_description"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="2dp"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                tools:text="Punching is Lorem Ipsum, stuff and +20 to damage" />
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
