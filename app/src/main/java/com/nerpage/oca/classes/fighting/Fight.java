@@ -1,7 +1,12 @@
 package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
+import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
+import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
+import com.nerpage.oca.classes.fighting.ledger.events.FightStartedEvent;
+import com.nerpage.oca.classes.fighting.ledger.events.FighterEnrolledEvent;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,9 +15,19 @@ import java.util.NoSuchElementException;
 
 public class Fight {
     //================================================================================
+    // region //            Inner classes
+
+    public interface FightObserver{
+        void notifyAboutProgress(Event event);
+    }
+
+    // endregion //         Inner classes
+    //================================================================================
+    //================================================================================
     // region //            Fields
 
-    private List<Fighter> fighters = new ArrayList<>();
+    private final List<Fighter> fighters = new ArrayList<>();
+    private final List<FightObserver> observers = new ArrayList<>();
 
     // endregion //         Fields
     //================================================================================
@@ -23,9 +38,8 @@ public class Fight {
         return fighters;
     }
 
-    private Fight setFighters(List<Fighter> fighters) {
-        this.fighters = fighters;
-        return this;
+    private List<FightObserver> getObservers() {
+        return observers;
     }
 
     // endregion //         Accessors
@@ -40,7 +54,7 @@ public class Fight {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<Fighter> getFightersWithout(Fighter fighter){
+    private List<Fighter> getFightersWithout(Fighter fighter){
         List<Fighter> toReturn = new ArrayList<>(this.getFighters());
         toReturn.remove(fighter);
         return toReturn;
@@ -50,6 +64,7 @@ public class Fight {
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
             //TODO: clashing Actions
+            notifyObservers(new EntityPerformedActionEvent(pendingAction));
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
         }
         activeFighter.setPendingAction(null);
@@ -63,10 +78,17 @@ public class Fight {
     }
 
     private void onActionSelectedNotified(Fighter fighter, Action action){
+        notifyObservers(new EntitySelectedActionEvent(action));
         fighter.setPendingAction(action);
         if(action != null)
             fighter.addToStopwatch(action.getTimeSpan());
         proceedWithNextFighter();
+    }
+
+    private void notifyObservers(Event event){
+        for(FightObserver observer : getObservers()){
+            observer.notifyAboutProgress(event);
+        }
     }
 
     // endregion //         Private methods
@@ -74,13 +96,19 @@ public class Fight {
     //================================================================================
     // region //            Interface
 
+    public void addObserver(FightObserver newObserver){
+        getObservers().add(newObserver);
+    }
+
     public void enrollFighter(Entity entity, FightingBehavior behavior, int handicapTime){
         Fighter newFighter = new Fighter(entity, behavior);
         newFighter.setStopwatchTime(handicapTime);
         this.getFighters().add(newFighter);
+        notifyObservers(new FighterEnrolledEvent(newFighter));
     }
 
     public void start(){
+        notifyObservers(new FightStartedEvent(getFighters()));
         proceedWithNextFighter();
     }
 
