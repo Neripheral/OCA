@@ -1,8 +1,6 @@
 package com.nerpage.oca.classes;
 
-import androidx.annotation.Nullable;
-
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.Status;
 
 import java.util.ArrayList;

@@ -4,8 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.HumanEquipment;
-import com.nerpage.oca.classes.fighting.Action;
-import com.nerpage.oca.classes.fighting.DuelistAI;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.actions.Kick;
 import com.nerpage.oca.classes.fighting.actions.Punch;
 

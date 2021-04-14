@@ -1,7 +1,7 @@
 package com.nerpage.oca.classes.fighting.ledger;
 
 import com.nerpage.oca.classes.Ledger;
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;

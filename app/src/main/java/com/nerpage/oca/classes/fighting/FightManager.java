@@ -2,6 +2,7 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Ledger;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.ledger.FightLedger;
 
 import java.util.ArrayList;

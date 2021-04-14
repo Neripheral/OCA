@@ -2,7 +2,7 @@ package com.nerpage.oca.modelfactories;
 
 import android.content.Context;
 
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.models.ActionCardModel;
 
 public final class ActionCardModelFactory {

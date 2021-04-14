@@ -1,6 +1,6 @@
 package com.nerpage.oca.classes.fighting.behaviors;
 
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.Fighter;
 
 import java.util.List;

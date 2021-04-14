@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting.ledger.events;
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Event;
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 
 abstract class ActionEvent extends Event {
     Action action;

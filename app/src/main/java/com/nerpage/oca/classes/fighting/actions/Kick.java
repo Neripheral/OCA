@@ -1,7 +1,6 @@
 package com.nerpage.oca.classes.fighting.actions;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.Status;
 import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
 

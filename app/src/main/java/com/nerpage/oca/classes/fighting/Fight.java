@@ -2,6 +2,7 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Event;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;

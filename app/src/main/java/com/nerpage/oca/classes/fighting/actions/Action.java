@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes.fighting;
+package com.nerpage.oca.classes.fighting.actions;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Identifiable;
+import com.nerpage.oca.classes.fighting.Status;
 
 public abstract class Action implements Cloneable, Identifiable {
     //================================================================================

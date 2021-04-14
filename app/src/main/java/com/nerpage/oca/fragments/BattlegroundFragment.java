@@ -17,7 +17,7 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;

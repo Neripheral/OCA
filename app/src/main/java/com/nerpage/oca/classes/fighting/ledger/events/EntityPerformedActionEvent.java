@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting.ledger.events;
 import android.content.Context;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.fighting.Action;
+import com.nerpage.oca.classes.fighting.actions.Action;
 
 public final class EntityPerformedActionEvent extends ActionEvent{
     @Override
