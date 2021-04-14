@@ -6,6 +6,7 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
+import com.nerpage.oca.classes.fighting.ledger.events.FightEndedEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.FightStartedEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.FighterEnrolledEvent;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class Fight {
     //================================================================================
@@ -51,8 +53,9 @@ public class Fight {
     private Fighter getNextFighter(){
         return this.getFighters()
                 .stream()
+                .filter(Fighter::canFight)
                 .min(Comparator.comparing(Fighter::getStopwatchTime))
-                .orElseThrow(NoSuchElementException::new);
+                .orElse(null);
     }
 
     private List<Fighter> getFightersWithout(Fighter fighter){
@@ -74,8 +77,10 @@ public class Fight {
     private void proceedWithNextFighter(){
         Fighter activeFighter = getNextFighter();
 
-        executePendingActionOf(activeFighter);
-        activeFighter.promptAction(getFightersWithout(activeFighter), this::onActionSelectedNotified);
+        if(activeFighter != null) { // null -> end of fight
+            executePendingActionOf(activeFighter);
+            activeFighter.promptAction(getFightersWithout(activeFighter), this::onActionSelectedNotified);
+        }
     }
 
     private void onActionSelectedNotified(Fighter fighter, Action action){
@@ -111,6 +116,7 @@ public class Fight {
     public void start(){
         notifyObservers(new FightStartedEvent(getFighters()));
         proceedWithNextFighter();
+        notifyObservers(new FightEndedEvent());
     }
 
     // endregion //         Interface
