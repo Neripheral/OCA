@@ -1,16 +1,17 @@
 package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class Fighter {
     //================================================================================
     // region //            Fields
 
     private Entity entity;
-    private Action selectedAction; // Action that fighter want to execute the next
-    private Action pendingAction; // Action already scheduled for execution. It is later replaced by selectedAction.
+    private Action pendingAction;
     private FightingBehavior behavior;
     private int stopwatchTime;
 
@@ -37,15 +38,6 @@ public class Fighter {
         return this;
     }
 
-    public Action getSelectedAction() {
-        return selectedAction;
-    }
-
-    public Fighter setSelectedAction(Action selectedAction) {
-        this.selectedAction = selectedAction;
-        return this;
-    }
-
     public FightingBehavior getBehavior() {
         return behavior;
     }
@@ -69,13 +61,8 @@ public class Fighter {
     //================================================================================
     // region //            Methods
 
-    public Action promptAction(List<Fighter> otherFighters){
-        return this.getBehavior().promptAction(this, otherFighters);
-    }
-
-    public void pushActionToPending(){
-        this.setPendingAction(this.getSelectedAction());
-        this.setSelectedAction(null);
+    public void promptAction(List<Fighter> otherFighters, BiConsumer<Fighter, Action> actionSelectedNotifier){
+        this.getBehavior().promptAction(this, otherFighters, actionSelectedNotifier);
     }
 
     public void addToStopwatch(int time){
@@ -89,7 +76,6 @@ public class Fighter {
 
     public Fighter(Entity entity, FightingBehavior behavior){
         this.entity = entity;
-        this.selectedAction = null;
         this.pendingAction = null;
         this.behavior = behavior;
         this.stopwatchTime = 0;

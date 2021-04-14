@@ -2,15 +2,14 @@ package com.nerpage.oca.classes.fighting.behaviors;
 
 import com.nerpage.oca.classes.fighting.Action;
 import com.nerpage.oca.classes.fighting.Fighter;
-import com.nerpage.oca.classes.fighting.FightingBehavior;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiConsumer;
 
 public class BraindeadFightingBehavior extends FightingBehavior {
     @Override
-    public Action promptAction(Fighter host, List<Fighter> others) {
+    public void promptAction(Fighter host, List<Fighter> others, BiConsumer<Fighter, Action> onActionSelectedNotifier) {
         Random rand = new Random();
 
         // picking one random action to perform
@@ -23,6 +22,6 @@ public class BraindeadFightingBehavior extends FightingBehavior {
         actionToPerform.setSource(host.getEntity());
         actionToPerform.setTarget(pickedOpponent.getEntity());
 
-        return actionToPerform;
+        onActionSelectedNotifier.accept(host, actionToPerform);
     }
 }
