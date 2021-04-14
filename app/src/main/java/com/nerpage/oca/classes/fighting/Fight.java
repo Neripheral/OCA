@@ -37,10 +37,6 @@ public class Fight {
     //================================================================================
     // region //            Accessors
 
-    private List<Fighter> getFighters() {
-        return fighters;
-    }
-
     private List<FightObserver> getObservers() {
         return observers;
     }
@@ -101,6 +97,10 @@ public class Fight {
     //================================================================================
     //================================================================================
     // region //            Interface
+
+    public List<Fighter> getFighters() {
+        return fighters;
+    }
 
     public void addObserver(FightObserver newObserver){
         getObservers().add(newObserver);
