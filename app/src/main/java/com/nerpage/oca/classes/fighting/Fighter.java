@@ -70,6 +70,11 @@ public class Fighter {
         this.setStopwatchTime(this.getStopwatchTime() + time);
     }
 
+    public boolean canFight(){
+        //TODO: when cannot fight
+        return true;
+    }
+
     // endregion //         Methods
     //================================================================================
     //================================================================================
