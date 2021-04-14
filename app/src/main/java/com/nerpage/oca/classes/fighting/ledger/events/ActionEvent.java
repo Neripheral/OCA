@@ -2,10 +2,10 @@ package com.nerpage.oca.classes.fighting.ledger.events;
 
 import androidx.annotation.NonNull;
 
-import com.nerpage.oca.classes.Ledger;
+import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.Action;
 
-public abstract class ActionEvent extends Ledger.Event {
+public abstract class ActionEvent extends Event {
     Action action;
 
     public Action getAction() {

@@ -1,54 +1,11 @@
 package com.nerpage.oca.classes;
 
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class Ledger {
-    //================================================================================
-    // region //            Inner classes
-
-    public static abstract class Event {
-        @NonNull
-        @Override
-        public abstract String toString();
-
-        // Return fancy, translated version
-        public String toString(Context context){
-            return this.toString();
-        }
-    }
-
-    public class StringEvent extends Event {
-        private String data;
-
-        public String getData() {
-            return data;
-        }
-
-        public StringEvent setData(String data) {
-            this.data = data;
-            return this;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return this.getData();
-        }
-
-        public StringEvent(String data) {
-            this.data = data;
-        }
-    }
-
-    // endregion //         Inner classes
-    //================================================================================
     //================================================================================
     // region //            Fields
 

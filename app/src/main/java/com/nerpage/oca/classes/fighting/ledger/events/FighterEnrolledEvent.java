@@ -5,10 +5,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.Ledger;
+import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.Fighter;
 
-public final class FighterEnrolledEvent extends Ledger.Event {
+public final class FighterEnrolledEvent extends Event {
     Fighter entity;
 
     public Fighter getEntity() {
