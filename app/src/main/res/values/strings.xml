@@ -78,4 +78,5 @@
     <string name="battleground_defend">Defend</string>
     <string name="action_punch_description" >-</string>
     <string name="action_kick_description">-</string>
+    <string name="event_fight_started_with_blank">Fight started. Participants: %s</string>
 </resources>

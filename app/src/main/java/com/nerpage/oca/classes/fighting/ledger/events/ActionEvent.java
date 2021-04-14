@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.Action;
 
-public abstract class ActionEvent extends Event {
+abstract class ActionEvent extends Event {
     Action action;
 
     public Action getAction() {
