@@ -16,6 +16,9 @@ import com.nerpage.oca.models.BattlegroundViewModel;
 import java.util.ArrayList;
 
 public class BattlegroundLayoutHelper extends LayoutHelper {
+    //================================================================================
+    // region //            POI
+
     public enum POI implements LayoutHelper.POI {
         ENEMY_TITLE(R.id.battleground_enemy_title),
         ENEMY_CURRENT_BLOOD(R.id.battleground_enemy_currentBlood),
@@ -40,11 +43,25 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         }
     }
 
+    // endregion //         POI
+    //================================================================================
+    //================================================================================
+    // region //            Private methods
+
     private RecyclerView findRecycler(){
         return (RecyclerView)getView(POI.ACTIONS_RECYCLER);
     }
 
-    public BattlegroundLayoutHelper updateViewUsing(BattlegroundViewModel model){
+    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder) {
+        if(firstHolder == lastHolder){
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
+        }else{
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+        }
+    }
+
+    private void updateViewDataWithModel(BattlegroundViewModel model){
         updateText( POI.ENEMY_TITLE,            model.getEnemyTitle());
         updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
         updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
@@ -55,7 +72,31 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         assert adapter != null;
         adapter.setDataset(new ArrayList<>(model.getPossibleActions()));
         adapter.notifyDataSetChanged();
+    }
 
+    // endregion //         Private methods
+    //================================================================================
+
+    public BattlegroundLayoutHelper updateInfoBoxVisibility(){
+        LinearLayoutManager manager = ((LinearLayoutManager)findRecycler().getLayoutManager());
+        assert manager != null;
+
+        RecyclerView.ViewHolder firstHolder =
+                findRecycler().findViewHolderForLayoutPosition(
+                        manager.findFirstVisibleItemPosition());
+        RecyclerView.ViewHolder lastHolder =
+                findRecycler().findViewHolderForLayoutPosition(
+                        manager.findLastVisibleItemPosition());
+
+        if(firstHolder != null && lastHolder != null)
+            changeInfoBoxVisibility(firstHolder, lastHolder);
+
+        return this;
+    }
+
+    public BattlegroundLayoutHelper updateView(BattlegroundViewModel model){
+        updateViewDataWithModel(model);
+        updateInfoBoxVisibility();
         return this;
     }
 

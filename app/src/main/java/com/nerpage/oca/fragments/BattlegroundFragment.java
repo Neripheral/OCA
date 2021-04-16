@@ -21,14 +21,12 @@ import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
-import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
@@ -87,7 +85,7 @@ public class BattlegroundFragment extends Fragment {
                 getPlayerCharacter(),
                 getFightManager().getParticipantsExceptForPc().get(0).getEntity());
 
-        getLayout().updateViewUsing(model);
+        getLayout().updateView(model);
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -135,31 +133,12 @@ public class BattlegroundFragment extends Fragment {
             actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
             getActionSelectedNotifier().accept(getFightManager().getPcFighter(), actionToPerform);
         }
+        refreshFragmentData();
     }
 
-    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder){
-        if(firstHolder == lastHolder){
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
-        }else{
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
-            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
-        }
-    }
 
-    private void onRecyclerScrolled(RecyclerView recyclerView){
-        assert recyclerView.getLayoutManager() != null;
-        LinearLayoutManager manager = ((LinearLayoutManager)recyclerView.getLayoutManager());
-
-        RecyclerView.ViewHolder firstHolder =
-                recyclerView.findViewHolderForLayoutPosition(
-                        manager.findFirstVisibleItemPosition());
-        RecyclerView.ViewHolder lastHolder =
-                recyclerView.findViewHolderForLayoutPosition(
-                        manager.findLastVisibleItemPosition());
-        assert firstHolder != null;
-        assert lastHolder != null;
-
-        changeInfoBoxVisibility(firstHolder, lastHolder);
+    private void onRecyclerScrolled(){
+        getLayout().updateInfoBoxVisibility();
     }
 
     private void initView(View rootView){
@@ -170,7 +149,7 @@ public class BattlegroundFragment extends Fragment {
                 new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        onRecyclerScrolled(recyclerView);
+                        onRecyclerScrolled();
                     }
                 }
         );

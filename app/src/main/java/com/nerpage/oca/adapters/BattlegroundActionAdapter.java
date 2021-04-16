@@ -144,11 +144,6 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     //================================================================================
     // region //            Methods
 
-    private void manageInfoVisibility(ActionViewHolder holder, int position){
-        View infoBox = holder.getRoot().findViewById(R.id.action_info);
-        infoBox.setVisibility(View.GONE);
-    }
-
     @NonNull
     @Override
     public ActionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -163,7 +158,6 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     @Override
     public void onBindViewHolder(@NonNull ActionViewHolder holder, int position) {
         holder.updateWithModel(this.getDataset().get(position));
-        manageInfoVisibility(holder, position);
     }
 
     @Override
