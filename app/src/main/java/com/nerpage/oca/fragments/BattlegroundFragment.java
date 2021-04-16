@@ -15,14 +15,20 @@ import android.view.ViewGroup;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
-import com.nerpage.oca.classes.Ledger;
+import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
+import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
@@ -30,6 +36,8 @@ public class BattlegroundFragment extends Fragment {
 
     private BattlegroundLayoutHelper layout;
     private FightManager fightManager;
+    //TODO: get rid of BiConsumer and replace it with new listener type
+    private BiConsumer<Fighter, Action> actionSelectedNotifier = null;
 
     // endregion //         Fields
     //================================================================================
@@ -54,26 +62,32 @@ public class BattlegroundFragment extends Fragment {
         return this;
     }
 
+    public BiConsumer<Fighter, Action> getActionSelectedNotifier() {
+        return actionSelectedNotifier;
+    }
+
+    public BattlegroundFragment setActionSelectedNotifier(BiConsumer<Fighter, Action> actionSelectedNotifier) {
+        this.actionSelectedNotifier = actionSelectedNotifier;
+        return this;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
     // region //            Private Methods
 
+    private void onPlayersTurn(Fighter host, List<Fighter> others, BiConsumer<Fighter, Action> actionSelectedNotifier){
+        //TODO: what to do when it's players turn
+        setActionSelectedNotifier(actionSelectedNotifier);
+    }
+
     private void refreshFragmentData(){
         BattlegroundViewModel model = BattlegroundViewModelFactory.generateFreshModel(
                 requireContext(),
                 getPlayerCharacter(),
-                getFightManager().getFighters().get(1).getEntity());
+                getFightManager().getParticipantsExceptForPc().get(0).getEntity());
 
         getLayout().updateViewUsing(model);
-    }
-
-    private void submitPlayerActionChoice(Action action){
-        action.setSource(getFightManager().getPlayerFighter().getEntity());
-        action.setTarget(getFightManager().getFightersWithout(getFightManager().getPlayerFighter()).get(0).getEntity());
-        getFightManager().registerSelectedAction(getFightManager().getPlayerFighter(), action);
-        getFightManager().continueFight();
-        refreshFragmentData();
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -82,10 +96,10 @@ public class BattlegroundFragment extends Fragment {
 
     private void enrollFighters(){
         // enroll player
-        getFightManager().enrollPlayer(getPlayerCharacter());
+        getFightManager().enrollPlayer(getPlayerCharacter(), this::onPlayersTurn);
 
         // enroll enemy
-        getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy());
+        getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy(), 0);
     }
 
     private void onBehaviorSurrenderSelected(){
@@ -115,7 +129,12 @@ public class BattlegroundFragment extends Fragment {
     }
 
     private void onActionItemClicked(View v, int position){
-        submitPlayerActionChoice(getPlayerCharacter().getPossibleActions().get(position));
+        if(getActionSelectedNotifier() != null) {
+            Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
+            actionToPerform.setSource(getPlayerCharacter());
+            actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
+            getActionSelectedNotifier().accept(getFightManager().getPcFighter(), actionToPerform);
+        }
     }
 
     private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder){
@@ -165,7 +184,7 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Public Methods
 
-    public void onProgressRegistered(Ledger.Event data){
+    public void onProgressRegistered(Event data){
         Log.e("Ledger", data.toString(getContext()));
         refreshFragmentData();
     }
@@ -175,8 +194,7 @@ public class BattlegroundFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setFightManager(new FightManager());
-        getFightManager().addProgressListener(this::onProgressRegistered);
-        getFightManager().setGoal(FightManager.Goal.DEATH);
+        getFightManager().addObserver(this::onProgressRegistered);
         enrollFighters();
     }
 
@@ -184,8 +202,7 @@ public class BattlegroundFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
-        getFightManager().startFight();
-        getFightManager().continueFight();
+        getFightManager().start();
 
         return getLayout().getRoot();
     }

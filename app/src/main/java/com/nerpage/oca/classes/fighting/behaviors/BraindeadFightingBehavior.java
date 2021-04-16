@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-public class BraindeadFightingBehavior extends FightingBehavior {
+public class BraindeadFightingBehavior implements FightingBehavior {
     @Override
     public void promptAction(Fighter host, List<Fighter> others, BiConsumer<Fighter, Action> onActionSelectedNotifier) {
         Random rand = new Random();

@@ -54,12 +54,6 @@ public class Fight {
                 .orElse(null);
     }
 
-    private List<Fighter> getFightersWithout(Fighter fighter){
-        List<Fighter> toReturn = new ArrayList<>(this.getFighters());
-        toReturn.remove(fighter);
-        return toReturn;
-    }
-
     private void executePendingActionOf(Fighter activeFighter) {
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
@@ -102,21 +96,27 @@ public class Fight {
         return fighters;
     }
 
+    public List<Fighter> getFightersWithout(Fighter fighter){
+        List<Fighter> toReturn = new ArrayList<>(this.getFighters());
+        toReturn.remove(fighter);
+        return toReturn;
+    }
+
     public void addObserver(FightObserver newObserver){
         getObservers().add(newObserver);
     }
 
-    public void enrollFighter(Entity entity, FightingBehavior behavior, int handicapTime){
+    public Fighter enrollFighter(Entity entity, FightingBehavior behavior, int handicapTime){
         Fighter newFighter = new Fighter(entity, behavior);
         newFighter.setStopwatchTime(handicapTime);
         this.getFighters().add(newFighter);
-        notifyObservers(new FighterEnrolledEvent(newFighter));
+        //notifyObservers(new FighterEnrolledEvent(newFighter));
+        return newFighter;
     }
 
     public void start(){
         notifyObservers(new FightStartedEvent(getFighters()));
         proceedWithNextFighter();
-        notifyObservers(new FightEndedEvent());
     }
 
     // endregion //         Interface
