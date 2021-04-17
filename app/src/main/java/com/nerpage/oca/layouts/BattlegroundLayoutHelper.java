@@ -20,9 +20,9 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
     // region //            POI
 
     public enum POI implements LayoutHelper.POI {
-        ENEMY_TITLE(R.id.battleground_enemy_title),
-        ENEMY_CURRENT_BLOOD(R.id.battleground_enemy_currentBlood),
-        ENEMY_MAX_BLOOD(R.id.battleground_enemy_maxBlood),
+        ENEMY_TITLE(R.id.enemy_title),
+        ENEMY_CURRENT_BLOOD(R.id.enemy_currentBlood),
+        ENEMY_MAX_BLOOD(R.id.enemy_maxBlood),
         PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
         PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
         BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
