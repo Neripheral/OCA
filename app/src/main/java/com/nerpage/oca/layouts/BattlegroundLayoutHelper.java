@@ -78,7 +78,9 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         adapter.notifyDataSetChanged();
     }
 
-    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration){
+    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration, float scale){
+        getView(poi).setScaleX(scale);
+        getView(poi).setScaleY(scale);
         AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration);
         return this;
     }
@@ -123,12 +125,12 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
                 .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 
-    public BattlegroundLayoutHelper playEnemyEffect(int resId, int duration){
-        return playEffect(POI.ENEMY_EFFECT, resId, duration);
+    public BattlegroundLayoutHelper playEnemyEffect(int resId, int duration, float scale){
+        return playEffect(POI.ENEMY_EFFECT, resId, duration, scale);
     }
 
-    public BattlegroundLayoutHelper playPcEffect(int resId, int duration){
-        return playEffect(POI.PC_EFFECT, resId, duration);
+    public BattlegroundLayoutHelper playPcEffect(int resId, int duration, float scale){
+        return playEffect(POI.PC_EFFECT, resId, duration, scale);
     }
 
 }
