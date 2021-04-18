@@ -4,7 +4,7 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.classes.fighting.Status;
 import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
 
-public class Kick extends Action {
+public class Kick extends Action implements Action.HasEffectAnimation {
     //================================================================================
     // region //            Fields
 
@@ -43,6 +43,21 @@ public class Kick extends Action {
     @Override
     public int getDescriptionResId() {
         return R.string.action_kick_description;
+    }
+
+    @Override
+    public int getEffectResId() {
+        return R.drawable.animation_blunt;
+    }
+
+    @Override
+    public int getEffectDuration() {
+        return Duration.MEDIUM.value;
+    }
+
+    @Override
+    public float getEffectScale() {
+        return Scale.LARGE.value;
     }
 
     // endregion //         Methods

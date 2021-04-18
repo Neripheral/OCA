@@ -5,16 +5,18 @@ import androidx.annotation.NonNull;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.fighting.statuses.Bloodsuck;
 
-public class Punch extends Action {
+public class Punch extends Action implements Action.HasEffectAnimation {
+
+
     //================================================================================
-    // Fields
-    //================================================================================
+    // region //            Fields
 
     private Bloodsuck appliedStatus;
 
+    // endregion //         Fields
     //================================================================================
-    // Overrides
     //================================================================================
+    // region //            Accessors
 
     @Override
     public Bloodsuck getAppliedStatus() {
@@ -25,6 +27,11 @@ public class Punch extends Action {
         this.appliedStatus = appliedStatus;
         return this;
     }
+
+    // endregion //         Accessors
+    //================================================================================
+    //================================================================================
+    // region //            Methods
 
     @Override
     public int getTimeSpan() {
@@ -49,9 +56,25 @@ public class Punch extends Action {
         return toReturn;
     }
 
+    @Override
+    public int getEffectResId() {
+        return R.drawable.animation_blunt;
+    }
+
+    @Override
+    public int getEffectDuration() {
+        return Duration.SHORT.value;
+    }
+
+    @Override
+    public float getEffectScale() {
+        return Scale.SMALL.value;
+    }
+
+    // endregion //         Methods
     //================================================================================
-    // Constructors
     //================================================================================
+    // region //            Constructors
 
     public Punch(Bloodsuck appliedStatus) {
         this.setAppliedStatus(appliedStatus);
@@ -60,4 +83,7 @@ public class Punch extends Action {
     public Punch(int power){
         this(new Bloodsuck(power));
     }
+
+    // endregion //         Constructors
+    //================================================================================
 }
