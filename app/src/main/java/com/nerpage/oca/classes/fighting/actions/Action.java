@@ -10,6 +10,41 @@ import com.nerpage.oca.classes.fighting.Status;
 
 public abstract class Action implements Cloneable, Identifiable {
     //================================================================================
+    // region //            Inner classes
+
+    public interface HasEffectAnimation{
+        enum Duration{
+            SHORT(50),
+            MEDIUM(80),
+            LONG(120);
+
+            int value;
+
+            Duration(int duration){
+                this.value = duration;
+            }
+        }
+
+        enum Scale{
+            SMALL(0.5f),
+            MEDIUM(0.8f),
+            LARGE(1.0f);
+
+            float value;
+
+            Scale(float scale){
+                this.value = scale;
+            }
+        }
+
+        int getEffectResId();
+        int getEffectDuration();
+        float getEffectScale();
+    }
+
+    // endregion //         Inner classes
+    //================================================================================
+    //================================================================================
     // region //            Fields
 
     private Entity source;
