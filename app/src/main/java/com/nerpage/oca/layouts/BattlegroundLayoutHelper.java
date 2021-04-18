@@ -1,6 +1,7 @@
 package com.nerpage.oca.layouts;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -10,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
@@ -29,7 +31,9 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
         BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
         BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
-        ACTIONS_RECYCLER(R.id.battleground_actions_recycler);
+        ACTIONS_RECYCLER(R.id.battleground_actions_recycler),
+        ENEMY_EFFECT(R.id.enemy_effect_attack),
+        PC_EFFECT(R.id.battleground_pc_effect);
 
         int id;
 
@@ -74,6 +78,11 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         adapter.notifyDataSetChanged();
     }
 
+    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration){
+        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration);
+        return this;
+    }
+
     // endregion //         Private methods
     //================================================================================
 
@@ -113,4 +122,13 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
                 .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
+
+    public BattlegroundLayoutHelper playEnemyEffect(int resId, int duration){
+        return playEffect(POI.ENEMY_EFFECT, resId, duration);
+    }
+
+    public BattlegroundLayoutHelper playPcEffect(int resId, int duration){
+        return playEffect(POI.PC_EFFECT, resId, duration);
+    }
+
 }
