@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="true">
+    <item
+        android:drawable="@drawable/blunt_1"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/blunt_2"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/blunt_3"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/blunt_4"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/blank"
+        android:duration="100" />
+</animation-list>
