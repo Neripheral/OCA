@@ -6,6 +6,7 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
+import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.FightStartedEvent;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class Fight {
     //================================================================================
     // region //            Inner classes
 
-    public interface FightObserver{
-        void notifyAboutProgress(Event event);
+    public interface FightListener{
+        void notifyAbout(FightEvent event);
     }
 
     // endregion //         Inner classes
@@ -26,15 +27,15 @@ public class Fight {
     // region //            Fields
 
     private final List<Fighter> fighters = new ArrayList<>();
-    private final List<FightObserver> observers = new ArrayList<>();
+    private FightListener fightListener;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    private List<FightObserver> getObservers() {
-        return observers;
+    public FightListener getFightListener() {
+        return fightListener;
     }
 
     // endregion //         Accessors
@@ -54,7 +55,7 @@ public class Fight {
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
             //TODO: clashing Actions
-            notifyObservers(new EntityPerformedActionEvent(pendingAction, activeFighter.getEntity()));
+            notifyAbout(new EntityPerformedActionEvent(pendingAction, activeFighter.getEntity()));
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
         }
         activeFighter.setPendingAction(null);
@@ -70,17 +71,15 @@ public class Fight {
     }
 
     private void onActionSelectedNotified(Fighter fighter, Action action){
-        notifyObservers(new EntitySelectedActionEvent(action, fighter.getEntity()));
+        notifyAbout(new EntitySelectedActionEvent(action, fighter.getEntity()));
         fighter.setPendingAction(action);
         if(action != null)
             fighter.addToStopwatch(action.getTimeSpan());
         proceedWithNextFighter();
     }
 
-    private void notifyObservers(Event event){
-        for(FightObserver observer : getObservers()){
-            observer.notifyAboutProgress(event);
-        }
+    private void notifyAbout(FightEvent event){
+        getFightListener().notifyAbout(event);
     }
 
     // endregion //         Private methods
@@ -98,10 +97,6 @@ public class Fight {
         return toReturn;
     }
 
-    public void addObserver(FightObserver newObserver){
-        getObservers().add(newObserver);
-    }
-
     public Fighter enrollFighter(Entity entity, FightingBehavior behavior, int handicapTime){
         Fighter newFighter = new Fighter(entity, behavior);
         newFighter.setStopwatchTime(handicapTime);
@@ -111,7 +106,7 @@ public class Fight {
     }
 
     public void start(){
-        notifyObservers(new FightStartedEvent(getFighters()));
+        notifyAbout(new FightStartedEvent(getFighters()));
         proceedWithNextFighter();
     }
 
