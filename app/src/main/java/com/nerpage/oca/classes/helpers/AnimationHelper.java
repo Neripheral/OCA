@@ -9,7 +9,7 @@ public class AnimationHelper {
         private volatile int duration;
         private int currentFrame;
 
-        public AnimationDrawableEx(AnimationDrawable animation, int duration){
+        public AnimationDrawableEx(final AnimationDrawable animation, final int duration){
             currentFrame = 0;
             this.duration = duration;
             for(int i = 0; i< animation.getNumberOfFrames(); i++){
@@ -24,34 +24,48 @@ public class AnimationHelper {
             currentFrame++;
             if(currentFrame >= framesNo){
                 currentFrame = 0;
-                if(isOneShot())
+                if(isOneShot()) {
+                    onAnimationEnd();
                     return;
+                }
             }
             selectDrawable(currentFrame);
             scheduleSelf(this, SystemClock.uptimeMillis() + duration);
         }
 
-        public void setDuration(int duration){
+        public void setDuration(final int duration){
             this.duration = duration;
             unscheduleSelf(this);
             selectDrawable(currentFrame);
             scheduleSelf(this, SystemClock.uptimeMillis() + duration);
         }
+
+        public void onAnimationEnd(){
+            return;
+        }
     }
 
-    public static void playCustomDurationAnimation(ImageView view, int resId, int duration){
+    public static void playCustomDurationAnimation(final ImageView view, final int resId, final int duration, final Runnable onAnimationEnd){
         view.setBackgroundResource(resId);
-        AnimationDrawableEx animation = new AnimationDrawableEx((AnimationDrawable)view.getBackground(), duration);
+        AnimationDrawableEx animation = new AnimationDrawableEx((AnimationDrawable)view.getBackground(), duration){
+            @Override
+            public void onAnimationEnd() {
+                onAnimationEnd.run();
+            }
+        };
         view.setBackground(animation);
         animation.stop();
         animation.start();
     }
 
-    public static void playAnimation(ImageView view, int resId){
+    public static void playCustomDurationAnimation(final ImageView view, final int resId, final int duration){
+        playCustomDurationAnimation(view, resId, duration, () -> {});
+    }
+
+    public static void playAnimation(final ImageView view, final int resId){
         view.setBackgroundResource(resId);
         AnimationDrawable animation = (AnimationDrawable)view.getBackground();
         animation.stop();
         animation.start();
-
     }
 }
