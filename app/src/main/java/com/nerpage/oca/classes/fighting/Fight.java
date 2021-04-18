@@ -6,15 +6,11 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEndedEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.FightStartedEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FighterEnrolledEvent;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class Fight {
     //================================================================================
@@ -58,7 +54,7 @@ public class Fight {
         Action pendingAction = activeFighter.getPendingAction();
         if(pendingAction != null){
             //TODO: clashing Actions
-            notifyObservers(new EntityPerformedActionEvent(pendingAction));
+            notifyObservers(new EntityPerformedActionEvent(pendingAction, activeFighter.getEntity()));
             pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
         }
         activeFighter.setPendingAction(null);
@@ -74,7 +70,7 @@ public class Fight {
     }
 
     private void onActionSelectedNotified(Fighter fighter, Action action){
-        notifyObservers(new EntitySelectedActionEvent(action));
+        notifyObservers(new EntitySelectedActionEvent(action, fighter.getEntity()));
         fighter.setPendingAction(action);
         if(action != null)
             fighter.addToStopwatch(action.getTimeSpan());

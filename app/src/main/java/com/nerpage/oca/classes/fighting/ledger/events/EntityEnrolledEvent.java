@@ -5,34 +5,30 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.Fighter;
 
-public final class FighterEnrolledEvent extends Event {
-    Fighter entity;
+public final class EntityEnrolledEvent extends FightEvent {
+    Entity entity;
 
-    public Fighter getEntity() {
+    public Entity getEntity() {
         return entity;
-    }
-
-    private FighterEnrolledEvent setEntity(Fighter entity) {
-        this.entity = entity;
-        return this;
     }
 
     @Override
     public String toString(Context context) {
         return context.getResources().getString(R.string.ledger_entity_enrolled,
-                this.getEntity().getEntity().getName(context));
+                this.getEntity().getName(context));
     }
 
     @NonNull
     @Override
     public String toString() {
-        return this.getEntity().getEntity().getId();
+        return this.getEntity().getId();
     }
 
-    public FighterEnrolledEvent(Fighter entity) {
+    public EntityEnrolledEvent(Entity entity) {
         this.entity = entity;
     }
 }

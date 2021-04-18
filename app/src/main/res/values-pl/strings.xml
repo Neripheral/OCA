@@ -77,4 +77,6 @@
     <string name="action_punch_description" >Prosty cios pięścią.</string>
     <string name="action_kick_description">-</string>
     <string name="event_fight_started_with_blank">Walka rozpoczęta. Uczestnicy: %s</string>
+    <string name="fighter_turn_started">%s rozpoczął swoją turę.</string>
+    <string name="fighter_turn_ended">%s zakończył swoją turę.</string>
 </resources>

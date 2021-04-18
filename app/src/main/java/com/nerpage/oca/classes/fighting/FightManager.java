@@ -1,14 +1,10 @@
 package com.nerpage.oca.classes.fighting;
 
-import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
-import com.nerpage.oca.classes.fighting.ledger.FightLedger;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class FightManager {
     //================================================================================
@@ -16,7 +12,7 @@ public class FightManager {
 
     private Fight fight = new Fight();
     private Fighter pcFighter = null;
-    private FightLedger ledger = new FightLedger();
+    private Ledger ledger = new Ledger();
 
     // endregion //         Fields
     //================================================================================
@@ -41,11 +37,11 @@ public class FightManager {
         return this;
     }
 
-    private FightLedger getLedger() {
+    private Ledger getLedger() {
         return ledger;
     }
 
-    private FightManager setLedger(FightLedger ledger) {
+    private FightManager setLedger(Ledger ledger) {
         this.ledger = ledger;
         return this;
     }

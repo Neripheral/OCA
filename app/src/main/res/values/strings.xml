@@ -79,4 +79,6 @@
     <string name="action_punch_description" >-</string>
     <string name="action_kick_description">-</string>
     <string name="event_fight_started_with_blank">Fight started. Participants: %s</string>
+    <string name="fighter_turn_started">%s started their turn.</string>
+    <string name="fighter_turn_ended">%s ended their turn.</string>
 </resources>

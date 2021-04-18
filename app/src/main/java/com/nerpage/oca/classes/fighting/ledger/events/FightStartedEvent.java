@@ -8,7 +8,7 @@ import com.nerpage.oca.classes.fighting.Fighter;
 
 import java.util.List;
 
-public final class FightStartedEvent extends Event {
+public final class FightStartedEvent extends FightEvent {
     private final List<Fighter> fighters;
 
     public List<Fighter> getFighters() {
