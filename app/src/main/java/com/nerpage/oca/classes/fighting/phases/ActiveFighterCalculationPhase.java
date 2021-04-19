@@ -3,7 +3,9 @@ package com.nerpage.oca.classes.fighting.phases;
 import com.nerpage.oca.classes.fighting.Fight;
 import com.nerpage.oca.classes.fighting.Fighter;
 
-public abstract class FighterTurnFightPhase extends FightPhase {
+import java.util.Comparator;
+
+public class ActiveFighterCalculationPhase extends FightPhase {
     //================================================================================
     // region //            Fields
 
@@ -14,11 +16,11 @@ public abstract class FighterTurnFightPhase extends FightPhase {
     //================================================================================
     // region //            Accessors
 
-    protected Fighter getActiveFighter() {
+    private Fighter getActiveFighter() {
         return activeFighter;
     }
 
-    private FighterTurnFightPhase setActiveFighter(Fighter activeFighter) {
+    private ActiveFighterCalculationPhase setActiveFighter(Fighter activeFighter) {
         this.activeFighter = activeFighter;
         return this;
     }
@@ -26,11 +28,33 @@ public abstract class FighterTurnFightPhase extends FightPhase {
     // endregion //         Accessors
     //================================================================================
     //================================================================================
+    // region //            Methods
+
+    private Fighter getNextFighter(){
+        return getFight().getFighters()
+                .stream()
+                .filter(Fighter::canFight)
+                .min(Comparator.comparing(Fighter::getStopwatchTime))
+                .orElse(null);
+    }
+
+    @Override
+    public FightPhase getNextPhase() {
+        return new ActiveFighterTurnStartPhase(getFight(), getActiveFighter());
+    }
+
+    @Override
+    public void execute() {
+        setActiveFighter(getNextFighter());
+    }
+
+    // endregion //         Methods
+    //================================================================================
+    //================================================================================
     // region //            Constructors
 
-    public FighterTurnFightPhase(Fight fight, Fighter activeFighter){
+    public ActiveFighterCalculationPhase(Fight fight) {
         super(fight);
-        setActiveFighter(activeFighter);
     }
 
     // endregion //         Constructors

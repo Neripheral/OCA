@@ -12,9 +12,6 @@ public abstract class FightPhase {
 
     public abstract FightPhase getNextPhase();
     public abstract void execute();
-    public FightEvent getEventBeforePhase(){
-        return null;
-    }
     public FightEvent getEventAfterPhase(){
         return null;
     }
