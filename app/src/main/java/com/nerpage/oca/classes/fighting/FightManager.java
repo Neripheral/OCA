@@ -3,6 +3,7 @@ package com.nerpage.oca.classes.fighting;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
+import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ public class FightManager {
     //================================================================================
     // region //            Fields
 
-    private Fight fight = new Fight();
+    private final Fight fight;
+    private final ObserversManager observersManager;
     private Fighter pcFighter = null;
     private Ledger ledger = new Ledger();
 
@@ -19,13 +21,13 @@ public class FightManager {
     //================================================================================
     // region //            Accessors
 
+
     private Fight getFight() {
         return fight;
     }
 
-    private FightManager setFight(Fight fight) {
-        this.fight = fight;
-        return this;
+    public ObserversManager getObserversManager() {
+        return observersManager;
     }
 
     public Fighter getPcFighter() {
@@ -51,7 +53,14 @@ public class FightManager {
     //================================================================================
     // region //            Private Methods
 
+    private void onObserversReady(){
+        //TODO: add proceed
+        //getFight().proceed();
+    }
 
+    private void onEventRegistered(FightEvent event){
+        getObserversManager().notifyObserversAbout(event);
+    }
 
     // endregion //         Private Methods
     //================================================================================
@@ -79,8 +88,8 @@ public class FightManager {
         return getFight().getFightersWithout(getPcFighter());
     }
 
-    public void addObserver(Fight.FightObserver observer) {
-        getFight().addObserver(observer);
+    public void addObserver(ObserversManager.FightListener listener) {
+        getObserversManager().addObserver(listener);
     }
 
     public void start(){
@@ -89,14 +98,13 @@ public class FightManager {
 
     // endregion //         Interface
     //================================================================================
-
-
-    // endregion //         Methods
-    //================================================================================
     //================================================================================
     // region //            Constructors
 
-    public FightManager(){}
+    public FightManager(){
+        this.fight = new Fight(this::onEventRegistered);
+        this.observersManager = new ObserversManager(this::onObserversReady);
+    }
 
     // endregion //         Constructors
     //================================================================================
