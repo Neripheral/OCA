@@ -3,7 +3,11 @@ package com.nerpage.oca.classes.fighting.phases;
 import com.nerpage.oca.classes.fighting.Fight;
 
 public abstract class FightPhase {
-    public final Fight fight;
+    private final Fight fight;
+
+    public Fight getFight() {
+        return fight;
+    }
 
     public abstract FightPhase getNextPhase();
     public abstract void execute();
