@@ -27,7 +27,7 @@ public class Fight {
     // region //            Fields
 
     private final List<Fighter> fighters = new ArrayList<>();
-    private FightListener fightListener;
+    private final FightListener fightListener;
 
     // endregion //         Fields
     //================================================================================
@@ -112,4 +112,14 @@ public class Fight {
 
     // endregion //         Interface
     //================================================================================
+    //================================================================================
+    // region //            Constructors
+
+    public Fight(FightListener listener){
+        this.fightListener = listener;
+    }
+
+    // endregion //         Constructors
+    //================================================================================
+
 }
