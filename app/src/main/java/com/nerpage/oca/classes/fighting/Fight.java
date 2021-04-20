@@ -1,16 +1,12 @@
 package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
-import com.nerpage.oca.classes.Event;
-import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
-import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
 import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FightStartedEvent;
+import com.nerpage.oca.classes.fighting.phases.FightPhase;
+import com.nerpage.oca.classes.fighting.phases.StartFightPhase;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Fight {
@@ -28,14 +24,24 @@ public class Fight {
 
     private final List<Fighter> fighters = new ArrayList<>();
     private final FightListener fightListener;
+    private FightPhase currentPhase;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    public FightListener getFightListener() {
+    private FightListener getFightListener() {
         return fightListener;
+    }
+
+    private FightPhase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    private Fight setCurrentPhase(FightPhase currentPhase) {
+        this.currentPhase = currentPhase;
+        return this;
     }
 
     // endregion //         Accessors
@@ -43,43 +49,9 @@ public class Fight {
     //================================================================================
     // region //            Private methods
 
-    private Fighter getNextFighter(){
-        return this.getFighters()
-                .stream()
-                .filter(Fighter::canFight)
-                .min(Comparator.comparing(Fighter::getStopwatchTime))
-                .orElse(null);
-    }
-
-    private void executePendingActionOf(Fighter activeFighter) {
-        Action pendingAction = activeFighter.getPendingAction();
-        if(pendingAction != null){
-            //TODO: clashing Actions
-            notifyAbout(new EntityPerformedActionEvent(pendingAction, activeFighter.getEntity()));
-            pendingAction.getTarget().applyStatus(pendingAction.getAppliedStatus());
-        }
-        activeFighter.setPendingAction(null);
-    }
-
-    private void proceedWithNextFighter(){
-        Fighter activeFighter = getNextFighter();
-
-        if(activeFighter != null) { // null -> end of fight
-            executePendingActionOf(activeFighter);
-            activeFighter.promptAction(getFightersWithout(activeFighter), this::onActionSelectedNotified);
-        }
-    }
-
-    private void onActionSelectedNotified(Fighter fighter, Action action){
-        notifyAbout(new EntitySelectedActionEvent(action, fighter.getEntity()));
-        fighter.setPendingAction(action);
-        if(action != null)
-            fighter.addToStopwatch(action.getTimeSpan());
-        proceedWithNextFighter();
-    }
-
-    private void notifyAbout(FightEvent event){
-        getFightListener().notifyAbout(event);
+    private void executePhase(){
+        getCurrentPhase().execute();
+        getFightListener().notifyAbout(getCurrentPhase().getEventAfterPhase());
     }
 
     // endregion //         Private methods
@@ -101,13 +73,19 @@ public class Fight {
         Fighter newFighter = new Fighter(entity, behavior);
         newFighter.setStopwatchTime(handicapTime);
         this.getFighters().add(newFighter);
-        //notifyObservers(new FighterEnrolledEvent(newFighter));
         return newFighter;
     }
 
+    public void proceed(){
+        setCurrentPhase(
+                getCurrentPhase().getNextPhase()
+        );
+        executePhase();
+    }
+
     public void start(){
-        notifyAbout(new FightStartedEvent(getFighters()));
-        proceedWithNextFighter();
+        setCurrentPhase(new StartFightPhase(this));
+        executePhase();
     }
 
     // endregion //         Interface
