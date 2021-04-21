@@ -27,6 +27,6 @@
         android:label="@string/belongings_manager_name"/>
     <fragment
         android:id="@+id/nav_battlground"
-        android:name="com.nerpage.oca.fragments.BattlegroundFragment"
+        android:name="com.nerpage.oca.fragments.battleground_fragment.BattlegroundFragment"
         android:label="@string/nav_battlground_name" />
 </navigation>

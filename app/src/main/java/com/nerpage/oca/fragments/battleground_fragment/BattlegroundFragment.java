@@ -1,4 +1,4 @@
-package com.nerpage.oca.fragments;
+package com.nerpage.oca.fragments.battleground_fragment;
 
 import android.os.Bundle;
 
@@ -158,7 +158,6 @@ public class BattlegroundFragment extends Fragment {
         }
         refreshFragmentData();
     }
-
 
     private void onRecyclerScrolled(){
         getLayout().updateInfoBoxVisibility();
