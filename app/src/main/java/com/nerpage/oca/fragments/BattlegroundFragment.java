@@ -22,6 +22,8 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
+import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
@@ -35,37 +37,57 @@ public class BattlegroundFragment extends Fragment {
 
     private BattlegroundLayoutHelper layout;
     private FightManager fightManager;
-    private FightingBehavior.ActionSelectedListener actionSelectedListener = null;
+    private Action nextAction = null;
+    private boolean playerTurn = false;
+    private Runnable onObserverReadyListener = null;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    public BattlegroundLayoutHelper getLayout() {
+    private BattlegroundLayoutHelper getLayout() {
         return this.layout;
     }
 
-    public BattlegroundFragment setLayout(BattlegroundLayoutHelper layout) {
+    private BattlegroundFragment setLayout(BattlegroundLayoutHelper layout) {
         this.layout = layout;
         return this;
     }
 
-    public FightManager getFightManager() {
+    private FightManager getFightManager() {
         return this.fightManager;
     }
 
-    public BattlegroundFragment setFightManager(FightManager fightManager) {
+    private BattlegroundFragment setFightManager(FightManager fightManager) {
         this.fightManager = fightManager;
         return this;
     }
 
-    public FightingBehavior.ActionSelectedListener getActionSelectedListener() {
-        return actionSelectedListener;
+    private Action getNextAction() {
+        return nextAction;
     }
 
-    public BattlegroundFragment setActionSelectedListener(FightingBehavior.ActionSelectedListener actionSelectedListener) {
-        this.actionSelectedListener = actionSelectedListener;
+    private BattlegroundFragment setNextAction(Action nextAction) {
+        this.nextAction = nextAction;
+        return this;
+    }
+
+    private boolean isPlayerTurn() {
+        return playerTurn;
+    }
+
+    private BattlegroundFragment setPlayerTurn(boolean playerTurn) {
+        this.playerTurn = playerTurn;
+        return this;
+    }
+
+    private Runnable getOnObserverReadyListener() {
+        return onObserverReadyListener;
+    }
+
+    private BattlegroundFragment setOnObserverReadyListener(Runnable onObserverReadyListener) {
+        this.onObserverReadyListener = onObserverReadyListener;
         return this;
     }
 
@@ -76,7 +98,7 @@ public class BattlegroundFragment extends Fragment {
 
     private void onPlayersTurn(Fighter host, List<Fighter> others, FightingBehavior.ActionSelectedListener actionSelectedListener){
         //TODO: what to do when it's players turn
-        setActionSelectedListener(actionSelectedListener);
+        actionSelectedListener.passSelectedAction(host, getNextAction());
     }
 
     private void refreshFragmentData(){
@@ -127,11 +149,14 @@ public class BattlegroundFragment extends Fragment {
     }
 
     private void onActionItemClicked(View v, int position){
-        if(getActionSelectedListener() != null) {
-            Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
-            actionToPerform.setSource(getPlayerCharacter());
-            actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
-            getActionSelectedListener().passSelectedAction(getFightManager().getPcFighter(), actionToPerform);
+        Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
+        actionToPerform.setSource(getPlayerCharacter());
+        actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
+
+        setNextAction(actionToPerform);
+        if(isPlayerTurn()){
+            setPlayerTurn(false);
+            getOnObserverReadyListener().run();
         }
         refreshFragmentData();
     }
@@ -163,8 +188,19 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Public Methods
 
-    public void onProgressRegistered(Event data){
+    public void onProgressRegistered(FightEvent data){
         Log.e("Ledger", data.toString(getContext()));
+
+        if(data.getClass() == ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent.class) {
+            ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent event =
+                    (ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent) data;
+
+            if (event.getFighter().getEntity() == getPlayerCharacter()) {
+                setPlayerTurn(true);
+                return;
+            }
+        }
+        getOnObserverReadyListener().run();
         refreshFragmentData();
     }
 
@@ -173,7 +209,9 @@ public class BattlegroundFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setFightManager(new FightManager());
-        getFightManager().addObserver(this::onProgressRegistered);
+        setOnObserverReadyListener(
+                getFightManager().addObserver(this::onProgressRegistered)
+        );
         enrollFighters();
     }
 

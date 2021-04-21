@@ -34,6 +34,7 @@ public class ActiveFighterActionSelectionPhase extends FighterTurnFightPhase {
     //TODO: there shouldn't be a fighter argument needed - investigate
     private void onActionSelected(Fighter fighter, Action action){
         getActiveFighter().setPendingAction(action);
+        setSelectedAction(action);
         if(action != null)
             getActiveFighter().addToStopwatch(action.getTimeSpan());
     }
