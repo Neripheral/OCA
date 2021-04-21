@@ -13,7 +13,7 @@ public class ActiveFighterAwaitingActionPhase extends FighterTurnFightPhase {
     public static class AwaitingFighterActionEvent extends FightEvent {
         private final Fighter fighter;
 
-        private Fighter getFighter() {
+        public Fighter getFighter() {
             return fighter;
         }
 
