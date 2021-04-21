@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Event;
 
-public final class FightEndedEvent extends Event {
+public final class FightEndedEvent extends FightEvent {
     @Override
     public String toString(Context context) {
         return context.getResources().getString(R.string.ledger_fight_finished);

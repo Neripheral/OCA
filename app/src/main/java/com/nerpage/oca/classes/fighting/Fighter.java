@@ -62,7 +62,7 @@ public class Fighter {
     //================================================================================
     // region //            Methods
 
-    public void promptAction(List<Fighter> otherFighters, BiConsumer<Fighter, Action> actionSelectedNotifier){
+    public void promptAction(List<Fighter> otherFighters, FightingBehavior.ActionSelectedListener actionSelectedNotifier){
         this.getBehavior().promptAction(this, otherFighters, actionSelectedNotifier);
     }
 

@@ -5,9 +5,16 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.fighting.actions.Action;
 
 public final class EntitySelectedActionEvent extends ActionEvent {
+    private final Entity entity;
+
+    public Entity getEntity() {
+        return entity;
+    }
+
     @Override
     public String toString(Context context) {
         return context.getResources().getString(R.string.ledger_entity_chose_action,
@@ -22,7 +29,8 @@ public final class EntitySelectedActionEvent extends ActionEvent {
         return this.getAction().getId();
     }
 
-    public EntitySelectedActionEvent(Action action) {
+    public EntitySelectedActionEvent(Action action, Entity entity) {
         super(action);
+        this.entity = entity;
     }
 }

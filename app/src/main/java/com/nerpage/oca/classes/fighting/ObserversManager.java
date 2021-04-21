@@ -1,15 +1,11 @@
 package com.nerpage.oca.classes.fighting;
 
-import com.nerpage.oca.classes.Entity;
-import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
-import com.nerpage.oca.classes.fighting.phases.FightPhase;
-import com.nerpage.oca.classes.fighting.phases.StartFightPhase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fight {
+class ObserversManager {
     //================================================================================
     // region //            Inner classes
 
@@ -17,31 +13,39 @@ public class Fight {
         void notifyAbout(FightEvent event);
     }
 
+    class FightObserver{
+        public FightListener listener;
+        boolean isReady;
+
+        public FightObserver(FightListener listener, boolean isReady) {
+            this.listener = listener;
+            this.isReady = isReady;
+        }
+    }
+
+    public interface EveryoneIsReadyListener {
+        void notifyEveryoneIsReady();
+    }
+
     // endregion //         Inner classes
     //================================================================================
     //================================================================================
     // region //            Fields
 
-    private final List<Fighter> fighters = new ArrayList<>();
-    private final FightListener fightListener;
-    private FightPhase currentPhase;
+    private final List<FightObserver> observers = new ArrayList<>();
+    private final EveryoneIsReadyListener everyoneIsReadyListener;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    private FightListener getFightListener() {
-        return fightListener;
+    public List<FightObserver> getObservers() {
+        return observers;
     }
 
-    private FightPhase getCurrentPhase() {
-        return currentPhase;
-    }
-
-    private Fight setCurrentPhase(FightPhase currentPhase) {
-        this.currentPhase = currentPhase;
-        return this;
+    public EveryoneIsReadyListener getEveryoneIsReadyListener() {
+        return everyoneIsReadyListener;
     }
 
     // endregion //         Accessors
@@ -49,12 +53,18 @@ public class Fight {
     //================================================================================
     // region //            Private methods
 
-    private void executePhase(){
-        getCurrentPhase().execute();
-        if(getCurrentPhase().getEventAfterPhase() != null)
-            getFightListener().notifyAbout(getCurrentPhase().getEventAfterPhase());
-        else
-            proceed();
+    private void onReadyNotified(FightObserver observer){
+        observer.isReady = true;
+        if(isEveryoneReady())
+            getEveryoneIsReadyListener().notifyEveryoneIsReady();
+    }
+
+    private boolean isEveryoneReady(){
+        for(FightObserver observer : getObservers()){
+            if(!observer.isReady)
+                return false;
+        }
+        return true;
     }
 
     // endregion //         Private methods
@@ -62,33 +72,17 @@ public class Fight {
     //================================================================================
     // region //            Interface
 
-    public List<Fighter> getFighters() {
-        return fighters;
+    public void notifyObserversAbout(FightEvent event){
+        for(FightObserver observer: getObservers()){
+            observer.isReady = false;
+            observer.listener.notifyAbout(event);
+        }
     }
 
-    public List<Fighter> getFightersWithout(Fighter fighter){
-        List<Fighter> toReturn = new ArrayList<>(this.getFighters());
-        toReturn.remove(fighter);
-        return toReturn;
-    }
-
-    public Fighter enrollFighter(Entity entity, FightingBehavior behavior, int handicapTime){
-        Fighter newFighter = new Fighter(entity, behavior);
-        newFighter.setStopwatchTime(handicapTime);
-        this.getFighters().add(newFighter);
-        return newFighter;
-    }
-
-    public void proceed(){
-        setCurrentPhase(
-                getCurrentPhase().getNextPhase()
-        );
-        executePhase();
-    }
-
-    public void start(){
-        setCurrentPhase(new StartFightPhase(this));
-        executePhase();
+    public Runnable addObserver(FightListener listener){
+        FightObserver newObserver = new FightObserver(listener, true);
+        getObservers().add(newObserver);
+        return () -> onReadyNotified(newObserver);
     }
 
     // endregion //         Interface
@@ -96,11 +90,10 @@ public class Fight {
     //================================================================================
     // region //            Constructors
 
-    public Fight(FightListener listener){
-        this.fightListener = listener;
+    public ObserversManager(EveryoneIsReadyListener listener) {
+        this.everyoneIsReadyListener = listener;
     }
 
     // endregion //         Constructors
     //================================================================================
-
 }
