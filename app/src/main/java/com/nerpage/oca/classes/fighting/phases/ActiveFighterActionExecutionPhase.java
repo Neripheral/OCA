@@ -34,7 +34,7 @@ public class ActiveFighterActionExecutionPhase extends FighterTurnFightPhase {
 
     @Override
     public FightPhase getNextPhase() {
-        return new ActiveFighterActionSelectionPhase(getFight(), getActiveFighter());
+        return new ActiveFighterAwaitingActionPhase(getFight(), getActiveFighter());
     }
 
     @Override
@@ -51,7 +51,10 @@ public class ActiveFighterActionExecutionPhase extends FighterTurnFightPhase {
 
     @Override
     public FightEvent getEventAfterPhase() {
-        return new EntityPerformedActionEvent(getPerformedAction(), getActiveFighter().getEntity());
+        if(getPerformedAction() == null)
+            return null;
+        else
+            return new EntityPerformedActionEvent(getPerformedAction(), getActiveFighter().getEntity());
     }
 
     // endregion //         Methods
