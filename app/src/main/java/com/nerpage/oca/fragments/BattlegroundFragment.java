@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
-import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
@@ -25,13 +23,11 @@ import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
-import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class BattlegroundFragment extends Fragment {
     //================================================================================
@@ -190,7 +186,7 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Public Methods
 
-    public void onProgressRegistered(FightEvent data){
+    public void onEventRegistered(FightEvent data){
         Log.e("Ledger", data.toString(getContext()));
 
         if(data.getClass() == ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent.class) {
@@ -225,7 +221,7 @@ public class BattlegroundFragment extends Fragment {
 
         setFightManager(new FightManager());
         setOnObserverReadyListener(
-                getFightManager().addObserver(this::onProgressRegistered)
+                getFightManager().addObserver(this::onEventRegistered)
         );
         enrollFighters();
     }
