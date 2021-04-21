@@ -79,4 +79,5 @@
     <string name="event_fight_started_with_blank">Walka rozpoczęta. Uczestnicy: %s</string>
     <string name="fighter_turn_started">%s rozpoczął swoją turę.</string>
     <string name="fighter_turn_ended">%s zakończył swoją turę.</string>
+    <string name="awaiting_input_from_blank">Awaiting input from %s</string>
 </resources>
