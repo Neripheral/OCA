@@ -54,8 +54,7 @@ public class FightManager {
     // region //            Private Methods
 
     private void onObserversReady(){
-        //TODO: add proceed
-        //getFight().proceed();
+        getFight().proceed();
     }
 
     private void onEventRegistered(FightEvent event){
@@ -88,8 +87,8 @@ public class FightManager {
         return getFight().getFightersWithout(getPcFighter());
     }
 
-    public void addObserver(ObserversManager.FightListener listener) {
-        getObserversManager().addObserver(listener);
+    public Runnable addObserver(ObserversManager.FightListener listener) {
+        return getObserversManager().addObserver(listener);
     }
 
     public void start(){
