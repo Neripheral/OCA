@@ -51,7 +51,10 @@ public class Fight {
 
     private void executePhase(){
         getCurrentPhase().execute();
-        getFightListener().notifyAbout(getCurrentPhase().getEventAfterPhase());
+        if(getCurrentPhase().getEventAfterPhase() != null)
+            getFightListener().notifyAbout(getCurrentPhase().getEventAfterPhase());
+        else
+            proceed();
     }
 
     // endregion //         Private methods
