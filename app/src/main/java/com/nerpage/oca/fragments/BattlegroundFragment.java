@@ -21,6 +21,7 @@ import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
+import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
@@ -34,8 +35,7 @@ public class BattlegroundFragment extends Fragment {
 
     private BattlegroundLayoutHelper layout;
     private FightManager fightManager;
-    //TODO: get rid of BiConsumer and replace it with new listener type
-    private BiConsumer<Fighter, Action> actionSelectedNotifier = null;
+    private FightingBehavior.ActionSelectedListener actionSelectedListener = null;
 
     // endregion //         Fields
     //================================================================================
@@ -60,12 +60,12 @@ public class BattlegroundFragment extends Fragment {
         return this;
     }
 
-    public BiConsumer<Fighter, Action> getActionSelectedNotifier() {
-        return actionSelectedNotifier;
+    public FightingBehavior.ActionSelectedListener getActionSelectedListener() {
+        return actionSelectedListener;
     }
 
-    public BattlegroundFragment setActionSelectedNotifier(BiConsumer<Fighter, Action> actionSelectedNotifier) {
-        this.actionSelectedNotifier = actionSelectedNotifier;
+    public BattlegroundFragment setActionSelectedListener(FightingBehavior.ActionSelectedListener actionSelectedListener) {
+        this.actionSelectedListener = actionSelectedListener;
         return this;
     }
 
@@ -74,9 +74,9 @@ public class BattlegroundFragment extends Fragment {
     //================================================================================
     // region //            Private Methods
 
-    private void onPlayersTurn(Fighter host, List<Fighter> others, BiConsumer<Fighter, Action> actionSelectedNotifier){
+    private void onPlayersTurn(Fighter host, List<Fighter> others, FightingBehavior.ActionSelectedListener actionSelectedListener){
         //TODO: what to do when it's players turn
-        setActionSelectedNotifier(actionSelectedNotifier);
+        setActionSelectedListener(actionSelectedListener);
     }
 
     private void refreshFragmentData(){
@@ -127,11 +127,11 @@ public class BattlegroundFragment extends Fragment {
     }
 
     private void onActionItemClicked(View v, int position){
-        if(getActionSelectedNotifier() != null) {
+        if(getActionSelectedListener() != null) {
             Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
             actionToPerform.setSource(getPlayerCharacter());
             actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
-            getActionSelectedNotifier().accept(getFightManager().getPcFighter(), actionToPerform);
+            getActionSelectedListener().passSelectedAction(getFightManager().getPcFighter(), actionToPerform);
         }
         refreshFragmentData();
     }

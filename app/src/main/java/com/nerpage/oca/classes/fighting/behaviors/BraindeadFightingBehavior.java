@@ -9,7 +9,7 @@ import java.util.function.BiConsumer;
 
 public class BraindeadFightingBehavior implements FightingBehavior {
     @Override
-    public void promptAction(Fighter host, List<Fighter> others, BiConsumer<Fighter, Action> onActionSelectedNotifier) {
+    public void promptAction(Fighter host, List<Fighter> others, ActionSelectedListener onActionSelectedNotifier) {
         Random rand = new Random();
 
         // picking one random action to perform
@@ -22,6 +22,6 @@ public class BraindeadFightingBehavior implements FightingBehavior {
         actionToPerform.setSource(host.getEntity());
         actionToPerform.setTarget(pickedOpponent.getEntity());
 
-        onActionSelectedNotifier.accept(host, actionToPerform);
+        onActionSelectedNotifier.passSelectedAction(host, actionToPerform);
     }
 }
