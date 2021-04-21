@@ -120,32 +120,6 @@ public class BattlegroundFragment extends Fragment {
         getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy(), 0);
     }
 
-    private void onBehaviorSurrenderSelected(){
-        //TODO: On surrender
-    }
-
-    private void onBehaviorAttackSelected(){
-        //TODO: On attack
-    }
-
-    private void onBehaviorDefendSelected(){
-        //TODO: On defend
-    }
-
-    private boolean onBehaviorItemSelected(MenuItem itemId){
-        if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
-            onBehaviorSurrenderSelected();
-            return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_ATTACK_BUTTON.getId()) {
-            onBehaviorAttackSelected();
-            return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_DEFEND_BUTTON.getId()) {
-            onBehaviorDefendSelected();
-            return true;
-        }
-        return false;
-    }
-
     private void onActionItemClicked(View v, int position){
         Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
         actionToPerform.setSource(getPlayerCharacter());
@@ -166,7 +140,7 @@ public class BattlegroundFragment extends Fragment {
     private void initView(View rootView){
         BattlegroundLayoutHelper newLayout = new BattlegroundLayoutHelper(
                 rootView,
-                this::onBehaviorItemSelected,
+                BehaviorHelper::onBehaviorItemSelected,
                 this::onActionItemClicked,
                 new RecyclerView.OnScrollListener() {
                     @Override
