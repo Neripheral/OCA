@@ -168,7 +168,8 @@ public class BattlegroundFragment extends Fragment {
 
             if (event.getFighter().getEntity() == getPlayerCharacter()) {
                 setPlayerTurn(true);
-                return;
+            } else{
+                getOnObserverReadyListener().run();
             }
         } else if(data.getClass() == EntityPerformedActionEvent.class){
             EntityPerformedActionEvent actionEvent = (EntityPerformedActionEvent) data;
@@ -182,9 +183,9 @@ public class BattlegroundFragment extends Fragment {
                     getLayout().playPcEffect(action.getEffectResId(), action.getEffectDuration(), action.getEffectScale());
                 }
             }
+        } else{
+            getOnObserverReadyListener().run();
         }
-        getOnObserverReadyListener().run();
-
         refreshFragmentData();
     }
 
