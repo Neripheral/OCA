@@ -1,6 +1,9 @@
 package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.events.Event;
+import com.nerpage.oca.classes.events.EventController;
+import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.events.FightEvent;
 import com.nerpage.oca.classes.fighting.phases.FightPhase;
@@ -9,7 +12,7 @@ import com.nerpage.oca.classes.fighting.phases.StartFightPhase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fight {
+public class Fight implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            Inner classes
 
@@ -23,17 +26,14 @@ public class Fight {
     // region //            Fields
 
     private final List<Fighter> fighters = new ArrayList<>();
-    private final FightListener fightListener;
     private FightPhase currentPhase;
+    private final List<Object> flowFreezers = new ArrayList<>();
+    private EventController.EventListener eventListener;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
-
-    private FightListener getFightListener() {
-        return fightListener;
-    }
 
     private FightPhase getCurrentPhase() {
         return currentPhase;
@@ -44,17 +44,30 @@ public class Fight {
         return this;
     }
 
+    private List<Object> getFlowFreezers() {
+        return flowFreezers;
+    }
+
+    private EventController.EventListener getEventListener() {
+        return eventListener;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
     // region //            Private methods
 
-    private void executePhase(){
+    private void proceed(FightPhase currentPhase){
+        setCurrentPhase(currentPhase);
         getCurrentPhase().execute();
-        if(getCurrentPhase().getEventAfterPhase() != null)
-            getFightListener().notifyAbout(getCurrentPhase().getEventAfterPhase());
-        else
-            proceed();
+        if(getCurrentPhase().getEventAfterPhase() != null){
+            getEventListener().emitEvent(getCurrentPhase().getEventAfterPhase());
+        }
+        tryToProceed();
+    }
+
+    private void proceed(){
+        proceed(getCurrentPhase().getNextPhase());
     }
 
     // endregion //         Private methods
@@ -79,16 +92,32 @@ public class Fight {
         return newFighter;
     }
 
-    public void proceed(){
-        setCurrentPhase(
-                getCurrentPhase().getNextPhase()
-        );
-        executePhase();
+    public void tryToProceed() {
+        if(getFlowFreezers().isEmpty())
+            proceed();
     }
 
     public void start(){
-        setCurrentPhase(new StartFightPhase(this));
-        executePhase();
+        proceed(new StartFightPhase(this));
+    }
+
+
+
+    @Override
+    public void onEventReceived(Event event) {
+        if(event.getClass() == FlowFreezer.FreezeFlow.class){
+            FlowFreezer.FreezeFlow freezeFlowEvent = (FlowFreezer.FreezeFlow) event;
+            getFlowFreezers().add(freezeFlowEvent.getIdentifier());
+        } else if(event.getClass() == FlowFreezer.ResumeFlow.class){
+            FlowFreezer.ResumeFlow resumeFlowEvent = (FlowFreezer.ResumeFlow) event;
+            getFlowFreezers().remove(resumeFlowEvent.getIdentifier());
+            tryToProceed();
+        }
+    }
+
+    @Override
+    public void setEventListener(EventController.EventListener eventListener) {
+        this.eventListener = eventListener;
     }
 
     // endregion //         Interface
@@ -96,8 +125,7 @@ public class Fight {
     //================================================================================
     // region //            Constructors
 
-    public Fight(FightListener listener){
-        this.fightListener = listener;
+    public Fight(){
     }
 
     // endregion //         Constructors

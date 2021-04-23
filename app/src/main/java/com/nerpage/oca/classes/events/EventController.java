@@ -16,7 +16,7 @@ public class EventController {
         void setEventListener(EventListener eventListener);
     }
 
-    private interface EventListener{
+    public interface EventListener{
         void emitEvent(Event event);
     }
 
