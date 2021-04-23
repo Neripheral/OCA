@@ -1,7 +1,7 @@
 package com.nerpage.oca.classes.fighting.phases;
 
 import com.nerpage.oca.classes.fighting.Fight;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 public abstract class FightPhase {
     private final Fight fight;

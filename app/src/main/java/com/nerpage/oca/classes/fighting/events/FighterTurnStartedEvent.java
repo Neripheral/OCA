@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.fighting.Fighter;
 
-public final class FighterTurnEndedEvent extends FightEvent{
+public final class FighterTurnStartedEvent extends FightEvent{
     private final Fighter fighter;
 
     public Fighter getFighter() {
@@ -17,15 +17,15 @@ public final class FighterTurnEndedEvent extends FightEvent{
     @NonNull
     @Override
     public String toString() {
-        return getFighter().getEntity().getId() + " ended their turn.";
+        return getFighter().getEntity().getId() + " started their turn.";
     }
 
     @Override
     public String toString(Context context) {
-        return context.getString(R.string.fighter_turn_ended, getFighter().getEntity().getName(context));
+        return context.getString(R.string.fighter_turn_started, getFighter().getEntity().getName(context));
     }
 
-    public FighterTurnEndedEvent(Fighter fighter) {
+    public FighterTurnStartedEvent(Fighter fighter){
         this.fighter = fighter;
     }
 }

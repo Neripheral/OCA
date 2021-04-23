@@ -1,7 +1,7 @@
 package com.nerpage.oca.fragments.battleground_fragment;
 
-import com.nerpage.oca.classes.fighting.ledger.events.EntityPerformedActionEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 
 public class EffectsManager {

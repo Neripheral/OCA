@@ -1,9 +1,8 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import android.content.Context;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.Event;
 import com.nerpage.oca.classes.fighting.Fighter;
 
 import java.util.List;

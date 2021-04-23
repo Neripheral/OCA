@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import androidx.annotation.NonNull;
 

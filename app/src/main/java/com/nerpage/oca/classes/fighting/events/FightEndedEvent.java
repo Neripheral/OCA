@@ -1,11 +1,10 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.Event;
 
 public final class FightEndedEvent extends FightEvent {
     @Override

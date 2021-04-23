@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 import java.util.List;
 

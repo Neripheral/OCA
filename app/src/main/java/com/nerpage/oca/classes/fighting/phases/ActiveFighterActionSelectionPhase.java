@@ -3,8 +3,8 @@ package com.nerpage.oca.classes.fighting.phases;
 import com.nerpage.oca.classes.fighting.Fight;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
-import com.nerpage.oca.classes.fighting.ledger.events.EntitySelectedActionEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.EntitySelectedActionEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 public class ActiveFighterActionSelectionPhase extends FighterTurnFightPhase {
     //================================================================================

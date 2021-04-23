@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import android.content.Context;
 
@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Entity;
-import com.nerpage.oca.classes.Event;
-import com.nerpage.oca.classes.fighting.Fighter;
 
 public final class EntityEnrolledEvent extends FightEvent {
     Entity entity;

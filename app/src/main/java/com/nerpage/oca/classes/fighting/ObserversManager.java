@@ -1,6 +1,6 @@
 package com.nerpage.oca.classes.fighting;
 
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 import java.util.ArrayList;
 import java.util.List;

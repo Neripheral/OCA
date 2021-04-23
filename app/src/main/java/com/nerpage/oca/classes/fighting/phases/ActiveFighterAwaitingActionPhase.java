@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.fighting.Fight;
 import com.nerpage.oca.classes.fighting.Fighter;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 public class ActiveFighterAwaitingActionPhase extends FighterTurnFightPhase {
     public static class AwaitingFighterActionEvent extends FightEvent {

@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes.fighting.ledger.events;
+package com.nerpage.oca.classes.fighting.events;
 
 import com.nerpage.oca.classes.Event;
 

@@ -2,8 +2,8 @@ package com.nerpage.oca.classes.fighting.phases;
 
 import com.nerpage.oca.classes.fighting.Fight;
 import com.nerpage.oca.classes.fighting.Fighter;
-import com.nerpage.oca.classes.fighting.ledger.events.FightEvent;
-import com.nerpage.oca.classes.fighting.ledger.events.FighterTurnStartedEvent;
+import com.nerpage.oca.classes.fighting.events.FightEvent;
+import com.nerpage.oca.classes.fighting.events.FighterTurnStartedEvent;
 
 public class ActiveFighterTurnStartPhase extends FighterTurnFightPhase {
     @Override
