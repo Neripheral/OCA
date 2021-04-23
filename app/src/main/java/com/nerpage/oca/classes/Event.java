@@ -5,7 +5,11 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 public abstract class Event {
-    @NonNull
+    public interface EventObserver{
+        void setOnReadyListener();
+        void onEventRegistered();
+    }
+
     @Override
     public abstract String toString();
 
