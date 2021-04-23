@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 
 public abstract class Event {
     @Override
-    public abstract String toString();
+    public String toString(){
+        return "Event occured: " + this.getClass().toString();
+    }
 
     // Return fancy, translated version
     public String toString(Context context){
