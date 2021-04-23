@@ -2,8 +2,9 @@ package com.nerpage.oca.classes.fighting;
 
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.events.EventController;
+import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
-import com.nerpage.oca.classes.fighting.events.FightEvent;
 
 import java.util.List;
 
@@ -12,9 +13,10 @@ public class FightManager {
     // region //            Fields
 
     private final Fight fight;
-    private final ObserversManager observersManager;
     private Fighter pcFighter = null;
     private Ledger ledger = new Ledger();
+    private final FlowFreezer flowFreezer;
+    private final EventController eventController;
 
     // endregion //         Fields
     //================================================================================
@@ -24,10 +26,6 @@ public class FightManager {
 
     private Fight getFight() {
         return fight;
-    }
-
-    public ObserversManager getObserversManager() {
-        return observersManager;
     }
 
     public Fighter getPcFighter() {
@@ -48,18 +46,18 @@ public class FightManager {
         return this;
     }
 
+    private FlowFreezer getFlowFreezer() {
+        return flowFreezer;
+    }
+
+    private EventController getEventController() {
+        return eventController;
+    }
+
     // endregion //         Accessors
     //================================================================================
     //================================================================================
     // region //            Private Methods
-
-    private void onObserversReady(){
-        getFight().proceed();
-    }
-
-    private void onEventRegistered(FightEvent event){
-        getObserversManager().notifyObserversAbout(event);
-    }
 
     // endregion //         Private Methods
     //================================================================================
@@ -87,12 +85,16 @@ public class FightManager {
         return getFight().getFightersWithout(getPcFighter());
     }
 
-    public Runnable addObserver(ObserversManager.FightListener listener) {
-        return getObserversManager().addObserver(listener);
-    }
-
     public void start(){
         getFight().start();
+    }
+
+    public void addFlowFreezer(EventController.EventEmitter emitter){
+        getFlowFreezer().addEventEmitter(emitter);
+    }
+
+    public void addEventListener(EventController.EventReceiver receiver){
+        getEventController().addEventReceiver(receiver);
     }
 
     // endregion //         Interface
@@ -101,8 +103,13 @@ public class FightManager {
     // region //            Constructors
 
     public FightManager(){
-        this.fight = new Fight(this::onEventRegistered);
-        this.observersManager = new ObserversManager(this::onObserversReady);
+        fight = new Fight();
+
+        flowFreezer = new FlowFreezer();
+        getFlowFreezer().addEventReceiver(getFight());
+
+        eventController = new EventController();
+        getEventController().addEventEmitter(getFight());
     }
 
     // endregion //         Constructors
