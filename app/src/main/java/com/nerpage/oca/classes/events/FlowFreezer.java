@@ -7,6 +7,10 @@ public class FlowFreezer extends EventController{
     private static class FlowEvent extends Event{
         private final Object identifier;
 
+        public Object getIdentifier(){
+            return identifier;
+        }
+
         private FlowEvent(Object identifier) {
             this.identifier = identifier;
         }
