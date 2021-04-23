@@ -1,6 +1,6 @@
 package com.nerpage.oca.classes.events;
 
-public class FlowStopper extends EventController{
+public class FlowFreezer extends EventController{
     //================================================================================
     // region //            Inner classes
 
@@ -12,14 +12,14 @@ public class FlowStopper extends EventController{
         }
     }
 
-    public static class StopFlowEvent extends FlowEvent{
-        public StopFlowEvent(Object identifier){
+    public static class FreezeFlow extends FlowEvent{
+        public FreezeFlow(Object identifier){
             super(identifier);
         }
     }
 
-    public static class ResumeFlowEvent extends FlowEvent {
-        private ResumeFlowEvent(Object identifier){
+    public static class ResumeFlow extends FlowEvent {
+        private ResumeFlow(Object identifier){
             super(identifier);
         }
     }
