@@ -23,7 +23,7 @@ public class FlowFreezer extends EventController{
     }
 
     public static class ResumeFlow extends FlowEvent {
-        private ResumeFlow(Object identifier){
+        public ResumeFlow(Object identifier){
             super(identifier);
         }
     }

@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.events.Event;
+import com.nerpage.oca.classes.events.EventController;
+import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
@@ -28,7 +31,7 @@ import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.List;
 
-public class BattlegroundFragment extends Fragment {
+public class BattlegroundFragment extends Fragment implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            Fields
 
@@ -36,7 +39,7 @@ public class BattlegroundFragment extends Fragment {
     private FightManager fightManager;
     private Action nextAction = null;
     private boolean playerTurn = false;
-    private Runnable onObserverReadyListener = null;
+    private EventController.EventListener flowFreezerListener;
 
     // endregion //         Fields
     //================================================================================
@@ -79,13 +82,8 @@ public class BattlegroundFragment extends Fragment {
         return this;
     }
 
-    private Runnable getOnObserverReadyListener() {
-        return onObserverReadyListener;
-    }
-
-    private BattlegroundFragment setOnObserverReadyListener(Runnable onObserverReadyListener) {
-        this.onObserverReadyListener = onObserverReadyListener;
-        return this;
+    private EventController.EventListener getFlowFreezerListener() {
+        return flowFreezerListener;
     }
 
     // endregion //         Accessors
@@ -127,7 +125,7 @@ public class BattlegroundFragment extends Fragment {
         setNextAction(actionToPerform);
         if(isPlayerTurn()){
             setPlayerTurn(false);
-            getOnObserverReadyListener().run();
+            unfreezeFlow();
         }
         refreshFragmentData();
     }
@@ -153,12 +151,42 @@ public class BattlegroundFragment extends Fragment {
         refreshFragmentData();
     }
 
+    private void unfreezeFlow(){
+        getFlowFreezerListener().emitEvent(new FlowFreezer.ResumeFlow(this));
+    }
+
+    private void freezeFlow(){
+        getFlowFreezerListener().emitEvent(new FlowFreezer.FreezeFlow(this));
+    }
+
+
     // endregion //         Private Methods
     //================================================================================
     //================================================================================
     // region //            Public Methods
 
-    public void onEventRegistered(FightEvent data){
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setFightManager(new FightManager());
+        getFightManager().addFlowFreezer(this);
+        getFightManager().addEventListener(this);
+
+        enrollFighters();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        initView(inflater.inflate(R.layout.fragment_battleground, container, false));
+
+        getFightManager().start();
+
+        return getLayout().getRoot();
+    }
+
+    @Override
+    public void onEventReceived(Event data) {
         Log.e("Ledger", data.toString(getContext()));
 
         if(data.getClass() == ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent.class) {
@@ -167,8 +195,7 @@ public class BattlegroundFragment extends Fragment {
 
             if (event.getFighter().getEntity() == getPlayerCharacter()) {
                 setPlayerTurn(true);
-            } else{
-                getOnObserverReadyListener().run();
+                freezeFlow();
             }
         } else if(data.getClass() == EntityPerformedActionEvent.class){
             EntityPerformedActionEvent actionEvent = (EntityPerformedActionEvent) data;
@@ -182,30 +209,13 @@ public class BattlegroundFragment extends Fragment {
                     getLayout().playPcEffect(action.getEffectResId(), action.getEffectDuration(), action.getEffectScale());
                 }
             }
-        } else{
-            getOnObserverReadyListener().run();
         }
         refreshFragmentData();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setFightManager(new FightManager());
-        setOnObserverReadyListener(
-                getFightManager().addObserver(this::onEventRegistered)
-        );
-        enrollFighters();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initView(inflater.inflate(R.layout.fragment_battleground, container, false));
-
-        getFightManager().start();
-
-        return getLayout().getRoot();
+    public void setEventListener(EventController.EventListener flowFreezerListener) {
+        this.flowFreezerListener = flowFreezerListener;
     }
 
     // endregion //         Public Methods
