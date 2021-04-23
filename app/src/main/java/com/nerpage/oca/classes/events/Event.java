@@ -1,4 +1,4 @@
-package com.nerpage.oca.classes;
+package com.nerpage.oca.classes.events;
 
 import android.content.Context;
 

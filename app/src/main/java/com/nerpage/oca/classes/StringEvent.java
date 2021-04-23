@@ -2,6 +2,8 @@ package com.nerpage.oca.classes;
 
 import androidx.annotation.NonNull;
 
+import com.nerpage.oca.classes.events.Event;
+
 public class StringEvent extends Event {
     private String data;
 

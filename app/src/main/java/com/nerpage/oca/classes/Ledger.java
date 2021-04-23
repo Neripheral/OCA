@@ -1,6 +1,8 @@
 package com.nerpage.oca.classes;
 
 
+import com.nerpage.oca.classes.events.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
