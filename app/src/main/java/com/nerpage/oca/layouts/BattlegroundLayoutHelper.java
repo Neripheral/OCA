@@ -171,6 +171,18 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         animation.start();
     }
 
+    private void shakeEnemyCard(){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_attackshake);
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                getView(POI.ENEMY_CONTAINER).setRotation(0);
+            }
+        });
+        animation.start();
+    }
+
     private void handleActionEvent(EntityPerformedActionEvent event){
         if(event.getAction() instanceof Action.HasEffectAnimation){
             getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
@@ -195,6 +207,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
                                     () ->
                                             unhighlightEnemyCard(this::unfreezeFlow)
                             );
+                            shakeEnemyCard();
                             forceViewUpdate();
                         }
                 );
