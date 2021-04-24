@@ -1,9 +1,16 @@
 package com.nerpage.oca.layouts;
 
-import android.util.Log;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 
+import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +29,7 @@ import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class BattlegroundLayoutHelper extends LayoutHelper implements EventController.EventReceiver, EventController.EventEmitter {
@@ -29,6 +37,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // region //            POI
 
     public enum POI implements LayoutHelper.POI {
+        ENEMY_CONTAINER(R.id.enemy_root),
         ENEMY_TITLE(R.id.enemy_title),
         ENEMY_CURRENT_BLOOD(R.id.enemy_currentBlood),
         ENEMY_MAX_BLOOD(R.id.enemy_maxBlood),
@@ -110,11 +119,42 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         getEventFreezer().emitEvent(new FlowFreezer.ResumeFlow(this));
     }
 
-    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration, float scale){
+    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
         getView(poi).setScaleY(scale);
-        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, this::unfreezeFlow);
+        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, after);
         return this;
+    }
+
+    private void highlightEnemyCard(Runnable after){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
+        animation.setInterpolator(new AnticipateOvershootInterpolator());
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                after.run();
+            }
+        });
+        animation.start();
+    }
+
+    private void unhighlightEnemyCard(Runnable after){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
+        animation.setInterpolator(new AnticipateOvershootInterpolator(){
+            @Override
+            public float getInterpolation(float input) {
+                return Math.abs(super.getInterpolation(input) - 1f);
+            }
+        });
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                after.run();
+            }
+        });
+        animation.start();
     }
 
     private void handleActionEvent(EntityPerformedActionEvent event){
@@ -122,18 +162,25 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
             getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
             Action.HasEffectAnimation effect = ((Action.HasEffectAnimation)event.getAction());
 
-            POI target;
             if(event.getAction().getTarget() instanceof PlayerCharacter)
-                target = POI.PC_EFFECT;
-            else
-                target = POI.ENEMY_EFFECT;
-
-            playEffect(
-                    target,
-                    effect.getEffectResId(),
-                    effect.getEffectDuration(),
-                    effect.getEffectScale()
-            );
+                playEffect(
+                        POI.PC_EFFECT,
+                        effect.getEffectResId(),
+                        effect.getEffectDuration(),
+                        effect.getEffectScale(),
+                        this::unfreezeFlow
+                );
+            else{
+                highlightEnemyCard(()->
+                    playEffect(
+                            POI.ENEMY_EFFECT,
+                            effect.getEffectResId(),
+                            effect.getEffectDuration(),
+                            effect.getEffectScale(),
+                            ()->unhighlightEnemyCard(this::unfreezeFlow)
+                    )
+                );
+            }
         }
     }
 
