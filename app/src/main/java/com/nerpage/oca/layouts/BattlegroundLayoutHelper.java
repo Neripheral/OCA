@@ -3,14 +3,10 @@ package com.nerpage.oca.layouts;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
 
-import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +25,6 @@ import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class BattlegroundLayoutHelper extends LayoutHelper implements EventController.EventReceiver, EventController.EventEmitter {
@@ -37,7 +32,8 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // region //            POI
 
     public enum POI implements LayoutHelper.POI {
-        ENEMY_CONTAINER(R.id.enemy_root),
+        ENEMY_CONTAINER_WITH_EFFECT(R.id.enemy_root),
+        ENEMY_CONTAINER(R.id.enemy_container),
         ENEMY_TITLE(R.id.enemy_title),
         ENEMY_CURRENT_BLOOD(R.id.enemy_currentBlood),
         ENEMY_MAX_BLOOD(R.id.enemy_maxBlood),
@@ -69,6 +65,8 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // region //            Fields
 
     private EventController.EventListener eventFreezer;
+    private BattlegroundViewModel model;
+    private boolean stopModelUpdates = true;
 
     // endregion //         Fields
     //================================================================================
@@ -81,6 +79,15 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
 
     private BattlegroundLayoutHelper setEventFreezer(EventController.EventListener eventFreezer) {
         this.eventFreezer = eventFreezer;
+        return this;
+    }
+
+    private BattlegroundViewModel getModel() {
+        return model;
+    }
+
+    private BattlegroundLayoutHelper setModel(BattlegroundViewModel model) {
+        this.model = model;
         return this;
     }
 
@@ -102,17 +109,24 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         }
     }
 
-    private void updateViewDataWithModel(BattlegroundViewModel model){
-        updateText( POI.ENEMY_TITLE,            model.getEnemyTitle());
-        updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(model.getEnemyCurrentBlood()));
-        updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(model.getEnemyMaxBlood()));
-        updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(model.getPcCurrentBlood()));
-        updateText( POI.PC_MAX_BLOOD,           String.valueOf(model.getPcMaxBlood()));
+    private void forceViewUpdate(){
+        updateText( POI.ENEMY_TITLE,            getModel().getEnemyTitle());
+        updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(getModel().getEnemyCurrentBlood()));
+        updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(getModel().getEnemyMaxBlood()));
+        updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(getModel().getPcCurrentBlood()));
+        updateText( POI.PC_MAX_BLOOD,           String.valueOf(getModel().getPcMaxBlood()));
 
         BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) findRecycler().getAdapter());
         assert adapter != null;
-        adapter.setDataset(new ArrayList<>(model.getPossibleActions()));
+        adapter.setDataset(new ArrayList<>(getModel().getPossibleActions()));
         adapter.notifyDataSetChanged();
+    }
+
+    private void updateViewDataWithModel(){
+        if(stopModelUpdates)
+            return;
+
+        forceViewUpdate();
     }
 
     private void unfreezeFlow(){
@@ -129,7 +143,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     private void highlightEnemyCard(Runnable after){
         Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
         animation.setInterpolator(new AnticipateOvershootInterpolator());
-        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.setTarget(getView(POI.ENEMY_CONTAINER_WITH_EFFECT));
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -147,7 +161,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
                 return Math.abs(super.getInterpolation(input) - 1f);
             }
         });
-        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.setTarget(getView(POI.ENEMY_CONTAINER_WITH_EFFECT));
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -164,21 +178,25 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
 
             if(event.getAction().getTarget() instanceof PlayerCharacter)
                 playEffect(
-                        POI.PC_EFFECT,
-                        effect.getEffectResId(),
-                        effect.getEffectDuration(),
-                        effect.getEffectScale(),
-                        this::unfreezeFlow
+                    POI.PC_EFFECT,
+                    effect.getEffectResId(),
+                    effect.getEffectDuration(),
+                    effect.getEffectScale(),
+                    this::unfreezeFlow
                 );
             else{
-                highlightEnemyCard(()->
-                    playEffect(
-                            POI.ENEMY_EFFECT,
-                            effect.getEffectResId(),
-                            effect.getEffectDuration(),
-                            effect.getEffectScale(),
-                            ()->unhighlightEnemyCard(this::unfreezeFlow)
-                    )
+                stopModelUpdates = true;
+                highlightEnemyCard(()-> {
+                            playEffect(
+                                    POI.ENEMY_EFFECT,
+                                    effect.getEffectResId(),
+                                    effect.getEffectDuration(),
+                                    effect.getEffectScale(),
+                                    () ->
+                                            unhighlightEnemyCard(this::unfreezeFlow)
+                            );
+                            forceViewUpdate();
+                        }
                 );
             }
         }
@@ -205,8 +223,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     }
 
     public BattlegroundLayoutHelper updateView(BattlegroundViewModel model){
-        updateViewDataWithModel(model);
-        updateInfoBoxVisibility();
+        setModel(model);
         return this;
     }
 
@@ -226,9 +243,13 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
 
     @Override
     public void onEventReceived(Event event) {
+        stopModelUpdates = false;
         if(event.getClass() == EntityPerformedActionEvent.class){
             handleActionEvent((EntityPerformedActionEvent)event);
         }
+        updateViewDataWithModel();
+        updateInfoBoxVisibility();
+        stopModelUpdates = true;
     }
 
     @Override

@@ -96,7 +96,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         actionSelectedListener.passSelectedAction(host, getNextAction());
     }
 
-    private void refreshFragmentData(){
+    private void updateLayoutsModel(){
         BattlegroundViewModel model = BattlegroundViewModelFactory.generateFreshModel(
                 requireContext(),
                 getPlayerCharacter(),
@@ -127,7 +127,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
             setPlayerTurn(false);
             unfreezeFlow();
         }
-        refreshFragmentData();
     }
 
     private void onRecyclerScrolled(){
@@ -147,8 +146,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
                 }
         );
         setLayout(newLayout);
-
-        refreshFragmentData();
     }
 
     private void unfreezeFlow(){
@@ -185,6 +182,8 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
 
         getFightManager().start();
 
+        updateLayoutsModel();
+
         return getLayout().getRoot();
     }
 
@@ -201,7 +200,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
                 freezeFlow();
             }
         }
-        refreshFragmentData();
+        updateLayoutsModel();
     }
 
     @Override
