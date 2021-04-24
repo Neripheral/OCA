@@ -1,5 +1,6 @@
 package com.nerpage.oca.layouts;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,13 +12,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.PlayerCharacter;
+import com.nerpage.oca.classes.events.Event;
+import com.nerpage.oca.classes.events.EventController;
+import com.nerpage.oca.classes.events.FlowFreezer;
+import com.nerpage.oca.classes.fighting.actions.Action;
+import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
 
-public class BattlegroundLayoutHelper extends LayoutHelper {
+public class BattlegroundLayoutHelper extends LayoutHelper implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            POI
 
@@ -50,6 +57,27 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
     // endregion //         POI
     //================================================================================
     //================================================================================
+    // region //            Fields
+
+    private EventController.EventListener eventFreezer;
+
+    // endregion //         Fields
+    //================================================================================
+    //================================================================================
+    // region //            Accessors
+
+    private EventController.EventListener getEventFreezer() {
+        return eventFreezer;
+    }
+
+    private BattlegroundLayoutHelper setEventFreezer(EventController.EventListener eventFreezer) {
+        this.eventFreezer = eventFreezer;
+        return this;
+    }
+
+    // endregion //         Accessors
+    //================================================================================
+    //================================================================================
     // region //            Private methods
 
     private RecyclerView findRecycler(){
@@ -78,11 +106,35 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
         adapter.notifyDataSetChanged();
     }
 
+    private void unfreezeFlow(){
+        getEventFreezer().emitEvent(new FlowFreezer.ResumeFlow(this));
+    }
+
     private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration, float scale){
         getView(poi).setScaleX(scale);
         getView(poi).setScaleY(scale);
-        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration);
+        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, this::unfreezeFlow);
         return this;
+    }
+
+    private void handleActionEvent(EntityPerformedActionEvent event){
+        if(event.getAction() instanceof Action.HasEffectAnimation){
+            getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
+            Action.HasEffectAnimation effect = ((Action.HasEffectAnimation)event.getAction());
+
+            POI target;
+            if(event.getAction().getTarget() instanceof PlayerCharacter)
+                target = POI.PC_EFFECT;
+            else
+                target = POI.ENEMY_EFFECT;
+
+            playEffect(
+                    target,
+                    effect.getEffectResId(),
+                    effect.getEffectDuration(),
+                    effect.getEffectScale()
+            );
+        }
     }
 
     // endregion //         Private methods
@@ -125,12 +177,15 @@ public class BattlegroundLayoutHelper extends LayoutHelper {
                 .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 
-    public BattlegroundLayoutHelper playEnemyEffect(int resId, int duration, float scale){
-        return playEffect(POI.ENEMY_EFFECT, resId, duration, scale);
+    @Override
+    public void onEventReceived(Event event) {
+        if(event.getClass() == EntityPerformedActionEvent.class){
+            handleActionEvent((EntityPerformedActionEvent)event);
+        }
     }
 
-    public BattlegroundLayoutHelper playPcEffect(int resId, int duration, float scale){
-        return playEffect(POI.PC_EFFECT, resId, duration, scale);
+    @Override
+    public void setEventListener(EventController.EventListener eventListener) {
+        this.setEventFreezer(eventListener);
     }
-
 }

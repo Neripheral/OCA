@@ -180,6 +180,9 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView(inflater.inflate(R.layout.fragment_battleground, container, false));
 
+        getFightManager().addEventListener(getLayout());
+        getFightManager().addFlowFreezer(getLayout());
+
         getFightManager().start();
 
         return getLayout().getRoot();
@@ -196,18 +199,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
             if (event.getFighter().getEntity() == getPlayerCharacter()) {
                 setPlayerTurn(true);
                 freezeFlow();
-            }
-        } else if(data.getClass() == EntityPerformedActionEvent.class){
-            EntityPerformedActionEvent actionEvent = (EntityPerformedActionEvent) data;
-
-            if(actionEvent.getAction() instanceof Action.HasEffectAnimation){
-                Action.HasEffectAnimation action = (Action.HasEffectAnimation)actionEvent.getAction();
-
-                if(actionEvent.getAction().getTarget() != getPlayerCharacter()){
-                    getLayout().playEnemyEffect(action.getEffectResId(), action.getEffectDuration(), action.getEffectScale());
-                } else{
-                    getLayout().playPcEffect(action.getEffectResId(), action.getEffectDuration(), action.getEffectScale());
-                }
             }
         }
         refreshFragmentData();
