@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.classes.ItemLayoutHelper;
@@ -14,7 +16,7 @@ import com.nerpage.oca.interfaces.Inventory;
 
 import java.lang.ref.WeakReference;
 
-public class ItemModel implements Comparable<ItemModel> {
+public class ItemModel extends ViewModel implements Comparable<ItemModel> {
     //================================================================================
     // Fields
     //================================================================================

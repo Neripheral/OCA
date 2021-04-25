@@ -77,6 +77,12 @@ public class ItemLayoutHelper extends LayoutHelper {
     // Compound view manipulation
     //================================================================================
 
+
+    @Override
+    public void updateViewData() {
+        //TODO: implement this... and refactor everything
+    }
+
     private void hideEverything(){
         for(ItemPOI view : ItemPOI.values()){
             hide(view);
