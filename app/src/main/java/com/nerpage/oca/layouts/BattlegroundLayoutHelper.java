@@ -82,11 +82,11 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         return this;
     }
 
-    private BattlegroundViewModel getModel() {
+    public BattlegroundViewModel getModel() {
         return model;
     }
 
-    private BattlegroundLayoutHelper setModel(BattlegroundViewModel model) {
+    public BattlegroundLayoutHelper setModel(BattlegroundViewModel model) {
         this.model = model;
         return this;
     }
@@ -120,13 +120,6 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         assert adapter != null;
         adapter.setDataset(new ArrayList<>(getModel().getPossibleActions()));
         adapter.notifyDataSetChanged();
-    }
-
-    private void updateViewDataWithModel(){
-        if(stopModelUpdates)
-            return;
-
-        forceViewUpdate();
     }
 
     private void unfreezeFlow(){
@@ -218,6 +211,13 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // endregion //         Private methods
     //================================================================================
 
+    public void updateViewData(){
+        if(stopModelUpdates)
+            return;
+
+        forceViewUpdate();
+    }
+
     public BattlegroundLayoutHelper updateInfoBoxVisibility(){
         LinearLayoutManager manager = ((LinearLayoutManager)findRecycler().getLayoutManager());
         assert manager != null;
@@ -232,11 +232,6 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         if(firstHolder != null && lastHolder != null)
             changeInfoBoxVisibility(firstHolder, lastHolder);
 
-        return this;
-    }
-
-    public BattlegroundLayoutHelper updateView(BattlegroundViewModel model){
-        setModel(model);
         return this;
     }
 
@@ -260,7 +255,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         if(event.getClass() == EntityPerformedActionEvent.class){
             handleActionEvent((EntityPerformedActionEvent)event);
         }
-        updateViewDataWithModel();
+        updateViewData();
         updateInfoBoxVisibility();
         stopModelUpdates = true;
     }
