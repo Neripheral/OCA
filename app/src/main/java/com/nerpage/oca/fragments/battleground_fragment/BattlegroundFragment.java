@@ -22,9 +22,7 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
-import com.nerpage.oca.classes.fighting.events.FightEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
-import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
@@ -102,7 +100,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
                 getPlayerCharacter(),
                 getFightManager().getParticipantsExceptForPc().get(0).getEntity());
 
-        getLayout().updateView(model);
+        getLayout().setModel(model);
     }
 
     private PlayerCharacter getPlayerCharacter(){
