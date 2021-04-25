@@ -27,7 +27,7 @@ import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
 
-public class BattlegroundLayoutHelper extends LayoutHelper implements EventController.EventReceiver, EventController.EventEmitter {
+public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel> implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            POI
 
@@ -65,7 +65,6 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // region //            Fields
 
     private EventController.EventListener eventFreezer;
-    private BattlegroundViewModel model;
     private boolean stopModelUpdates = true;
 
     // endregion //         Fields
@@ -79,15 +78,6 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
 
     private BattlegroundLayoutHelper setEventFreezer(EventController.EventListener eventFreezer) {
         this.eventFreezer = eventFreezer;
-        return this;
-    }
-
-    public BattlegroundViewModel getModel() {
-        return model;
-    }
-
-    public BattlegroundLayoutHelper setModel(BattlegroundViewModel model) {
-        this.model = model;
         return this;
     }
 

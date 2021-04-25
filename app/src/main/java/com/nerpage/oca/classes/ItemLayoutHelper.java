@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.models.ItemModel;
 
-public class ItemLayoutHelper extends LayoutHelper {
+public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
     //================================================================================
     // POI Override
     //================================================================================
@@ -48,21 +48,11 @@ public class ItemLayoutHelper extends LayoutHelper {
     // Fields
     //================================================================================
 
-    private ItemModel model;
     private View.OnClickListener listener;
 
     //================================================================================
     // Accessors
     //================================================================================
-
-    public ItemModel getModel() {
-        return model;
-    }
-
-    public ItemLayoutHelper setModel(ItemModel newModel){
-        this.model = newModel;
-        return this;
-    }
 
     public View.OnClickListener getListener() {
         return listener;

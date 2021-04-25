@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.nerpage.oca.interfaces.HasLayout;
 
-public abstract class LayoutHelper implements HasLayout {
+public abstract class LayoutHelper<M extends ViewModel> implements HasLayout {
     //================================================================================
     // region //            Inner classes
 
@@ -20,7 +20,7 @@ public abstract class LayoutHelper implements HasLayout {
     // region //            Fields
 
     private View root;
-    private ViewModel model;
+    private M model;
 
     // endregion //         Fields
     //================================================================================
@@ -31,16 +31,16 @@ public abstract class LayoutHelper implements HasLayout {
         return this.root;
     }
 
-    public LayoutHelper setRoot(View newRoot){
+    public LayoutHelper<M> setRoot(View newRoot){
         this.root = newRoot;
         return this;
     }
 
-    public ViewModel getModel() {
+    public M getModel() {
         return model;
     }
 
-    public LayoutHelper setModel(ViewModel model) {
+    public LayoutHelper<M> setModel(M model) {
         this.model = model;
         return this;
     }
