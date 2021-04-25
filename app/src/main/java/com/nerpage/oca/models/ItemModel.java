@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.lifecycle.ViewModel;
 
 import com.nerpage.oca.classes.Item;
-import com.nerpage.oca.classes.ItemLayout;
+import com.nerpage.oca.layouts.ItemLayout;
 import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.interfaces.Inventory;

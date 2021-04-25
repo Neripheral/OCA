@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.Layout;
+import com.nerpage.oca.layouts.Layout;
 import com.nerpage.oca.interfaces.HasLayout;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.ActionCardModel;

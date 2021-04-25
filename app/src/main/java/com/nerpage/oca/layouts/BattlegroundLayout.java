@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
-import com.nerpage.oca.classes.Layout;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
