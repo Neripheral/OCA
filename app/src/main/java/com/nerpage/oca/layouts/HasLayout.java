@@ -1,4 +1,4 @@
-package com.nerpage.oca.interfaces;
+package com.nerpage.oca.layouts;
 
 import android.view.View;
 import android.widget.ImageView;

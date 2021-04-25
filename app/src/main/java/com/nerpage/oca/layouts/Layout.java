@@ -4,8 +4,6 @@ import android.view.View;
 
 import androidx.lifecycle.ViewModel;
 
-import com.nerpage.oca.interfaces.HasLayout;
-
 public abstract class Layout<M extends ViewModel> implements HasLayout {
     //================================================================================
     // region //            Inner classes
