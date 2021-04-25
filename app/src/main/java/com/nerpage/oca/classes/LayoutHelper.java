@@ -4,20 +4,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.nerpage.oca.interfaces.HasLayout;
 
 public abstract class LayoutHelper implements HasLayout {
+    //================================================================================
+    // region //            Inner classes
+
     public interface POI extends HasLayout.POI{}
 
+    // endregion //         Inner classes
     //================================================================================
-    // Fields
     //================================================================================
+    // region //            Fields
 
     private View root;
+    private ViewModel model;
 
+    // endregion //         Fields
     //================================================================================
-    // Accessors
     //================================================================================
+    // region //            Accessors
 
     public View getRoot() {
         return this.root;
@@ -28,17 +36,38 @@ public abstract class LayoutHelper implements HasLayout {
         return this;
     }
 
+    public ViewModel getModel() {
+        return model;
+    }
+
+    public LayoutHelper setModel(ViewModel model) {
+        this.model = model;
+        return this;
+    }
+
+    // endregion //         Accessors
     //================================================================================
-    // Methods
     //================================================================================
+    // region //            Private methods
 
 
 
+    // endregion //         Private methods
     //================================================================================
-    // Constructors
     //================================================================================
+    // region //            Interface
+
+    public abstract void updateViewData();
+
+    // endregion //         Interface
+    //================================================================================
+    //================================================================================
+    // region //            Constructors
 
     public LayoutHelper(View root){
         this.setRoot(root);
     }
+
+    // endregion //         Constructors
+    //================================================================================
 }
