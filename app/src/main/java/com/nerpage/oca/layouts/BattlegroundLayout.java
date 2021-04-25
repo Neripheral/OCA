@@ -31,11 +31,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     // region //            POI
 
     public enum POI implements Layout.POI {
-        ENEMY_CONTAINER_WITH_EFFECT(R.id.fighter_root),
-        ENEMY_CONTAINER(R.id.fighter_container),
-        ENEMY_TITLE(R.id.fighter_title),
-        ENEMY_CURRENT_BLOOD(R.id.fighter_currentBlood),
-        ENEMY_MAX_BLOOD(R.id.fighter_maxBlood),
+        ENEMY_CONTAINER(R.id.enemy_include),
         PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
         PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
         BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
@@ -43,7 +39,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
         BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
         ACTIONS_RECYCLER(R.id.battleground_actions_recycler),
-        ENEMY_EFFECT(R.id.fighter_effect_attack),
         PC_EFFECT(R.id.battleground_pc_effect);
 
         int id;
@@ -65,6 +60,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     private EventController.EventListener eventFreezer;
     private boolean stopModelUpdates = true;
+    private FighterCardLayout enemyLayout;
 
     // endregion //         Fields
     //================================================================================
@@ -78,6 +74,21 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     private BattlegroundLayout setEventFreezer(EventController.EventListener eventFreezer) {
         this.eventFreezer = eventFreezer;
         return this;
+    }
+
+    private FighterCardLayout getEnemyLayout() {
+        return enemyLayout;
+    }
+
+    private BattlegroundLayout setEnemyLayout(FighterCardLayout enemyLayout) {
+        this.enemyLayout = enemyLayout;
+        return this;
+    }
+
+    @Override
+    public Layout<BattlegroundViewModel> setModel(BattlegroundViewModel model) {
+        getEnemyLayout().setModel(model.getEnemyCard());
+        return super.setModel(model);
     }
 
     // endregion //         Accessors
@@ -99,11 +110,9 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     }
 
     private void forceViewUpdate(){
-        updateText( POI.ENEMY_TITLE,            getModel().getEnemyTitle());
-        updateText( POI.ENEMY_CURRENT_BLOOD,    String.valueOf(getModel().getEnemyCurrentBlood()));
-        updateText( POI.ENEMY_MAX_BLOOD,        String.valueOf(getModel().getEnemyMaxBlood()));
         updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(getModel().getPcCurrentBlood()));
         updateText( POI.PC_MAX_BLOOD,           String.valueOf(getModel().getPcMaxBlood()));
+        getEnemyLayout().updateViewData();
 
         BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) findRecycler().getAdapter());
         assert adapter != null;
@@ -125,7 +134,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     private void highlightEnemyCard(Runnable after){
         Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
         animation.setInterpolator(new AnticipateOvershootInterpolator());
-        animation.setTarget(getView(POI.ENEMY_CONTAINER_WITH_EFFECT));
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -143,7 +152,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                 return Math.abs(super.getInterpolation(input) - 1f);
             }
         });
-        animation.setTarget(getView(POI.ENEMY_CONTAINER_WITH_EFFECT));
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -181,8 +190,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
             else{
                 stopModelUpdates = true;
                 highlightEnemyCard(()-> {
-                            playEffect(
-                                    POI.ENEMY_EFFECT,
+                            getEnemyLayout().playEffect(
                                     effect.getEffectResId(),
                                     effect.getEffectDuration(),
                                     effect.getEffectScale(),
@@ -200,6 +208,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     // endregion //         Private methods
     //================================================================================
 
+    @Override
     public void updateViewData(){
         if(stopModelUpdates)
             return;
@@ -229,6 +238,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                               OnRecyclerItemClicked onRecyclerItemClicked,
                               RecyclerView.OnScrollListener onScrollListener){
         super(rootView);
+        setEnemyLayout(new FighterCardLayout(getView(POI.ENEMY_CONTAINER)));
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
         findRecycler().addOnScrollListener(onScrollListener);

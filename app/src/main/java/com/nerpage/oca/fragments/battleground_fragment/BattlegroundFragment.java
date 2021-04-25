@@ -97,8 +97,8 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     private void updateLayoutsModel(){
         BattlegroundViewModel model = BattlegroundViewModelFactory.generateFreshModel(
                 requireContext(),
-                getPlayerCharacter(),
-                getFightManager().getParticipantsExceptForPc().get(0).getEntity());
+                getFightManager().getPcFighter(),
+                getFightManager().getParticipantsExceptForPc().get(0));
 
         getLayout().setModel(model);
     }

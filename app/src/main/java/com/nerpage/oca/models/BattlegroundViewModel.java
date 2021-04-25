@@ -9,11 +9,9 @@ public class BattlegroundViewModel extends ViewModel {
     //================================================================================
     // region //            Fields
 
-    private String enemyTitle = "missing_enemy_title";
-    private int enemyCurrentBlood = 0;
-    private int enemyMaxBlood = 0;
     private int pcCurrentBlood = 0;
     private int pcMaxBlood = 0;
+    private FighterCardModel enemyCard = new FighterCardModel();
     private List<ActionCardModel> possibleActions = new ArrayList<>();
 
     // endregion //         Fields
@@ -21,30 +19,12 @@ public class BattlegroundViewModel extends ViewModel {
     //================================================================================
     // region //            Accessors
 
-    public String getEnemyTitle() {
-        return enemyTitle;
+    public FighterCardModel getEnemyCard() {
+        return enemyCard;
     }
 
-    public BattlegroundViewModel setEnemyTitle(String enemyTitle) {
-        this.enemyTitle = enemyTitle;
-        return this;
-    }
-
-    public int getEnemyCurrentBlood() {
-        return enemyCurrentBlood;
-    }
-
-    public BattlegroundViewModel setEnemyCurrentBlood(int enemyCurrentBlood) {
-        this.enemyCurrentBlood = enemyCurrentBlood;
-        return this;
-    }
-
-    public int getEnemyMaxBlood() {
-        return enemyMaxBlood;
-    }
-
-    public BattlegroundViewModel setEnemyMaxBlood(int enemyMaxBlood) {
-        this.enemyMaxBlood = enemyMaxBlood;
+    public BattlegroundViewModel setEnemyCard(FighterCardModel enemyCard) {
+        this.enemyCard = enemyCard;
         return this;
     }
 

@@ -3,6 +3,7 @@ package com.nerpage.oca.modelfactories;
 import android.content.Context;
 
 import com.nerpage.oca.classes.Entity;
+import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.models.ActionCardModel;
 import com.nerpage.oca.models.BattlegroundViewModel;
@@ -11,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class BattlegroundViewModelFactory{
-    private static void bindPcData(BattlegroundViewModel newModel, Context context, Entity pc){
-        newModel.setPcCurrentBlood(pc.getBlood());
-        newModel.setPcMaxBlood(pc.getMaxBlood());
+    private static void bindPcData(BattlegroundViewModel newModel, Context context, Fighter pc){
+        newModel.setPcCurrentBlood(pc.getEntity().getBlood());
+        newModel.setPcMaxBlood(pc.getEntity().getMaxBlood());
     }
 
-    private static void bindEnemyData(BattlegroundViewModel newModel, Context context, Entity enemy) {
-        newModel.setEnemyTitle(enemy.getName(context));
-        newModel.setEnemyCurrentBlood(enemy.getBlood());
-        newModel.setEnemyMaxBlood(enemy.getMaxBlood());
+    private static void bindEnemyData(BattlegroundViewModel newModel, Context context, Fighter enemy) {
+        newModel.setEnemyCard(
+                FighterCardModelFactory.generateFreshModel(context, enemy)
+        );
     }
 
     private static List<ActionCardModel> generateActionCardModels(Context context, List<Action> possibleActions) {
@@ -30,13 +31,13 @@ public final class BattlegroundViewModelFactory{
         return cardModels;
     }
 
-    private static void bindPossibleActions(BattlegroundViewModel newModel, Context context, Entity pc) {
+    private static void bindPossibleActions(BattlegroundViewModel newModel, Context context, Fighter pc) {
         newModel.setPossibleActions(
-                generateActionCardModels(context, pc.getPossibleActions())
+                generateActionCardModels(context, pc.getEntity().getPossibleActions())
         );
     }
 
-    public static BattlegroundViewModel generateFreshModel(Context context, Entity pc, Entity enemy){
+    public static BattlegroundViewModel generateFreshModel(Context context, Fighter pc, Fighter enemy){
         BattlegroundViewModel newModel = new BattlegroundViewModel();
         bindPcData(newModel, context, pc);
         bindEnemyData(newModel, context, enemy);

@@ -1,8 +1,10 @@
 package com.nerpage.oca.layouts;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.models.FighterCardModel;
 
 public class FighterCardLayout extends Layout<FighterCardModel>{
@@ -60,6 +62,12 @@ public class FighterCardLayout extends Layout<FighterCardModel>{
         updateText(POI.TITLE, getModel().getTitle());
         updateText(POI.CURRENT_BLOOD, getModel().getCurrentBlood());
         updateText(POI.MAX_BLOOD, getModel().getMaxBlood());
+    }
+
+    public void playEffect(int resId, int duration, float scale, Runnable after){
+        getView(POI.EFFECT).setScaleX(scale);
+        getView(POI.EFFECT).setScaleY(scale);
+        AnimationHelper.playCustomDurationAnimation((ImageView)getView(POI.EFFECT), resId, duration, after);
     }
 
     // endregion //         Interface
