@@ -32,11 +32,11 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
     // region //            POI
 
     public enum POI implements LayoutHelper.POI {
-        ENEMY_CONTAINER_WITH_EFFECT(R.id.enemy_root),
-        ENEMY_CONTAINER(R.id.enemy_container),
-        ENEMY_TITLE(R.id.enemy_title),
-        ENEMY_CURRENT_BLOOD(R.id.enemy_currentBlood),
-        ENEMY_MAX_BLOOD(R.id.enemy_maxBlood),
+        ENEMY_CONTAINER_WITH_EFFECT(R.id.fighter_root),
+        ENEMY_CONTAINER(R.id.fighter_container),
+        ENEMY_TITLE(R.id.fighter_title),
+        ENEMY_CURRENT_BLOOD(R.id.fighter_currentBlood),
+        ENEMY_MAX_BLOOD(R.id.fighter_maxBlood),
         PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
         PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
         BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
@@ -44,7 +44,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper implements EventContr
         BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
         BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
         ACTIONS_RECYCLER(R.id.battleground_actions_recycler),
-        ENEMY_EFFECT(R.id.enemy_effect_attack),
+        ENEMY_EFFECT(R.id.fighter_effect_attack),
         PC_EFFECT(R.id.battleground_pc_effect);
 
         int id;
