@@ -13,6 +13,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <include
+        android:id="@+id/enemy_include"
         layout="@layout/battleground_fightercard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
