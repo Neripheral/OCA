@@ -7,12 +7,12 @@ import android.widget.TextView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.models.ItemModel;
 
-public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
+public class ItemLayout extends Layout<ItemModel> {
     //================================================================================
     // POI Override
     //================================================================================
 
-    enum ItemPOI implements LayoutHelper.POI{
+    enum ItemPOI implements Layout.POI{
         SYNOPSIS(R.id.item_synopsis),
             INVENTORYMENU(R.id.item_inventory_menu),
                 FULLNESS(R.id.item_inventory_fullness),
@@ -58,7 +58,7 @@ public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
         return listener;
     }
 
-    public ItemLayoutHelper setListener(View.OnClickListener listener){
+    public ItemLayout setListener(View.OnClickListener listener){
         this.listener = listener;
         return this;
     }
@@ -118,7 +118,7 @@ public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
         ((TextView)this.getView(ItemPOI.INVENTORYCAPACITY)).setText(getModel().getCapacity());
     }
 
-    public ItemLayoutHelper prepareHoldingSpaceButtons(){
+    public ItemLayout prepareHoldingSpaceButtons(){
         this.show(ItemPOI.HOLDINGSPACE);
         if(!getModel().isHiddenTransferToHandsButton())
             this.show(ItemPOI.MOVETOHOLDINGSPACE).setOnClickListener(this.getListener());
@@ -131,7 +131,7 @@ public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
 
     }
 
-    public ItemLayoutHelper prepareHolder(){
+    public ItemLayout prepareHolder(){
         setupInitState();
 
         if(!getModel().getQuantity().isEmpty())
@@ -145,18 +145,18 @@ public class ItemLayoutHelper extends LayoutHelper<ItemModel> {
         return this;
     }
 
-    public ItemLayoutHelper setOverallListener(){
+    public ItemLayout setOverallListener(){
         getRoot().setOnClickListener(this.getListener());
         return this;
     }
 
-    public ItemLayoutHelper(ItemModel model, View root, View.OnClickListener listener){
+    public ItemLayout(ItemModel model, View root, View.OnClickListener listener){
         super(root);
         this.setModel(model);
         this.setListener(listener);
     }
 
-    public ItemLayoutHelper(ItemModel model, View root){
+    public ItemLayout(ItemModel model, View root){
         this(model, root, null);
     }
 

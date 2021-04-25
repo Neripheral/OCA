@@ -2,7 +2,7 @@ package com.nerpage.oca.fragments.battleground_fragment;
 
 import android.view.MenuItem;
 
-import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
+import com.nerpage.oca.layouts.BattlegroundLayout;
 
 class BehaviorHelper {
     private static void onBehaviorSurrenderSelected(){
@@ -18,13 +18,13 @@ class BehaviorHelper {
     }
 
     public static boolean onBehaviorItemSelected(MenuItem itemId){
-        if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
+        if(itemId.getItemId() == BattlegroundLayout.POI.BEHAVIOR_SURRENDER_BUTTON.getId()) {
             onBehaviorSurrenderSelected();
             return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_ATTACK_BUTTON.getId()) {
+        }else if(itemId.getItemId() == BattlegroundLayout.POI.BEHAVIOR_ATTACK_BUTTON.getId()) {
             onBehaviorAttackSelected();
             return true;
-        }else if(itemId.getItemId() == BattlegroundLayoutHelper.POI.BEHAVIOR_DEFEND_BUTTON.getId()) {
+        }else if(itemId.getItemId() == BattlegroundLayout.POI.BEHAVIOR_DEFEND_BUTTON.getId()) {
             onBehaviorDefendSelected();
             return true;
         }

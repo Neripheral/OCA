@@ -9,8 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.CarryingSpace;
-import com.nerpage.oca.classes.ItemLayoutHelper;
+import com.nerpage.oca.classes.ItemLayout;
 import com.nerpage.oca.fragments.ItemListFragment;
 import com.nerpage.oca.models.ItemModel;
 
@@ -60,7 +59,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         ItemModel model = dataset.get(position);
         switch(this.workmode) {
             case PCINVENTORY:
-                ItemLayoutHelper helper = model.initLayoutHelperFor(holder.rootView, holder)
+                ItemLayout helper = model.initLayoutHelperFor(holder.rootView, holder)
                             .prepareHolder();
                 if(model.getBoundItemStorage() != null)
                     holder.nestedInventoryFragment =

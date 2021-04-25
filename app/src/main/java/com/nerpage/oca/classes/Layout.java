@@ -1,14 +1,12 @@
 package com.nerpage.oca.classes;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
 
 import com.nerpage.oca.interfaces.HasLayout;
 
-public abstract class LayoutHelper<M extends ViewModel> implements HasLayout {
+public abstract class Layout<M extends ViewModel> implements HasLayout {
     //================================================================================
     // region //            Inner classes
 
@@ -31,7 +29,7 @@ public abstract class LayoutHelper<M extends ViewModel> implements HasLayout {
         return this.root;
     }
 
-    public LayoutHelper<M> setRoot(View newRoot){
+    public Layout<M> setRoot(View newRoot){
         this.root = newRoot;
         return this;
     }
@@ -40,7 +38,7 @@ public abstract class LayoutHelper<M extends ViewModel> implements HasLayout {
         return model;
     }
 
-    public LayoutHelper<M> setModel(M model) {
+    public Layout<M> setModel(M model) {
         this.model = model;
         return this;
     }
@@ -64,7 +62,7 @@ public abstract class LayoutHelper<M extends ViewModel> implements HasLayout {
     //================================================================================
     // region //            Constructors
 
-    public LayoutHelper(View root){
+    public Layout(View root){
         this.setRoot(root);
     }
 

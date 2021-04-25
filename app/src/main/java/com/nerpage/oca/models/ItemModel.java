@@ -2,14 +2,11 @@ package com.nerpage.oca.models;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
 
-import com.nerpage.oca.R;
 import com.nerpage.oca.classes.Item;
-import com.nerpage.oca.classes.ItemLayoutHelper;
+import com.nerpage.oca.classes.ItemLayout;
 import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.interfaces.Inventory;
@@ -155,8 +152,8 @@ public class ItemModel extends ViewModel implements Comparable<ItemModel> {
         return String.valueOf((int)(getFullness()*100)) + "%";
     }
 
-    public ItemLayoutHelper initLayoutHelperFor(View v, View.OnClickListener listener){
-        ItemLayoutHelper lh = new ItemLayoutHelper(this, v, listener);
+    public ItemLayout initLayoutHelperFor(View v, View.OnClickListener listener){
+        ItemLayout lh = new ItemLayout(this, v, listener);
         return lh;
     }
 

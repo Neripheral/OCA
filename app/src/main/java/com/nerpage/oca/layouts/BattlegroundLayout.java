@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
-import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.Layout;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
@@ -27,11 +27,11 @@ import com.nerpage.oca.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
 
-public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel> implements EventController.EventReceiver, EventController.EventEmitter {
+public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            POI
 
-    public enum POI implements LayoutHelper.POI {
+    public enum POI implements Layout.POI {
         ENEMY_CONTAINER_WITH_EFFECT(R.id.fighter_root),
         ENEMY_CONTAINER(R.id.fighter_container),
         ENEMY_TITLE(R.id.fighter_title),
@@ -76,7 +76,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel
         return eventFreezer;
     }
 
-    private BattlegroundLayoutHelper setEventFreezer(EventController.EventListener eventFreezer) {
+    private BattlegroundLayout setEventFreezer(EventController.EventListener eventFreezer) {
         this.eventFreezer = eventFreezer;
         return this;
     }
@@ -116,7 +116,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel
         getEventFreezer().emitEvent(new FlowFreezer.ResumeFlow(this));
     }
 
-    private BattlegroundLayoutHelper playEffect(POI poi, int resId, int duration, float scale, Runnable after){
+    private BattlegroundLayout playEffect(POI poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
         getView(poi).setScaleY(scale);
         AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, after);
@@ -208,7 +208,7 @@ public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel
         forceViewUpdate();
     }
 
-    public BattlegroundLayoutHelper updateInfoBoxVisibility(){
+    public BattlegroundLayout updateInfoBoxVisibility(){
         LinearLayoutManager manager = ((LinearLayoutManager)findRecycler().getLayoutManager());
         assert manager != null;
 
@@ -225,17 +225,17 @@ public class BattlegroundLayoutHelper extends LayoutHelper<BattlegroundViewModel
         return this;
     }
 
-    public BattlegroundLayoutHelper(View rootView,
-                                    BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
-                                    OnRecyclerItemClicked onRecyclerItemClicked,
-                                    RecyclerView.OnScrollListener onScrollListener){
+    public BattlegroundLayout(View rootView,
+                              BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
+                              OnRecyclerItemClicked onRecyclerItemClicked,
+                              RecyclerView.OnScrollListener onScrollListener){
         super(rootView);
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
         findRecycler().addOnScrollListener(onScrollListener);
         (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
-        ((BottomNavigationView)getView(BattlegroundLayoutHelper.POI.BEHAVIOR_NAVBAR))
+        ((BottomNavigationView)getView(BattlegroundLayout.POI.BEHAVIOR_NAVBAR))
                 .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 

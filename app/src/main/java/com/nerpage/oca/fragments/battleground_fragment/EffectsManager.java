@@ -2,15 +2,15 @@ package com.nerpage.oca.fragments.battleground_fragment;
 
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.events.FightEvent;
-import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
+import com.nerpage.oca.layouts.BattlegroundLayout;
 
 public class EffectsManager {
-    private BattlegroundLayoutHelper layout;
+    private BattlegroundLayout layout;
     private Runnable onObserverReadyListener;
 
 
 
-    private BattlegroundLayoutHelper getLayout() {
+    private BattlegroundLayout getLayout() {
         return layout;
     }
 
@@ -27,7 +27,7 @@ public class EffectsManager {
         getOnObserverReadyListener().run();
     }
 
-    private EffectsManager(BattlegroundLayoutHelper layout, Runnable onObserverReadyListener) {
+    private EffectsManager(BattlegroundLayout layout, Runnable onObserverReadyListener) {
         this.layout = layout;
         this.onObserverReadyListener = onObserverReadyListener;
     }

@@ -23,7 +23,7 @@ import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
-import com.nerpage.oca.layouts.BattlegroundLayoutHelper;
+import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.models.BattlegroundViewModel;
 
@@ -33,7 +33,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     //================================================================================
     // region //            Fields
 
-    private BattlegroundLayoutHelper layout;
+    private BattlegroundLayout layout;
     private FightManager fightManager;
     private Action nextAction = null;
     private boolean playerTurn = false;
@@ -44,11 +44,11 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     //================================================================================
     // region //            Accessors
 
-    private BattlegroundLayoutHelper getLayout() {
+    private BattlegroundLayout getLayout() {
         return this.layout;
     }
 
-    private BattlegroundFragment setLayout(BattlegroundLayoutHelper layout) {
+    private BattlegroundFragment setLayout(BattlegroundLayout layout) {
         this.layout = layout;
         return this;
     }
@@ -132,7 +132,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     }
 
     private void initView(View rootView){
-        BattlegroundLayoutHelper newLayout = new BattlegroundLayoutHelper(
+        BattlegroundLayout newLayout = new BattlegroundLayout(
                 rootView,
                 BehaviorHelper::onBehaviorItemSelected,
                 this::onActionItemClicked,

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.classes.LayoutHelper;
+import com.nerpage.oca.classes.Layout;
 import com.nerpage.oca.interfaces.HasLayout;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.models.ActionCardModel;
@@ -26,7 +26,7 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
         //================================================================================
         // region //           ActionViewHolder: Inner classes
 
-        enum POI implements LayoutHelper.POI {
+        enum POI implements Layout.POI {
             THUMBNAIL(R.id.action_thumbnail),
             TITLE(R.id.action_title),
             INFO_BOX(R.id.action_info),
