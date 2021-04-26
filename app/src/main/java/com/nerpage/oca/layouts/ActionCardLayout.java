@@ -12,6 +12,7 @@ public class ActionCardLayout extends Layout<ActionCardModel> {
     // region //           Inner classes
 
     public enum POI implements Layout.POI {
+        CONTAINER(R.id.action_container),
         THUMBNAIL(R.id.action_thumbnail),
         TITLE(R.id.action_title),
         INFO_BOX(R.id.action_info),
