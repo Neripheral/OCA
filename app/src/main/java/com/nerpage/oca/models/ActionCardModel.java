@@ -1,6 +1,8 @@
 package com.nerpage.oca.models;
 
-public class ActionCardModel {
+import androidx.lifecycle.ViewModel;
+
+public class ActionCardModel extends ViewModel {
     //================================================================================
     // region //            ActionViewModel: Fields
 
