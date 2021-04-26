@@ -12,12 +12,12 @@ public class FighterCardLayout extends Layout<FighterCardModel>{
     // region //            Inner classes
 
     public enum POI implements Layout.POI {
-        CONTAINER(R.id.enemy_root),
-        CARD(R.id.enemy_container),
-        TITLE(R.id.enemy_title),
-        CURRENT_BLOOD(R.id.enemy_currentBlood),
-        MAX_BLOOD(R.id.enemy_maxBlood),
-        EFFECT(R.id.enemy_effect_attack);
+        CONTAINER(R.id.fighter_root),
+        CARD(R.id.fighter_container),
+        TITLE(R.id.fighter_title),
+        CURRENT_BLOOD(R.id.fighter_currentBlood),
+        MAX_BLOOD(R.id.fighter_maxBlood),
+        EFFECT(R.id.fighter_effect_attack);
 
         int id;
 
