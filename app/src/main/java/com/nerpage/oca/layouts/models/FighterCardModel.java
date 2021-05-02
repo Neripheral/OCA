@@ -1,4 +1,4 @@
-package com.nerpage.oca.models;
+package com.nerpage.oca.layouts.models;
 
 import androidx.lifecycle.ViewModel;
 

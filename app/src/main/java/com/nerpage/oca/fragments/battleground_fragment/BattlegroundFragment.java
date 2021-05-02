@@ -25,7 +25,7 @@ import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
-import com.nerpage.oca.models.BattlegroundViewModel;
+import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 
 import java.util.List;
 

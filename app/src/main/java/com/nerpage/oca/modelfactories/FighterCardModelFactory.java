@@ -3,7 +3,7 @@ package com.nerpage.oca.modelfactories;
 import android.content.Context;
 
 import com.nerpage.oca.classes.fighting.Fighter;
-import com.nerpage.oca.models.FighterCardModel;
+import com.nerpage.oca.layouts.models.FighterCardModel;
 
 public final class FighterCardModelFactory {
     public static FighterCardModel generateFreshModel(Context context, Fighter fighter){

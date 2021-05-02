@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.classes.helpers.AnimationHelper;
-import com.nerpage.oca.models.FighterCardModel;
+import com.nerpage.oca.layouts.models.FighterCardModel;
 
 public class FighterCardLayout extends Layout<FighterCardModel>{
     //================================================================================

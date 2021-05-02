@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.AttributesFragment;
-import com.nerpage.oca.models.AttributeModel;
+import com.nerpage.oca.layouts.models.AttributeModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

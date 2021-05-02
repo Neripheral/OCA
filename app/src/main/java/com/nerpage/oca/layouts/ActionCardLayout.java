@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.models.ActionCardModel;
+import com.nerpage.oca.layouts.models.ActionCardModel;
 
 public class ActionCardLayout extends Layout<ActionCardModel> {
     //================================================================================

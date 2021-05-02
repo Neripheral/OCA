@@ -26,7 +26,7 @@ import com.nerpage.oca.classes.ItemStorage;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.interfaces.Equipable;
 import com.nerpage.oca.interfaces.Inventory;
-import com.nerpage.oca.models.ItemModel;
+import com.nerpage.oca.layouts.models.ItemModel;
 
 public class InventoryManagerFragment extends ItemListFragment {
     public static class Layout{

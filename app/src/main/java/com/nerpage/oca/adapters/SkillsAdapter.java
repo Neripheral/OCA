@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.SkillsFragment;
-import com.nerpage.oca.models.SkillModel;
+import com.nerpage.oca.layouts.models.SkillModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

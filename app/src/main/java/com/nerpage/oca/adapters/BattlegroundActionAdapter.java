@@ -3,17 +3,14 @@ package com.nerpage.oca.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.layouts.ActionCardLayout;
-import com.nerpage.oca.layouts.Layout;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
-import com.nerpage.oca.models.ActionCardModel;
+import com.nerpage.oca.layouts.models.ActionCardModel;
 
 import java.util.ArrayList;
 import java.util.List;

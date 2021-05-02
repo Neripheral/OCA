@@ -22,7 +22,7 @@ import com.nerpage.oca.adapters.ItemListAdapter;
 import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.classes.ItemDatabase;
 import com.nerpage.oca.classes.ItemStorage;
-import com.nerpage.oca.models.ItemModel;
+import com.nerpage.oca.layouts.models.ItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ItemDbSelector extends ItemListFragment {
     }
 
     public List<ItemModel> getDataset(){
-        java.util.List<com.nerpage.oca.models.ItemModel> dataset = new ArrayList<>();
+        java.util.List<com.nerpage.oca.layouts.models.ItemModel> dataset = new ArrayList<>();
 
         Map<String, Class<Item>> allItems = ItemDatabase.getItemList();
         for(Map.Entry<String, Class<Item>> entry : allItems.entrySet()){

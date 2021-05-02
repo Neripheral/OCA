@@ -19,7 +19,7 @@ import com.nerpage.oca.adapters.SkillsAdapter;
 import com.nerpage.oca.misc.SpacesItemDecoration;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.Skill;
-import com.nerpage.oca.models.SkillModel;
+import com.nerpage.oca.layouts.models.SkillModel;
 
 import java.util.ArrayList;
 import java.util.Collections;

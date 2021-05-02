@@ -22,7 +22,7 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
-import com.nerpage.oca.models.BattlegroundViewModel;
+import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
 

@@ -20,7 +20,7 @@ import com.nerpage.oca.classes.Item;
 import com.nerpage.oca.interfaces.Inventory;
 import com.nerpage.oca.misc.RecyclerViewClickListener;
 import com.nerpage.oca.misc.SpacesItemDecoration;
-import com.nerpage.oca.models.ItemModel;
+import com.nerpage.oca.layouts.models.ItemModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.models.ItemModel;
+import com.nerpage.oca.layouts.models.ItemModel;
 
 public class ItemLayout extends Layout<ItemModel> {
     //================================================================================

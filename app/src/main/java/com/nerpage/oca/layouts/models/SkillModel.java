@@ -1,4 +1,4 @@
-package com.nerpage.oca.models;
+package com.nerpage.oca.layouts.models;
 
 public class SkillModel implements Comparable<SkillModel>{
     private int totalCounter;

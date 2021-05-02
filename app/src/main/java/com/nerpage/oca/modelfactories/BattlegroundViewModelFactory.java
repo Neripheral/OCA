@@ -2,11 +2,10 @@ package com.nerpage.oca.modelfactories;
 
 import android.content.Context;
 
-import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
-import com.nerpage.oca.models.ActionCardModel;
-import com.nerpage.oca.models.BattlegroundViewModel;
+import com.nerpage.oca.layouts.models.ActionCardModel;
+import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
