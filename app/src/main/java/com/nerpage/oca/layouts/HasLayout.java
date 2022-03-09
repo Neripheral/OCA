@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public interface HasLayout {
+    class RootUnsetException extends IllegalStateException{}
     /**
      * POI represents each View in Layout that is important.
      * As such each final LayoutHelper should have own enum implementing POI.
@@ -15,7 +16,9 @@ public interface HasLayout {
 
     View getRoot();
 
-    default View getView(POI poi){
+    default View getView(POI poi) throws RootUnsetException{
+        if(getRoot() == null)
+            throw new RootUnsetException();
         return this.getRoot().findViewById(poi.getId());
     }
 
