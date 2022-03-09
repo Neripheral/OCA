@@ -1,4 +1,4 @@
-package com.nerpage.oca.fragments.presenters;
+package com.nerpage.oca.fragments;
 
 import android.view.View;
 
