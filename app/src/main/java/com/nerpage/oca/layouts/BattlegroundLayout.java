@@ -21,6 +21,7 @@ import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.helpers.AnimationHelper;
+import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 
@@ -58,6 +59,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     //================================================================================
     // region //            Fields
 
+    private BattlegroundPresenter p;
     private EventController.EventListener eventFreezer;
     private boolean stopModelUpdates = true;
     private FighterCardLayout enemyLayout;
@@ -238,6 +240,10 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                               OnRecyclerItemClicked onRecyclerItemClicked,
                               RecyclerView.OnScrollListener onScrollListener){
         super(rootView);
+
+        p = new BattlegroundPresenter();
+        p.setRoot(rootView);
+
         setEnemyLayout(new FighterCardLayout(getView(POI.ENEMY_CONTAINER)));
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
