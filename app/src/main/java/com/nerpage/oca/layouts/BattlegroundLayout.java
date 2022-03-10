@@ -3,6 +3,7 @@ package com.nerpage.oca.layouts;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ImageView;
@@ -60,7 +61,10 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     // region //            Fields
 
     private BattlegroundPresenter p;
+
+    //TODO: FlowFreezer should be a child class of EventController with specific utility methods
     private EventController.EventListener eventFreezer;
+
     private boolean stopModelUpdates = true;
     private FighterCardLayout enemyLayout;
 
@@ -99,10 +103,11 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     // region //            Private methods
 
     private RecyclerView findRecycler(){
-        return (RecyclerView)getView(POI.ACTIONS_RECYCLER);
+        return p.getRecycler();
     }
 
     private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder) {
+        //TODO: ActionCardFragment should be responsible for this
         if(firstHolder == lastHolder){
             firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
         }else{
@@ -111,12 +116,14 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void forceViewUpdate(){
-        updateText( POI.PC_CURRENT_BLOOD,       String.valueOf(getModel().getPcCurrentBlood()));
-        updateText( POI.PC_MAX_BLOOD,           String.valueOf(getModel().getPcMaxBlood()));
+        p.updatePCCurrentBlood(String.valueOf(getModel().getPcCurrentBlood()));
+        p.updatePCMaxBlood(String.valueOf(getModel().getPcMaxBlood()));
         getEnemyLayout().updateViewData();
 
-        BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) findRecycler().getAdapter());
+        //TODO: adapter should be stored as class field!
+        BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) p.getRecycler().getAdapter());
         assert adapter != null;
         adapter.setDataset(new ArrayList<>(getModel().getPossibleActions()));
         adapter.notifyDataSetChanged();
@@ -126,11 +133,8 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         getEventFreezer().emitEvent(new FlowFreezer.ResumeFlow(this));
     }
 
-    private BattlegroundLayout playEffect(POI poi, int resId, int duration, float scale, Runnable after){
-        getView(poi).setScaleX(scale);
-        getView(poi).setScaleY(scale);
-        AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, after);
-        return this;
+    private void freezeFlow(){
+        getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
     }
 
     private void highlightEnemyCard(Runnable after){
@@ -178,12 +182,11 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     private void handleActionEvent(EntityPerformedActionEvent event){
         if(event.getAction() instanceof Action.HasEffectAnimation){
-            getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
+            freezeFlow();
             Action.HasEffectAnimation effect = ((Action.HasEffectAnimation)event.getAction());
 
             if(event.getAction().getTarget() instanceof PlayerCharacter)
-                playEffect(
-                    POI.PC_EFFECT,
+                p.playEffectOnPC(
                     effect.getEffectResId(),
                     effect.getEffectDuration(),
                     effect.getEffectScale(),
@@ -219,6 +222,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     }
 
     public BattlegroundLayout updateInfoBoxVisibility(){
+        //TODO: separate fragment should be responsible for handling recycler
         LinearLayoutManager manager = ((LinearLayoutManager)findRecycler().getLayoutManager());
         assert manager != null;
 

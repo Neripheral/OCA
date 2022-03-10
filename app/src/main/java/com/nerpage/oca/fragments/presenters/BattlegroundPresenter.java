@@ -1,5 +1,7 @@
 package com.nerpage.oca.fragments.presenters;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.Presenter;
 
@@ -32,5 +34,25 @@ public class BattlegroundPresenter extends Presenter {
 
     // endregion //         POI
     //================================================================================
+    //================================================================================
+    // region //            Interface
 
+    public RecyclerView getRecycler(){
+        return (RecyclerView) getView(POI.ACTIONS_RECYCLER);
+    }
+
+    public void updatePCCurrentBlood(String newCurrentBlood){
+        updateText(POI.PC_CURRENT_BLOOD, newCurrentBlood);
+    }
+
+    public void updatePCMaxBlood(String newMaxBlood){
+        updateText(POI.PC_MAX_BLOOD, newMaxBlood);
+    }
+
+    public void playEffectOnPC(int resId, int duration, float scale, Runnable after) {
+        playEffect(POI.PC_EFFECT, resId, duration, scale, after);
+    }
+
+    // endregion //         Interface
+    //================================================================================
 }
