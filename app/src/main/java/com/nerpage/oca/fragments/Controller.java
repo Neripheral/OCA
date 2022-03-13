@@ -18,8 +18,9 @@ public abstract class Controller<M extends Model, P extends Presenter> {
         p.setRoot(newRoot);
     }
 
-    protected Controller(M newM, P newP){
+    protected Controller(M newM, P newP, Context newContext){
         m = newM;
         p = newP;
+        context = newContext;
     }
 }
