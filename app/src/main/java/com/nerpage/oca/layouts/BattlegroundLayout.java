@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
-import android.widget.ImageView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -21,7 +20,6 @@ import com.nerpage.oca.classes.events.EventController;
 import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
-import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.fragments.controllers.FighterCardController;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
