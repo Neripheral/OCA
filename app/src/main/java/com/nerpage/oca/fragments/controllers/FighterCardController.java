@@ -11,6 +11,14 @@ public class FighterCardController extends Controller<FighterCardModel, FighterC
     //================================================================================
     // region //            Interface
 
+    //TODO: for compatibility purposes only! after successful Layout->Controller transition this
+    // method should become obsolete and should be deleted!
+    public void updateModel(com.nerpage.oca.layouts.models.FighterCardModel otherModel){
+        m.maxBlood = otherModel.getMaxBlood();
+        m.currentBlood = otherModel.getCurrentBlood();
+        m.title = otherModel.getTitle();
+    }
+
     public void updateModel(Fighter fighter){
         m.maxBlood = String.valueOf(fighter.getEntity().getMaxBlood());
         m.currentBlood = String.valueOf(fighter.getEntity().getBlood());
