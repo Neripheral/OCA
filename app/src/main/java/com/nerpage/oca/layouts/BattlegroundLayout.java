@@ -21,7 +21,6 @@ import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.fragments.FighterCardFragment;
-import com.nerpage.oca.fragments.controllers.FighterCardController;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.layouts.models.BattlegroundViewModel;
@@ -29,34 +28,6 @@ import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 import java.util.ArrayList;
 
 public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements EventController.EventReceiver, EventController.EventEmitter {
-    //================================================================================
-    // region //            POI
-
-    public enum POI implements Layout.POI {
-        ENEMY_CONTAINER(R.id.enemy_include),
-        PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
-        PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
-        BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
-        BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
-        BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
-        BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
-        ACTIONS_RECYCLER(R.id.battleground_actions_recycler),
-        PC_EFFECT(R.id.battleground_pc_effect);
-
-        int id;
-
-        @Override
-        public int getId() {
-            return id;
-        }
-
-        POI(int id){
-            this.id = id;
-        }
-    }
-
-    // endregion //         POI
-    //================================================================================
     //================================================================================
     // region //            Fields
 
@@ -129,49 +100,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
     }
 
-    private void highlightEnemyCard(Runnable after){
-        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
-        animation.setInterpolator(new AnticipateOvershootInterpolator());
-        animation.setTarget(getView(POI.ENEMY_CONTAINER));
-        animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                after.run();
-            }
-        });
-        animation.start();
-    }
-
-    private void unhighlightEnemyCard(Runnable after){
-        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
-        animation.setInterpolator(new AnticipateOvershootInterpolator(){
-            @Override
-            public float getInterpolation(float input) {
-                return Math.abs(super.getInterpolation(input) - 1f);
-            }
-        });
-        animation.setTarget(getView(POI.ENEMY_CONTAINER));
-        animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                after.run();
-            }
-        });
-        animation.start();
-    }
-
-    private void shakeEnemyCard(){
-        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_attackshake);
-        animation.setTarget(getView(POI.ENEMY_CONTAINER));
-        animation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                getView(POI.ENEMY_CONTAINER).setRotation(0);
-            }
-        });
-        animation.start();
-    }
-
     private void handleActionEvent(EntityPerformedActionEvent event){
         if(event.getAction() instanceof Action.HasEffectAnimation){
             freezeFlow();
@@ -186,15 +114,15 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                 );
             else{
                 stopModelUpdates = true;
-                highlightEnemyCard(()-> {
+                p.highlightEnemyCard(()-> {
                             fighterCardFragment.playEffect(
                                     effect.getEffectResId(),
                                     effect.getEffectDuration(),
                                     effect.getEffectScale(),
                                     () ->
-                                            unhighlightEnemyCard(this::unfreezeFlow)
+                                            p.unhighlightEnemyCard(this::unfreezeFlow)
                             );
-                            shakeEnemyCard();
+                            p.shakeEnemyCard();
                             forceViewUpdate();
                         }
                 );
@@ -247,8 +175,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         findRecycler().addOnScrollListener(onScrollListener);
         (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
-        ((BottomNavigationView)getView(BattlegroundLayout.POI.BEHAVIOR_NAVBAR))
-                .setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        p.getBehaviorNavbar().setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 
     @Override

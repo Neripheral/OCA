@@ -1,9 +1,16 @@
 package com.nerpage.oca.fragments.presenters;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
+import android.view.animation.AnticipateOvershootInterpolator;
+
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.Presenter;
+import com.nerpage.oca.layouts.BattlegroundLayout;
 
 public class BattlegroundPresenter extends Presenter {
     //================================================================================
@@ -41,6 +48,10 @@ public class BattlegroundPresenter extends Presenter {
         return (RecyclerView) getView(POI.ACTIONS_RECYCLER);
     }
 
+    public BottomNavigationView getBehaviorNavbar(){
+        return ((BottomNavigationView)getView(POI.BEHAVIOR_NAVBAR));
+    }
+
     public void updatePCCurrentBlood(String newCurrentBlood){
         updateText(POI.PC_CURRENT_BLOOD, newCurrentBlood);
     }
@@ -51,6 +62,49 @@ public class BattlegroundPresenter extends Presenter {
 
     public void playEffectOnPC(int resId, int duration, float scale, Runnable after) {
         playEffect(POI.PC_EFFECT, resId, duration, scale, after);
+    }
+
+    public void highlightEnemyCard(Runnable after){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
+        animation.setInterpolator(new AnticipateOvershootInterpolator());
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                after.run();
+            }
+        });
+        animation.start();
+    }
+
+    public void unhighlightEnemyCard(Runnable after){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_highlight);
+        animation.setInterpolator(new AnticipateOvershootInterpolator(){
+            @Override
+            public float getInterpolation(float input) {
+                return Math.abs(super.getInterpolation(input) - 1f);
+            }
+        });
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                after.run();
+            }
+        });
+        animation.start();
+    }
+
+    public void shakeEnemyCard(){
+        Animator animation = AnimatorInflater.loadAnimator(getRoot().getContext(), R.animator.enemycard_attackshake);
+        animation.setTarget(getView(POI.ENEMY_CONTAINER));
+        animation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                getView(POI.ENEMY_CONTAINER).setRotation(0);
+            }
+        });
+        animation.start();
     }
 
     // endregion //         Interface
