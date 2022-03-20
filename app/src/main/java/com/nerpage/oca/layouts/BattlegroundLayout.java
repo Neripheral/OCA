@@ -20,6 +20,7 @@ import com.nerpage.oca.classes.events.EventController;
 import com.nerpage.oca.classes.events.FlowFreezer;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
+import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.controllers.FighterCardController;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
@@ -64,7 +65,8 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     //TODO: FlowFreezer should be a child class of EventController with specific utility methods
     private EventController.EventListener eventFreezer;
 
-    private FighterCardController fighterController;
+
+    private FighterCardFragment fighterCardFragment;
     private boolean stopModelUpdates = true;
 
     // endregion //         Fields
@@ -83,7 +85,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     @Override
     public Layout<BattlegroundViewModel> setModel(BattlegroundViewModel model) {
-        fighterController.updateModel(model.getEnemyCard());
+        fighterCardFragment.updateData(model.getEnemyCard());
         return super.setModel(model);
     }
 
@@ -110,7 +112,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(getModel().getPcCurrentBlood()));
         p.updatePCMaxBlood(String.valueOf(getModel().getPcMaxBlood()));
-        fighterController.updatePresentation();
+        fighterCardFragment.updateView();
 
         //TODO: adapter should be stored as class field!
         BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) p.getRecycler().getAdapter());
@@ -185,7 +187,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
             else{
                 stopModelUpdates = true;
                 highlightEnemyCard(()-> {
-                            fighterController.playEffect(
+                            fighterCardFragment.playEffect(
                                     effect.getEffectResId(),
                                     effect.getEffectDuration(),
                                     effect.getEffectScale(),
@@ -232,14 +234,13 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     public BattlegroundLayout(View rootView,
                               BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
                               OnRecyclerItemClicked onRecyclerItemClicked,
-                              RecyclerView.OnScrollListener onScrollListener){
+                              RecyclerView.OnScrollListener onScrollListener, FighterCardFragment newFighterCardFragment){
         super(rootView);
 
         p = new BattlegroundPresenter();
         p.setRoot(rootView);
 
-        fighterController = new FighterCardController(rootView.getContext());
-        fighterController.setRoot(getView(POI.ENEMY_CONTAINER));
+        fighterCardFragment = newFighterCardFragment;
 
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));

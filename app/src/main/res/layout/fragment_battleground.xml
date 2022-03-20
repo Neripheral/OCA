@@ -12,9 +12,9 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <include
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/enemy_include"
-        layout="@layout/battleground_fightercard"
+        android:name="com.nerpage.oca.fragments.FighterCardFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

@@ -23,6 +23,7 @@ import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
+import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.layouts.models.BattlegroundViewModel;
@@ -33,6 +34,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     //================================================================================
     // region //            Fields
 
+    private FighterCardFragment fighterCardFragment;
     private BattlegroundLayout layout;
     private FightManager fightManager;
     private Action nextAction = null;
@@ -132,6 +134,9 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     }
 
     private void initView(View rootView){
+        //TODO: when POIs are available remove referencing by R
+        fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
+
         BattlegroundLayout newLayout = new BattlegroundLayout(
                 rootView,
                 BehaviorHelper::onBehaviorItemSelected,
@@ -141,7 +146,8 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
                     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                         onRecyclerScrolled();
                     }
-                }
+                },
+                fighterCardFragment
         );
         setLayout(newLayout);
     }
@@ -178,11 +184,18 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         getFightManager().addEventListener(getLayout());
         getFightManager().addFlowFreezer(getLayout());
 
-        getFightManager().start();
+
 
         updateLayoutsModel();
 
         return getLayout().getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getFightManager().start();
     }
 
     @Override
