@@ -2,9 +2,7 @@ package com.nerpage.oca.fragments.battleground_fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -129,10 +127,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         }
     }
 
-    private void onRecyclerScrolled(){
-        getLayout().updateInfoBoxVisibility();
-    }
-
     private void initView(View rootView){
         //TODO: when POIs are available remove referencing by R
         fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
@@ -141,12 +135,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
                 rootView,
                 BehaviorHelper::onBehaviorItemSelected,
                 this::onActionItemClicked,
-                new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        onRecyclerScrolled();
-                    }
-                },
                 fighterCardFragment
         );
         setLayout(newLayout);
