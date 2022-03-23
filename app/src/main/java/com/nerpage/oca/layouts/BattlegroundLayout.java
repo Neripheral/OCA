@@ -69,7 +69,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(getModel().getPcCurrentBlood()));
         p.updatePCMaxBlood(String.valueOf(getModel().getPcMaxBlood()));
-        fighterCardFragment.updateView();
+        fighterCardFragment.updatePresentation();
 
         //TODO: adapter should be stored as class field!
         BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) p.getRecycler().getAdapter());
