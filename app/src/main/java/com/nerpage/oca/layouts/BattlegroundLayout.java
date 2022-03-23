@@ -1,18 +1,14 @@
 package com.nerpage.oca.layouts;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
@@ -69,16 +65,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         return p.getRecycler();
     }
 
-    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder) {
-        //TODO: ActionCardFragment should be responsible for this
-        if(firstHolder == lastHolder){
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
-        }else{
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
-            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
-        }
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(getModel().getPcCurrentBlood()));
@@ -98,6 +84,10 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     private void freezeFlow(){
         getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
+    }
+
+    private void onRecyclerScrolled(){
+        p.updateInfoBoxVisibility();
     }
 
     private void handleActionEvent(EntityPerformedActionEvent event){
@@ -141,28 +131,10 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         forceViewUpdate();
     }
 
-    public BattlegroundLayout updateInfoBoxVisibility(){
-        //TODO: separate fragment should be responsible for handling recycler
-        LinearLayoutManager manager = ((LinearLayoutManager)findRecycler().getLayoutManager());
-        assert manager != null;
-
-        RecyclerView.ViewHolder firstHolder =
-                findRecycler().findViewHolderForLayoutPosition(
-                        manager.findFirstVisibleItemPosition());
-        RecyclerView.ViewHolder lastHolder =
-                findRecycler().findViewHolderForLayoutPosition(
-                        manager.findLastVisibleItemPosition());
-
-        if(firstHolder != null && lastHolder != null)
-            changeInfoBoxVisibility(firstHolder, lastHolder);
-
-        return this;
-    }
-
     public BattlegroundLayout(View rootView,
                               BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
                               OnRecyclerItemClicked onRecyclerItemClicked,
-                              RecyclerView.OnScrollListener onScrollListener, FighterCardFragment newFighterCardFragment){
+                              FighterCardFragment newFighterCardFragment){
         super(rootView);
 
         p = new BattlegroundPresenter();
@@ -172,7 +144,12 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
         findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
-        findRecycler().addOnScrollListener(onScrollListener);
+        findRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                onRecyclerScrolled();
+            }
+        });
         (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
 
         p.getBehaviorNavbar().setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -185,7 +162,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
             handleActionEvent((EntityPerformedActionEvent)event);
         }
         updateViewData();
-        updateInfoBoxVisibility();
+        p.updateInfoBoxVisibility();
         stopModelUpdates = true;
     }
 
