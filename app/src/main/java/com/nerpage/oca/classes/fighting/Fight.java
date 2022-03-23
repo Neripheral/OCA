@@ -27,7 +27,7 @@ public class Fight implements EventController.EventReceiver, EventController.Eve
 
     private final List<Fighter> fighters = new ArrayList<>();
     private FightPhase currentPhase;
-    private final List<Object> flowFreezers = new ArrayList<>();
+    private final List<Object> flowControllersIdList = new ArrayList<>();
     private EventController.EventListener eventListener;
 
     // endregion //         Fields
@@ -44,8 +44,8 @@ public class Fight implements EventController.EventReceiver, EventController.Eve
         return this;
     }
 
-    private List<Object> getFlowFreezers() {
-        return flowFreezers;
+    private List<Object> getFlowControllersIdList() {
+        return flowControllersIdList;
     }
 
     private EventController.EventListener getEventListener() {
@@ -93,7 +93,7 @@ public class Fight implements EventController.EventReceiver, EventController.Eve
     }
 
     public void tryToProceed() {
-        if(getFlowFreezers().isEmpty())
+        if(getFlowControllersIdList().isEmpty())
             proceed();
     }
 
@@ -106,11 +106,11 @@ public class Fight implements EventController.EventReceiver, EventController.Eve
     @Override
     public void onEventReceived(Event event) {
         if(event.getClass() == FlowController.StopFlow.class){
-            FlowController.StopFlow freezeFlowEvent = (FlowController.StopFlow) event;
-            getFlowFreezers().add(freezeFlowEvent.getIdentifier());
+            FlowController.StopFlow stopFlowEvent = (FlowController.StopFlow) event;
+            getFlowControllersIdList().add(stopFlowEvent.getIdentifier());
         } else if(event.getClass() == FlowController.StartFlow.class){
-            FlowController.StartFlow resumeFlowEvent = (FlowController.StartFlow) event;
-            getFlowFreezers().remove(resumeFlowEvent.getIdentifier());
+            FlowController.StartFlow startFlowEvent = (FlowController.StartFlow) event;
+            getFlowControllersIdList().remove(startFlowEvent.getIdentifier());
             tryToProceed();
         }
     }
