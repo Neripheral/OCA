@@ -14,7 +14,7 @@ import com.nerpage.oca.activities.CharacterEditorActivity;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
-import com.nerpage.oca.classes.events.FlowFreezer;
+import com.nerpage.oca.classes.events.FlowController;
 import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
@@ -141,11 +141,11 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     }
 
     private void unfreezeFlow(){
-        getFlowFreezerListener().emitEvent(new FlowFreezer.ResumeFlow(this));
+        getFlowFreezerListener().emitEvent(new FlowController.StartFlow(this));
     }
 
     private void freezeFlow(){
-        getFlowFreezerListener().emitEvent(new FlowFreezer.FreezeFlow(this));
+        getFlowFreezerListener().emitEvent(new FlowController.StopFlow(this));
     }
 
 

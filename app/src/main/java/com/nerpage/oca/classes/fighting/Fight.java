@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting;
 import com.nerpage.oca.classes.Entity;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
-import com.nerpage.oca.classes.events.FlowFreezer;
+import com.nerpage.oca.classes.events.FlowController;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.events.FightEvent;
 import com.nerpage.oca.classes.fighting.phases.FightPhase;
@@ -105,11 +105,11 @@ public class Fight implements EventController.EventReceiver, EventController.Eve
 
     @Override
     public void onEventReceived(Event event) {
-        if(event.getClass() == FlowFreezer.FreezeFlow.class){
-            FlowFreezer.FreezeFlow freezeFlowEvent = (FlowFreezer.FreezeFlow) event;
+        if(event.getClass() == FlowController.StopFlow.class){
+            FlowController.StopFlow freezeFlowEvent = (FlowController.StopFlow) event;
             getFlowFreezers().add(freezeFlowEvent.getIdentifier());
-        } else if(event.getClass() == FlowFreezer.ResumeFlow.class){
-            FlowFreezer.ResumeFlow resumeFlowEvent = (FlowFreezer.ResumeFlow) event;
+        } else if(event.getClass() == FlowController.StartFlow.class){
+            FlowController.StartFlow resumeFlowEvent = (FlowController.StartFlow) event;
             getFlowFreezers().remove(resumeFlowEvent.getIdentifier());
             tryToProceed();
         }

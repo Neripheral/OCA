@@ -13,7 +13,7 @@ import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
-import com.nerpage.oca.classes.events.FlowFreezer;
+import com.nerpage.oca.classes.events.FlowController;
 import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.fragments.FighterCardFragment;
@@ -79,11 +79,11 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     }
 
     private void unfreezeFlow(){
-        getEventFreezer().emitEvent(new FlowFreezer.ResumeFlow(this));
+        getEventFreezer().emitEvent(new FlowController.StartFlow(this));
     }
 
     private void freezeFlow(){
-        getEventFreezer().emitEvent(new FlowFreezer.FreezeFlow(this));
+        getEventFreezer().emitEvent(new FlowController.StopFlow(this));
     }
 
     private void onRecyclerScrolled(){

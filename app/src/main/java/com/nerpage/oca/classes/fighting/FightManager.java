@@ -3,7 +3,7 @@ package com.nerpage.oca.classes.fighting;
 import com.nerpage.oca.classes.Ledger;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.EventController;
-import com.nerpage.oca.classes.events.FlowFreezer;
+import com.nerpage.oca.classes.events.FlowController;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class FightManager {
     private final Fight fight;
     private Fighter pcFighter = null;
     private Ledger ledger = new Ledger();
-    private final FlowFreezer flowFreezer;
+    private final FlowController flowFreezer;
     private final EventController eventController;
 
     // endregion //         Fields
@@ -46,7 +46,7 @@ public class FightManager {
         return this;
     }
 
-    private FlowFreezer getFlowFreezer() {
+    private FlowController getFlowFreezer() {
         return flowFreezer;
     }
 
@@ -105,7 +105,7 @@ public class FightManager {
     public FightManager(){
         fight = new Fight();
 
-        flowFreezer = new FlowFreezer();
+        flowFreezer = new FlowController();
         getFlowFreezer().addEventReceiver(getFight());
 
         eventController = new EventController();

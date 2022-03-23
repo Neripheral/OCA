@@ -1,7 +1,6 @@
 package com.nerpage.oca.classes.events;
 
-//TODO: FlowFreezer is a bad name, it should be FlowController and offer flow start/pause feature
-public class FlowFreezer extends EventController{
+public class FlowController extends EventController{
     //================================================================================
     // region //            Inner classes
 
@@ -17,14 +16,14 @@ public class FlowFreezer extends EventController{
         }
     }
 
-    public static class FreezeFlow extends FlowEvent{
-        public FreezeFlow(Object identifier){
+    public static class StopFlow extends FlowEvent{
+        public StopFlow(Object identifier){
             super(identifier);
         }
     }
 
-    public static class ResumeFlow extends FlowEvent {
-        public ResumeFlow(Object identifier){
+    public static class StartFlow extends FlowEvent {
+        public StartFlow(Object identifier){
             super(identifier);
         }
     }
