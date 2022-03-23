@@ -3,8 +3,10 @@ package com.nerpage.oca.fragments.presenters;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
+import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,10 +44,41 @@ public class BattlegroundPresenter extends Presenter {
     // endregion //         POI
     //================================================================================
     //================================================================================
+    // region //            Private methods
+
+    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder) {
+        //TODO: ActionCardFragment should be responsible for this
+        if(firstHolder == lastHolder){
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
+        }else{
+            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+        }
+    }
+
+    // endregion //         Private methods
+    //================================================================================
+    //================================================================================
     // region //            Interface
 
     public RecyclerView getRecycler(){
         return (RecyclerView) getView(POI.ACTIONS_RECYCLER);
+    }
+
+    //TODO: separate fragment should be responsible for handling recycler
+    public void updateInfoBoxVisibility(){
+        LinearLayoutManager manager = ((LinearLayoutManager)getRecycler().getLayoutManager());
+        assert manager != null;
+
+        RecyclerView.ViewHolder firstHolder =
+                getRecycler().findViewHolderForLayoutPosition(
+                        manager.findFirstVisibleItemPosition());
+        RecyclerView.ViewHolder lastHolder =
+                getRecycler().findViewHolderForLayoutPosition(
+                        manager.findLastVisibleItemPosition());
+
+        if(firstHolder != null && lastHolder != null)
+            changeInfoBoxVisibility(firstHolder, lastHolder);
     }
 
     public BottomNavigationView getBehaviorNavbar(){
