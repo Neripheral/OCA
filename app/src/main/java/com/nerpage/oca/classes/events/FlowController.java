@@ -4,6 +4,22 @@ public class FlowController extends EventController{
     //================================================================================
     // region //            Inner classes
 
+    public static class FlowHelper {
+        private final EventController.EventListener listener;
+
+        public void stopFlow(){
+            listener.emitEvent(new StopFlow(this));
+        }
+
+        public void startFlow(){
+            listener.emitEvent(new StartFlow(this));
+        }
+
+        public FlowHelper(EventController.EventListener flowListener){
+            listener = flowListener;
+        }
+    }
+
     private static class FlowEvent extends Event{
         private final Object identifier;
 
