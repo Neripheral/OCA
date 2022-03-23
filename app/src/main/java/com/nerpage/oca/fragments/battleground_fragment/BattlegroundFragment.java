@@ -37,7 +37,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     private FightManager fightManager;
     private Action nextAction = null;
     private boolean playerTurn = false;
-    private EventController.EventListener flowFreezerListener;
+    private FlowController.FlowHelper flowHelper;
 
     // endregion //         Fields
     //================================================================================
@@ -80,10 +80,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         return this;
     }
 
-    private EventController.EventListener getFlowFreezerListener() {
-        return flowFreezerListener;
-    }
-
     // endregion //         Accessors
     //================================================================================
     //================================================================================
@@ -123,7 +119,7 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         setNextAction(actionToPerform);
         if(isPlayerTurn()){
             setPlayerTurn(false);
-            unfreezeFlow();
+            flowHelper.startFlow();
         }
     }
 
@@ -139,15 +135,6 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         );
         setLayout(newLayout);
     }
-
-    private void unfreezeFlow(){
-        getFlowFreezerListener().emitEvent(new FlowController.StartFlow(this));
-    }
-
-    private void freezeFlow(){
-        getFlowFreezerListener().emitEvent(new FlowController.StopFlow(this));
-    }
-
 
     // endregion //         Private Methods
     //================================================================================
@@ -196,15 +183,15 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
 
             if (event.getFighter().getEntity() == getPlayerCharacter()) {
                 setPlayerTurn(true);
-                freezeFlow();
+                flowHelper.stopFlow();
             }
         }
         updateLayoutsModel();
     }
 
     @Override
-    public void setEventListener(EventController.EventListener flowFreezerListener) {
-        this.flowFreezerListener = flowFreezerListener;
+    public void setEventListener(EventController.EventListener flowListener) {
+        this.flowHelper = new FlowController.FlowHelper(flowListener);
     }
 
     // endregion //         Public Methods
