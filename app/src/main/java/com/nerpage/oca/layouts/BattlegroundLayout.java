@@ -28,11 +28,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     // region //            Fields
 
     private BattlegroundPresenter p;
-
-    //TODO: FlowFreezer should be a child class of EventController with specific utility methods
-    private EventController.EventListener eventFreezer;
-
-
+    private FlowController.FlowHelper flowHelper;
     private FighterCardFragment fighterCardFragment;
     private boolean stopModelUpdates = true;
 
@@ -40,15 +36,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     //================================================================================
     //================================================================================
     // region //            Accessors
-
-    private EventController.EventListener getEventFreezer() {
-        return eventFreezer;
-    }
-
-    private BattlegroundLayout setEventFreezer(EventController.EventListener eventFreezer) {
-        this.eventFreezer = eventFreezer;
-        return this;
-    }
 
     @Override
     public Layout<BattlegroundViewModel> setModel(BattlegroundViewModel model) {
@@ -78,21 +65,13 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         adapter.notifyDataSetChanged();
     }
 
-    private void unfreezeFlow(){
-        getEventFreezer().emitEvent(new FlowController.StartFlow(this));
-    }
-
-    private void freezeFlow(){
-        getEventFreezer().emitEvent(new FlowController.StopFlow(this));
-    }
-
     private void onRecyclerScrolled(){
         p.updateInfoBoxVisibility();
     }
 
     private void handleActionEvent(EntityPerformedActionEvent event){
         if(event.getAction() instanceof Action.HasEffectAnimation){
-            freezeFlow();
+            flowHelper.stopFlow();
             Action.HasEffectAnimation effect = ((Action.HasEffectAnimation)event.getAction());
 
             if(event.getAction().getTarget() instanceof PlayerCharacter)
@@ -100,7 +79,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                     effect.getEffectResId(),
                     effect.getEffectDuration(),
                     effect.getEffectScale(),
-                    this::unfreezeFlow
+                    flowHelper::startFlow
                 );
             else{
                 stopModelUpdates = true;
@@ -110,7 +89,7 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
                                     effect.getEffectDuration(),
                                     effect.getEffectScale(),
                                     () ->
-                                            p.unhighlightEnemyCard(this::unfreezeFlow)
+                                            p.unhighlightEnemyCard(flowHelper::startFlow)
                             );
                             p.shakeEnemyCard();
                             forceViewUpdate();
@@ -168,6 +147,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     @Override
     public void setEventListener(EventController.EventListener eventListener) {
-        this.setEventFreezer(eventListener);
+        flowHelper = new FlowController.FlowHelper(eventListener);
     }
 }
