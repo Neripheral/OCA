@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.Presenter;
-import com.nerpage.oca.layouts.BattlegroundLayout;
 
 public class BattlegroundPresenter extends Presenter {
     //================================================================================
