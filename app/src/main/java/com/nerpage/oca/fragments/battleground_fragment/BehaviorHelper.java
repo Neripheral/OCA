@@ -3,7 +3,6 @@ package com.nerpage.oca.fragments.battleground_fragment;
 import android.view.MenuItem;
 
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
-import com.nerpage.oca.layouts.BattlegroundLayout;
 
 class BehaviorHelper {
     private static void onBehaviorSurrenderSelected(){

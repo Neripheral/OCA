@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nerpage.oca.classes.helpers.AnimationHelper;
-import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.layouts.HasLayout;
 
 public abstract class Presenter implements HasLayout {

@@ -31,7 +31,6 @@ import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
-import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.ActionCardModelFactory;
 
 import java.util.ArrayList;
