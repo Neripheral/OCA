@@ -1,9 +1,9 @@
 package com.nerpage.oca.fragments.battleground_fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,16 +25,16 @@ import com.nerpage.oca.classes.fighting.actions.Action;
 import com.nerpage.oca.classes.fighting.EnemyGenerator;
 import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
+import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
-import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.layouts.BattlegroundLayout;
-import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
-import com.nerpage.oca.layouts.models.BattlegroundViewModel;
+import com.nerpage.oca.modelfactories.ActionCardModelFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BattlegroundFragment extends PACFragment<BattlegroundModel, BattlegroundPresenter> implements EventController.EventReceiver, EventController.EventEmitter {
@@ -42,26 +42,18 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     // region //            Fields
 
     private FighterCardFragment fighterCardFragment;
-
-    private BattlegroundLayout layout;
     private FightManager fightManager;
     private Action nextAction = null;
     private boolean playerTurn = false;
     private FlowController.FlowHelper flowHelper;
 
+    //TODO: dirty af, clean asap
+    private boolean stopModelUpdates = true;
+
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
-
-    private BattlegroundLayout getLayout() {
-        return this.layout;
-    }
-
-    private BattlegroundFragment setLayout(BattlegroundLayout layout) {
-        this.layout = layout;
-        return this;
-    }
 
     private FightManager getFightManager() {
         return this.fightManager;
@@ -100,13 +92,15 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         actionSelectedListener.passSelectedAction(host, getNextAction());
     }
 
-    private void updateLayoutsModel(){
-        BattlegroundViewModel model = BattlegroundViewModelFactory.generateFreshModel(
-                requireContext(),
-                getFightManager().getPcFighter(),
-                getFightManager().getParticipantsExceptForPc().get(0));
+    private void updateModel(){
+        m.pcCurrentBlood = getFightManager().getPcFighter().getEntity().getBlood();
+        m.pcMaxBlood = getFightManager().getPcFighter().getEntity().getMaxBlood();
+        m.possibleActions = new ArrayList<>();
+        for(Action action : getFightManager().getPcFighter().getEntity().getPossibleActions()){
+            m.possibleActions.add(ActionCardModelFactory.generateFreshModel(getContext(), action));
+        }
 
-        getLayout().setModel(model);
+        fighterCardFragment.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -154,12 +148,58 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
         initRecycler();
 
-        BattlegroundLayout newLayout = new BattlegroundLayout(
-                p,
-                BehaviorHelper::onBehaviorItemSelected,
-                fighterCardFragment
-        );
-        setLayout(newLayout);
+        p.getBehaviorNavbar().setOnNavigationItemSelectedListener(BehaviorHelper::onBehaviorItemSelected);
+    }
+
+    //TODO: this whole method looks fishy and dirty
+    @SuppressLint("NotifyDataSetChanged")
+    private void forceViewUpdate(){
+        p.updatePCCurrentBlood(String.valueOf(m.pcCurrentBlood));
+        p.updatePCMaxBlood(String.valueOf(m.pcMaxBlood));
+        fighterCardFragment.updatePresentation();
+
+        //TODO: adapter should be stored as class field!
+        BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) p.getRecycler().getAdapter());
+        assert adapter != null;
+        adapter.setDataset(new ArrayList<>(m.possibleActions));
+        adapter.notifyDataSetChanged();
+    }
+
+    public void updateView(){
+        if(stopModelUpdates)
+            return;
+
+        forceViewUpdate();
+    }
+
+    private void handleActionEvent(EntityPerformedActionEvent event){
+        if(event.getAction() instanceof Action.HasEffectAnimation){
+            flowHelper.stopFlow();
+            Action.HasEffectAnimation effect = ((Action.HasEffectAnimation)event.getAction());
+
+            if(event.getAction().getTarget() instanceof PlayerCharacter)
+                p.playEffectOnPC(
+                        effect.getEffectResId(),
+                        effect.getEffectDuration(),
+                        effect.getEffectScale(),
+                        flowHelper::startFlow
+                );
+            else{
+                stopModelUpdates = true;
+                p.highlightEnemyCard(()-> {
+                            fighterCardFragment.playEffect(
+                                    effect.getEffectResId(),
+                                    effect.getEffectDuration(),
+                                    effect.getEffectScale(),
+                                    () ->
+                                            p.unhighlightEnemyCard(flowHelper::startFlow)
+                            );
+                            p.shakeEnemyCard();
+                            forceViewUpdate();
+                        }
+                );
+            }
+        }
     }
 
     // endregion //         Private Methods
@@ -183,14 +223,8 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         p.setRoot(inflater.inflate(R.layout.fragment_battleground, container, false));
         initView();
 
-        getFightManager().addEventListener(getLayout());
-        getFightManager().addFlowFreezer(getLayout());
-
-
-
-        updateLayoutsModel();
-
-        return getLayout().getRoot();
+        updateModel();
+        return p.getRoot();
     }
 
     @Override
@@ -201,19 +235,25 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     }
 
     @Override
-    public void onEventReceived(Event data) {
-        Log.e("Ledger", data.toString(getContext()));
+    public void onEventReceived(Event event) {
+        Log.e("Ledger", event.toString(getContext()));
 
-        if(data.getClass() == ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent.class) {
-            ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent event =
-                    (ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent) data;
+        stopModelUpdates = false;
+        if(event.getClass() == ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent.class) {
+            ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent awaitingInputevent =
+                    (ActiveFighterAwaitingActionPhase.AwaitingFighterActionEvent) event;
 
-            if (event.getFighter().getEntity() == getPlayerCharacter()) {
+            if (awaitingInputevent.getFighter().getEntity() == getPlayerCharacter()) {
                 setPlayerTurn(true);
                 flowHelper.stopFlow();
             }
+        } else if(event.getClass() == EntityPerformedActionEvent.class){
+            handleActionEvent((EntityPerformedActionEvent)event);
         }
-        updateLayoutsModel();
+        updateModel();
+        updateView();
+        p.updateInfoBoxVisibility();
+        stopModelUpdates = true;
     }
 
     @Override
