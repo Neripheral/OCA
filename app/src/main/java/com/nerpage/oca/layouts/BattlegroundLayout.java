@@ -61,10 +61,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         adapter.notifyDataSetChanged();
     }
 
-    private void onRecyclerScrolled(){
-        p.updateInfoBoxVisibility();
-    }
-
     private void handleActionEvent(EntityPerformedActionEvent event){
         if(event.getAction() instanceof Action.HasEffectAnimation){
             flowHelper.stopFlow();
@@ -95,18 +91,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         }
     }
 
-    private void initRecycler(OnRecyclerItemClicked onRecyclerItemClicked){
-        p.getRecycler().setLayoutManager(new LinearLayoutManager(getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
-        p.getRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
-        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                onRecyclerScrolled();
-            }
-        });
-        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
-    }
-
     // endregion //         Private methods
     //================================================================================
 
@@ -120,12 +104,10 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
 
     public BattlegroundLayout(BattlegroundPresenter newPresenter,
                               BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
-                              OnRecyclerItemClicked onRecyclerItemClicked,
                               FighterCardFragment newFighterCardFragment){
         super(newPresenter.getRoot());
         p = newPresenter;
         fighterCardFragment = newFighterCardFragment;
-        initRecycler(onRecyclerItemClicked);
         p.getBehaviorNavbar().setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 

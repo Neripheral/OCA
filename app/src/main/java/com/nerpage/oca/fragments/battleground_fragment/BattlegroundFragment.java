@@ -2,7 +2,11 @@ package com.nerpage.oca.fragments.battleground_fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
+import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
@@ -25,6 +30,7 @@ import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
+import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.layouts.models.BattlegroundViewModel;
@@ -127,14 +133,30 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         }
     }
 
+    private void onRecyclerScrolled(){
+        p.updateInfoBoxVisibility();
+    }
+
+    private void initRecycler(){
+        p.getRecycler().setLayoutManager(new LinearLayoutManager(p.getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
+        p.getRecycler().setAdapter(new BattlegroundActionAdapter(this::onActionItemClicked));
+        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                onRecyclerScrolled();
+            }
+        });
+        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
+    }
+
     private void initView(){
         //TODO: when POIs are available remove referencing by R
         fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
+        initRecycler();
 
         BattlegroundLayout newLayout = new BattlegroundLayout(
                 p,
                 BehaviorHelper::onBehaviorItemSelected,
-                this::onActionItemClicked,
                 fighterCardFragment
         );
         setLayout(newLayout);
