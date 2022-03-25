@@ -48,10 +48,6 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
     //================================================================================
     // region //            Private methods
 
-    private RecyclerView findRecycler(){
-        return p.getRecycler();
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(getModel().getPcCurrentBlood()));
@@ -99,6 +95,18 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         }
     }
 
+    private void initRecycler(OnRecyclerItemClicked onRecyclerItemClicked){
+        p.getRecycler().setLayoutManager(new LinearLayoutManager(getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
+        p.getRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
+        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                onRecyclerScrolled();
+            }
+        });
+        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
+    }
+
     // endregion //         Private methods
     //================================================================================
 
@@ -110,27 +118,14 @@ public class BattlegroundLayout extends Layout<BattlegroundViewModel> implements
         forceViewUpdate();
     }
 
-    public BattlegroundLayout(View rootView,
+    public BattlegroundLayout(BattlegroundPresenter newPresenter,
                               BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener,
                               OnRecyclerItemClicked onRecyclerItemClicked,
                               FighterCardFragment newFighterCardFragment){
-        super(rootView);
-
-        p = new BattlegroundPresenter();
-        p.setRoot(rootView);
-
+        super(newPresenter.getRoot());
+        p = newPresenter;
         fighterCardFragment = newFighterCardFragment;
-
-        findRecycler().setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        findRecycler().setAdapter(new BattlegroundActionAdapter(onRecyclerItemClicked));
-        findRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                onRecyclerScrolled();
-            }
-        });
-        (new LinearSnapHelper()).attachToRecyclerView(findRecycler());
-
+        initRecycler(onRecyclerItemClicked);
         p.getBehaviorNavbar().setOnNavigationItemSelectedListener(navigationItemSelectedListener);
     }
 

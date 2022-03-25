@@ -22,17 +22,21 @@ import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.fragments.FighterCardFragment;
+import com.nerpage.oca.fragments.PACFragment;
+import com.nerpage.oca.fragments.models.BattlegroundModel;
+import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.layouts.BattlegroundLayout;
 import com.nerpage.oca.modelfactories.BattlegroundViewModelFactory;
 import com.nerpage.oca.layouts.models.BattlegroundViewModel;
 
 import java.util.List;
 
-public class BattlegroundFragment extends Fragment implements EventController.EventReceiver, EventController.EventEmitter {
+public class BattlegroundFragment extends PACFragment<BattlegroundModel, BattlegroundPresenter> implements EventController.EventReceiver, EventController.EventEmitter {
     //================================================================================
     // region //            Fields
 
     private FighterCardFragment fighterCardFragment;
+
     private BattlegroundLayout layout;
     private FightManager fightManager;
     private Action nextAction = null;
@@ -123,12 +127,12 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
         }
     }
 
-    private void initView(View rootView){
+    private void initView(){
         //TODO: when POIs are available remove referencing by R
         fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
 
         BattlegroundLayout newLayout = new BattlegroundLayout(
-                rootView,
+                p,
                 BehaviorHelper::onBehaviorItemSelected,
                 this::onActionItemClicked,
                 fighterCardFragment
@@ -154,7 +158,8 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        initView(inflater.inflate(R.layout.fragment_battleground, container, false));
+        p.setRoot(inflater.inflate(R.layout.fragment_battleground, container, false));
+        initView();
 
         getFightManager().addEventListener(getLayout());
         getFightManager().addFlowFreezer(getLayout());
@@ -192,6 +197,12 @@ public class BattlegroundFragment extends Fragment implements EventController.Ev
     @Override
     public void setEventListener(EventController.EventListener flowListener) {
         this.flowHelper = new FlowController.FlowHelper(flowListener);
+    }
+
+    @Override
+    public void initPAC() {
+        m = new BattlegroundModel();
+        p = new BattlegroundPresenter();
     }
 
     // endregion //         Public Methods
