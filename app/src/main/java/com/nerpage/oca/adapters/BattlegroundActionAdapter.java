@@ -1,5 +1,6 @@
 package com.nerpage.oca.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,73 +9,69 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.fragments.presenters.ActionCardPresenter;
 import com.nerpage.oca.layouts.ActionCardLayout;
 import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
-import com.nerpage.oca.layouts.models.ActionCardModel;
+import com.nerpage.oca.fragments.models.ActionCardModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionCardHolder>{
+public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionCardHolder>{
     //================================================================================
     // region //            Inner classes
 
-    public static class ActionCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static abstract class ActionCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //================================================================================
         // region //           ActionViewHolder: Fields
 
-        private ActionCardLayout layout;
-        private OnRecyclerItemClicked listener;
+        private ActionCardPresenter p;
+        private ActionCardModel m;
 
         // endregion //        ActionViewHolder: Fields
         //================================================================================
         //================================================================================
-        // region //           ActionViewHolder: Accessors
-
-
-        private ActionCardLayout getLayout() {
-            return layout;
-        }
-
-        private ActionCardHolder setLayout(ActionCardLayout layout) {
-            this.layout = layout;
-            return this;
-        }
-
-        private OnRecyclerItemClicked getListener() {
-            return listener;
-        }
-
-        private ActionCardHolder setListener(OnRecyclerItemClicked listener) {
-            this.listener = listener;
-            return this;
-        }
-
-        // endregion //        ActionViewHolder: Accessors
-        //================================================================================
-        //================================================================================
         // region //           ActionViewHolder: Methods
 
-        public void updateWithModel(ActionCardModel model){
-            getLayout().setModel(model);
-            getLayout().updateViewData();
+        public void setRoot(View root){
+            p.setRoot(root);
         }
+        
+        public void updateView(){
+            p.updateThumbnail(m.thumbnailResId);
+            p.updateTitle(m.title);
+            p.updateDescription(m.description);
+            p.setOverallListener(this);
+        }
+
+        public void updateModel(ActionCardModel newModel){
+            m.thumbnailResId = newModel.thumbnailResId;;
+            m.title = newModel.title;
+            m.description = newModel.description;
+        }
+
+        public abstract void onCardClicked(int position);
+        
+        // endregion //        ActionViewHolder: Methods
+        //================================================================================
+        //================================================================================
+        // region //           ActionViewHolder: Overrides
 
         @Override
-        public void onClick(View v) {
-            getListener().onRecyclerItemClicked(v, getAdapterPosition());
+        public void onClick(View view) {
+            onCardClicked(this.getAdapterPosition());
         }
 
-        // endregion //        ActionViewHolder: Methods
+        // endregion //        ActionViewHolder: Overrides
         //================================================================================
         //================================================================================
         // region //           ActionViewHolder: Constructors
 
-        public ActionCardHolder(@NonNull View itemView, OnRecyclerItemClicked listener) {
-            super(itemView);
-            this.layout = new ActionCardLayout(itemView);
-            this.listener = listener;
-            getLayout().getView(ActionCardLayout.POI.CONTAINER).setOnClickListener(this);
+        public ActionCardHolder(@NonNull View root) {
+            super(root);
+            p = new ActionCardPresenter();
+            setRoot(root);
+            m = new ActionCardModel();
         }
 
         // endregion //        ActionViewHolder: Constructors
@@ -87,15 +84,15 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
     // region //            Fields
 
     private List<ActionCardModel> dataset;
-    private OnRecyclerItemClicked onRecyclerItemClicked;
 
     // endregion //         Fields
     //================================================================================
     //================================================================================
     // region //            Accessors
 
-    public List<ActionCardModel> getDataset() {
-        return dataset;
+    public void updateDataOnPosition(int position, ActionCardModel newModel){
+        dataset.set(position, newModel);
+        notifyItemChanged(position);
     }
 
     public BattlegroundActionAdapter setDataset(List<ActionCardModel> dataset) {
@@ -103,19 +100,12 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
         return this;
     }
 
-    public OnRecyclerItemClicked getOnRecyclerItemClicked() {
-        return onRecyclerItemClicked;
-    }
-
-    public BattlegroundActionAdapter setOnRecyclerItemClicked(OnRecyclerItemClicked onRecyclerItemClicked) {
-        this.onRecyclerItemClicked = onRecyclerItemClicked;
-        return this;
-    }
-
     // endregion //         Accessors
     //================================================================================
     //================================================================================
-    // region //            Methods
+    // region //            Interface
+
+    public abstract void onCardClicked(int position);
 
     @NonNull
     @Override
@@ -125,31 +115,36 @@ public class BattlegroundActionAdapter extends RecyclerView.Adapter<Battleground
                 .inflate(R.layout.battleground_action_listitem,
                         parent,
                         false);
-        return new ActionCardHolder(v, getOnRecyclerItemClicked());
+        return new ActionCardHolder(v){
+            @Override
+            public void onCardClicked(int position) {
+                BattlegroundActionAdapter.this.onCardClicked(position);
+            }
+        };
     }
 
     @Override
     public void onBindViewHolder(@NonNull ActionCardHolder holder, int position) {
-        holder.updateWithModel(this.getDataset().get(position));
+        holder.updateModel(dataset.get(position));
+        holder.updateView();
     }
 
     @Override
     public int getItemCount() {
-        return this.getDataset().size();
+        return this.dataset.size();
     }
 
-    // endregion //         Methods
+    // endregion //         Interface
     //================================================================================
     //================================================================================
     // region //            Constructors
 
-    public BattlegroundActionAdapter(List<ActionCardModel> dataset, OnRecyclerItemClicked listener) {
+    public BattlegroundActionAdapter(List<ActionCardModel> dataset) {
         this.dataset = dataset;
-        this.onRecyclerItemClicked = listener;
     }
 
-    public BattlegroundActionAdapter(OnRecyclerItemClicked listener) {
-        this(new ArrayList<>(), listener);
+    public BattlegroundActionAdapter() {
+        this(new ArrayList<>());
     }
 
     // endregion //         Constructors

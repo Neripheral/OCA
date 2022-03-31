@@ -29,6 +29,7 @@ import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
+import com.nerpage.oca.fragments.models.ActionCardModel;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 import com.nerpage.oca.modelfactories.ActionCardModelFactory;
@@ -96,7 +97,11 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         m.pcMaxBlood = getFightManager().getPcFighter().getEntity().getMaxBlood();
         m.possibleActions = new ArrayList<>();
         for(Action action : getFightManager().getPcFighter().getEntity().getPossibleActions()){
-            m.possibleActions.add(ActionCardModelFactory.generateFreshModel(getContext(), action));
+            ActionCardModel newModel = new ActionCardModel();
+            newModel.thumbnailResId = action.getThumbnailResId();
+            newModel.title = action.getName(getContext());
+            newModel.description = action.getDescription(requireContext());
+            m.possibleActions.add(newModel);
         }
 
         fighterCardFragment.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
@@ -114,7 +119,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         getFightManager().enrollFighter(EnemyGenerator.generateRandomEnemy(), 0);
     }
 
-    private void onActionItemClicked(View v, int position){
+    private void onActionItemClicked(int position){
         Action actionToPerform = getPlayerCharacter().getPossibleActions().get(position);
         actionToPerform.setSource(getPlayerCharacter());
         actionToPerform.setTarget(getFightManager().getParticipantsExceptForPc().get(0).getEntity());
@@ -132,7 +137,12 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
 
     private void initRecycler(){
         p.getRecycler().setLayoutManager(new LinearLayoutManager(p.getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
-        p.getRecycler().setAdapter(new BattlegroundActionAdapter(this::onActionItemClicked));
+        p.getRecycler().setAdapter(new BattlegroundActionAdapter(){
+            @Override
+            public void onCardClicked(int position) {
+                onActionItemClicked(position);
+            }
+        });
         p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

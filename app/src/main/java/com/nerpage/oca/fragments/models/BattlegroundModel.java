@@ -1,7 +1,6 @@
 package com.nerpage.oca.fragments.models;
 
 import com.nerpage.oca.fragments.Model;
-import com.nerpage.oca.layouts.models.ActionCardModel;
 
 import java.util.List;
 
