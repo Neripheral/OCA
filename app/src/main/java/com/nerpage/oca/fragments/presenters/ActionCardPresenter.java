@@ -1,5 +1,7 @@
 package com.nerpage.oca.fragments.presenters;
 
+import android.view.View;
+
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.Presenter;
 
@@ -41,6 +43,10 @@ public class ActionCardPresenter extends Presenter {
 
     public void updateDescription(String description){
         updateText(POI.DESCRIPTION, description);
+    }
+
+    public void setOverallListener(View.OnClickListener listener){
+        getView(POI.CONTAINER).setOnClickListener(listener);
     }
 
     // endregion //         Interface
