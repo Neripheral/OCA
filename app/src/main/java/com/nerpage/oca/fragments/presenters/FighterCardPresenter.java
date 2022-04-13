@@ -32,6 +32,10 @@ public class FighterCardPresenter extends Presenter {
     //================================================================================
     // region //            Interface
 
+    public int getDescribedLayoutId(){
+        return R.layout.battleground_fightercard;
+    }
+
     public void updateTitle(String newTitle){
         updateText(POI.TITLE, newTitle);
     }
