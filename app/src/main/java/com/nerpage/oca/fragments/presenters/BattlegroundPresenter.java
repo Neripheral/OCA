@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
+import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.fragments.Presenter;
 
 public class BattlegroundPresenter extends Presenter {
@@ -45,13 +46,13 @@ public class BattlegroundPresenter extends Presenter {
     //================================================================================
     // region //            Private methods
 
-    private void changeInfoBoxVisibility(RecyclerView.ViewHolder firstHolder, RecyclerView.ViewHolder lastHolder) {
+    private void changeInfoBoxVisibility(BattlegroundActionAdapter.ActionCardHolder firstHolder, BattlegroundActionAdapter.ActionCardHolder lastHolder) {
         //TODO: ActionCardFragment should be responsible for this
         if(firstHolder == lastHolder){
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.VISIBLE);
+            firstHolder.showDetails();
         }else{
-            firstHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
-            lastHolder.itemView.findViewById(R.id.action_info).setVisibility(View.GONE);
+            firstHolder.hideDetails();
+            lastHolder.hideDetails();
         }
     }
 
@@ -77,7 +78,10 @@ public class BattlegroundPresenter extends Presenter {
                         manager.findLastVisibleItemPosition());
 
         if(firstHolder != null && lastHolder != null)
-            changeInfoBoxVisibility(firstHolder, lastHolder);
+            changeInfoBoxVisibility(
+                    (BattlegroundActionAdapter.ActionCardHolder)firstHolder,
+                    (BattlegroundActionAdapter.ActionCardHolder)lastHolder
+            );
     }
 
     public BottomNavigationView getBehaviorNavbar(){
