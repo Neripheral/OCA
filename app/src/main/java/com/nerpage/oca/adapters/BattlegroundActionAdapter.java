@@ -1,6 +1,5 @@
 package com.nerpage.oca.adapters;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.presenters.ActionCardPresenter;
-import com.nerpage.oca.layouts.ActionCardLayout;
-import com.nerpage.oca.interfaces.listeners.OnRecyclerItemClicked;
 import com.nerpage.oca.fragments.models.ActionCardModel;
 
 import java.util.ArrayList;
@@ -45,13 +42,21 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         }
 
         public void updateModel(ActionCardModel newModel){
-            m.thumbnailResId = newModel.thumbnailResId;;
+            m.thumbnailResId = newModel.thumbnailResId;
             m.title = newModel.title;
             m.description = newModel.description;
         }
 
         public abstract void onCardClicked(int position);
-        
+
+        public void showDetails(){
+            p.showDetails();
+        }
+
+        public void hideDetails(){
+            p.hideDetails();
+        }
+
         // endregion //        ActionViewHolder: Methods
         //================================================================================
         //================================================================================
@@ -127,6 +132,7 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
     public void onBindViewHolder(@NonNull ActionCardHolder holder, int position) {
         holder.updateModel(dataset.get(position));
         holder.updateView();
+        holder.hideDetails();
     }
 
     @Override
