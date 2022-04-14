@@ -8,8 +8,7 @@ public class ActionsRecyclerPresenter extends Presenter {
     // region //            POI
 
     public enum POI implements Presenter.POI {
-        //EXAMPLE_POI(R.id.examplepoi)
-        ;
+        RECYCLER(R.id.actions_recycler);
 
         int id;
 
@@ -29,8 +28,7 @@ public class ActionsRecyclerPresenter extends Presenter {
     // region //            Interface
 
     public int getDescribedLayoutId() {
-        //method returning R.layout id of layout that is described by this presenter
-        return 0;
+        return R.layout.fragment_actions_recycler;
     }
 
     // endregion //         Interface
