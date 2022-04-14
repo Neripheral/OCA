@@ -49,6 +49,14 @@ public class ActionCardPresenter extends Presenter {
         getView(POI.CONTAINER).setOnClickListener(listener);
     }
 
+    public void showDetails(){
+        show(POI.INFO_BOX);
+    }
+
+    public void hideDetails(){
+        hide(POI.INFO_BOX);
+    }
+
     // endregion //         Interface
     //================================================================================
 }
