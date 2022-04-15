@@ -7,14 +7,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.fragments.presenters.ActionsRecyclerPresenter;
 import com.nerpage.oca.fragments.models.ActionsRecyclerModel;
 
-public final class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> {
+public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> {
     //================================================================================
     // region //            Fields
 
+    private LinearLayoutManager layoutManager;
+    private BattlegroundActionAdapter adapter;
 
     // endregion //         Fields
     //================================================================================
@@ -27,11 +33,35 @@ public final class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerMo
     //================================================================================
     // region //            Private methods
 
+    private void onRecyclerScrolled(){
+        updateDetailsVisibility();
+    }
+
+    private void updateDetailsVisibility(){
+        BattlegroundActionAdapter.ActionCardHolder firstHolder =
+                (BattlegroundActionAdapter.ActionCardHolder)
+                        p.getRecycler().findViewHolderForLayoutPosition(
+                            layoutManager.findFirstVisibleItemPosition());
+        BattlegroundActionAdapter.ActionCardHolder lastHolder =
+                (BattlegroundActionAdapter.ActionCardHolder)
+                        p.getRecycler().findViewHolderForLayoutPosition(
+                            layoutManager.findLastVisibleItemPosition());
+
+        if(firstHolder != null && lastHolder != null)
+            if(firstHolder == lastHolder){
+                firstHolder.showDetails();
+            }else{
+                firstHolder.hideDetails();
+                lastHolder.hideDetails();
+            }
+    }
 
     // endregion //         Private methods
     //================================================================================
     //================================================================================
     // region //            Interface
+
+    public abstract void onActionItemClicked(int position);
 
     public void updateModel(/*arg list*/) {
         //main, public model updating method
@@ -46,12 +76,24 @@ public final class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerMo
     //================================================================================
     // region //            Fragment overrides
 
-
     @Override
     public void initPAC() {
         //default initPAC, not necessary to change
         m = new ActionsRecyclerModel();
         p = new ActionsRecyclerPresenter();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        adapter = new BattlegroundActionAdapter(){
+            @Override
+            public void onCardClicked(int position) {
+                onActionItemClicked(position);
+            }
+        };
     }
 
     @Nullable
@@ -60,6 +102,17 @@ public final class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerMo
         //default onCreateView, not necessary to change
         root = inflater.inflate(p.getDescribedLayoutId(), container, false);
         p.setRoot(root);
+
+        p.getRecycler().setLayoutManager(layoutManager);
+        p.getRecycler().setAdapter(adapter);
+        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                onRecyclerScrolled();
+            }
+        });
+        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
+
         return root;
     }
 
