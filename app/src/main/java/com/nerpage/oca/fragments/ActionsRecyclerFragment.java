@@ -73,7 +73,17 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
 
     //TODO: only for migration purposes, remove when unnecessary
     public void injectRoot(View newRoot){
+        initPAC();
         p.setRoot(newRoot);
+
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        adapter = new BattlegroundActionAdapter(){
+            @Override
+            public void onCardClicked(int position) {
+                if(callToParent != null)
+                    callToParent.tellActionItemWasClicked(position);
+            }
+        };
     }
 
     public void updateModel(/*arg list*/) {
@@ -82,6 +92,18 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
 
     public void updatePresentation() {
         //main, public presentation updating method
+    }
+
+    public void initRecyclerView(){
+        p.getRecycler().setLayoutManager(layoutManager);
+        p.getRecycler().setAdapter(adapter);
+        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                onRecyclerScrolled();
+            }
+        });
+        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
     }
 
     // endregion //         Interface
@@ -122,15 +144,7 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
         root = inflater.inflate(p.getDescribedLayoutId(), container, false);
         p.setRoot(root);
 
-        p.getRecycler().setLayoutManager(layoutManager);
-        p.getRecycler().setAdapter(adapter);
-        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener(){
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                onRecyclerScrolled();
-            }
-        });
-        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
+        initRecyclerView();
 
         return root;
     }
