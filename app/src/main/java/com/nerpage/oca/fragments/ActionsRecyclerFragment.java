@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
+import com.nerpage.oca.classes.fighting.actions.Action;
+import com.nerpage.oca.fragments.models.ActionCardModel;
 import com.nerpage.oca.fragments.presenters.ActionsRecyclerPresenter;
 import com.nerpage.oca.fragments.models.ActionsRecyclerModel;
+
+import java.util.List;
 
 public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> implements PACFragment.CallbackToParent<ActionsRecyclerFragment.Callback>{
     //================================================================================
@@ -86,8 +90,14 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
         };
     }
 
-    public void updateModel(/*arg list*/) {
-        //main, public model updating method
+    public void updateModel(List<Action> actions) {
+        for(Action action : actions){
+            ActionCardModel newModel = new ActionCardModel();
+            newModel.thumbnailResId = action.getThumbnailResId();
+            newModel.title = action.getName(getContext());
+            newModel.description = action.getDescription(requireContext());
+            m.possibleActions.add(newModel);
+        }
     }
 
     public void updatePresentation() {
