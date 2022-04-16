@@ -26,7 +26,8 @@ public class BattlegroundPresenter extends Presenter {
         BEHAVIOR_SURRENDER_BUTTON(R.id.battleground_behavior_surrenderbtn),
         BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
         BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
-        ACTIONS_RECYCLER(R.id.battleground_actions_recycler),
+        ACTIONS_RECYCLER_FRAME(R.id.battleground_actionsRecycler_frame),
+        ACTIONS_RECYCLER(R.id.actions_recycler),
         PC_EFFECT(R.id.battleground_pc_effect);
 
         int id;
@@ -60,6 +61,10 @@ public class BattlegroundPresenter extends Presenter {
     //================================================================================
     //================================================================================
     // region //            Interface
+
+    public View getActionsRecyclerFrame(){
+        return getView(POI.ACTIONS_RECYCLER_FRAME);
+    }
 
     public RecyclerView getRecycler(){
         return (RecyclerView) getView(POI.ACTIONS_RECYCLER);
