@@ -27,12 +27,12 @@ import com.nerpage.oca.classes.fighting.FightManager;
 import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
+import com.nerpage.oca.fragments.ActionsRecyclerFragment;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.ActionCardModel;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
-import com.nerpage.oca.modelfactories.ActionCardModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     // region //            Fields
 
     private FighterCardFragment fighterCardFragment;
+    private ActionsRecyclerFragment actionsRecyclerFragment;
     private FightManager fightManager;
     private Action nextAction = null;
     private boolean playerTurn = false;
@@ -131,31 +132,18 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         }
     }
 
-    private void onRecyclerScrolled(){
-        p.updateInfoBoxVisibility();
-    }
-
-    private void initRecycler(){
-        p.getRecycler().setLayoutManager(new LinearLayoutManager(p.getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
-        p.getRecycler().setAdapter(new BattlegroundActionAdapter(){
-            @Override
-            public void onCardClicked(int position) {
-                onActionItemClicked(position);
-            }
-        });
-        p.getRecycler().addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                onRecyclerScrolled();
-            }
-        });
-        (new LinearSnapHelper()).attachToRecyclerView(p.getRecycler());
-    }
-
     private void initView(){
         //TODO: when POIs are available remove referencing by R
         fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
-        initRecycler();
+
+        actionsRecyclerFragment.injectRoot(p.getActionsRecyclerFrame());
+        actionsRecyclerFragment.registerCallback(new ActionsRecyclerFragment.Callback() {
+            @Override
+            public void tellActionItemWasClicked(int position) {
+                onActionItemClicked(position);
+            }
+        });
+        actionsRecyclerFragment.initRecyclerView();
 
         p.getBehaviorNavbar().setOnNavigationItemSelectedListener(BehaviorHelper::onBehaviorItemSelected);
     }
@@ -219,6 +207,8 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        actionsRecyclerFragment = new ActionsRecyclerFragment();
 
         setFightManager(new FightManager());
         getFightManager().addFlowFreezer(this);
