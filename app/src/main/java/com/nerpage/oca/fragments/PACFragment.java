@@ -7,6 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public abstract class PACFragment<M extends Model, P extends Presenter> extends Fragment {
+    public interface CallbackToParent<C extends CallbackToParent.Callback>{
+        interface Callback{}
+
+        void registerCallback(C callback);
+    }
+
     View root;
 
     protected M m;
