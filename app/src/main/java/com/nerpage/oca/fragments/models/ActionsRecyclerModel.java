@@ -2,6 +2,8 @@ package com.nerpage.oca.fragments.models;
 
 import com.nerpage.oca.fragments.Model;
 
-public class ActionsRecyclerModel extends Model {
+import java.util.List;
 
+public class ActionsRecyclerModel extends Model {
+    public List<ActionCardModel> possibleActions;
 }
