@@ -71,6 +71,11 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //================================================================================
     // region //            Interface
 
+    //TODO: only for migration purposes, remove when unnecessary
+    public void injectRoot(View newRoot){
+        p.setRoot(newRoot);
+    }
+
     public void updateModel(/*arg list*/) {
         //main, public model updating method
     }
