@@ -231,7 +231,6 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         }
         updateModel();
         updateView();
-        p.updateInfoBoxVisibility();
         stopModelUpdates = true;
     }
 

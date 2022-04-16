@@ -27,7 +27,6 @@ public class BattlegroundPresenter extends Presenter {
         BEHAVIOR_ATTACK_BUTTON(R.id.battleground_behavior_attackbtn),
         BEHAVIOR_DEFEND_BUTTON(R.id.battleground_behavior_defendbtn),
         ACTIONS_RECYCLER_FRAME(R.id.battleground_actionsRecycler_frame),
-        ACTIONS_RECYCLER(R.id.actions_recycler),
         PC_EFFECT(R.id.battleground_pc_effect);
 
         int id;
@@ -47,15 +46,7 @@ public class BattlegroundPresenter extends Presenter {
     //================================================================================
     // region //            Private methods
 
-    private void changeInfoBoxVisibility(BattlegroundActionAdapter.ActionCardHolder firstHolder, BattlegroundActionAdapter.ActionCardHolder lastHolder) {
-        //TODO: ActionCardFragment should be responsible for this
-        if(firstHolder == lastHolder){
-            firstHolder.showDetails();
-        }else{
-            firstHolder.hideDetails();
-            lastHolder.hideDetails();
-        }
-    }
+
 
     // endregion //         Private methods
     //================================================================================
@@ -64,29 +55,6 @@ public class BattlegroundPresenter extends Presenter {
 
     public View getActionsRecyclerFrame(){
         return getView(POI.ACTIONS_RECYCLER_FRAME);
-    }
-
-    public RecyclerView getRecycler(){
-        return (RecyclerView) getView(POI.ACTIONS_RECYCLER);
-    }
-
-    //TODO: separate fragment should be responsible for handling recycler
-    public void updateInfoBoxVisibility(){
-        LinearLayoutManager manager = ((LinearLayoutManager)getRecycler().getLayoutManager());
-        assert manager != null;
-
-        RecyclerView.ViewHolder firstHolder =
-                getRecycler().findViewHolderForLayoutPosition(
-                        manager.findFirstVisibleItemPosition());
-        RecyclerView.ViewHolder lastHolder =
-                getRecycler().findViewHolderForLayoutPosition(
-                        manager.findLastVisibleItemPosition());
-
-        if(firstHolder != null && lastHolder != null)
-            changeInfoBoxVisibility(
-                    (BattlegroundActionAdapter.ActionCardHolder)firstHolder,
-                    (BattlegroundActionAdapter.ActionCardHolder)lastHolder
-            );
     }
 
     public BottomNavigationView getBehaviorNavbar(){
