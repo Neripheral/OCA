@@ -15,12 +15,22 @@ import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.fragments.presenters.ActionsRecyclerPresenter;
 import com.nerpage.oca.fragments.models.ActionsRecyclerModel;
 
-public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> {
+public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> implements PACFragment.CallbackToParent<ActionsRecyclerFragment.Callback>{
+    //================================================================================
+    // region //            Callback
+
+    public interface Callback extends PACFragment.CallbackToParent.Callback {
+        void tellActionItemWasClicked(int position);
+    }
+
+    // endregion //         Callback
+    //================================================================================
     //================================================================================
     // region //            Fields
 
     private LinearLayoutManager layoutManager;
     private BattlegroundActionAdapter adapter;
+    private @Nullable Callback callToParent;
 
     // endregion //         Fields
     //================================================================================
@@ -61,8 +71,6 @@ public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecycle
     //================================================================================
     // region //            Interface
 
-    public abstract void onActionItemClicked(int position);
-
     public void updateModel(/*arg list*/) {
         //main, public model updating method
     }
@@ -75,6 +83,12 @@ public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecycle
     //================================================================================
     //================================================================================
     // region //            Fragment overrides
+
+
+    @Override
+    public void registerCallback(Callback callback) {
+        callToParent = callback;
+    }
 
     @Override
     public void initPAC() {
@@ -91,7 +105,8 @@ public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecycle
         adapter = new BattlegroundActionAdapter(){
             @Override
             public void onCardClicked(int position) {
-                onActionItemClicked(position);
+                if(callToParent != null)
+                    callToParent.tellActionItemWasClicked(position);
             }
         };
     }
@@ -99,7 +114,6 @@ public abstract class ActionsRecyclerFragment extends PACFragment<ActionsRecycle
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //default onCreateView, not necessary to change
         root = inflater.inflate(p.getDescribedLayoutId(), container, false);
         p.setRoot(root);
 
