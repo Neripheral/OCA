@@ -13,7 +13,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/enemy_include"
+        android:id="@+id/battleground_enemy_frame"
         android:name="com.nerpage.oca.fragments.FighterCardFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

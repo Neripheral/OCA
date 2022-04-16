@@ -8,12 +8,9 @@ import android.view.animation.AnticipateOvershootInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
-import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.Presenter;
@@ -23,7 +20,7 @@ public class BattlegroundPresenter extends Presenter {
     // region //            POI
 
     public enum POI implements Presenter.POI {
-        ENEMY_CONTAINER(R.id.enemy_include),
+        ENEMY_CONTAINER(R.id.battleground_enemy_frame),
         PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
         PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),
         BEHAVIOR_NAVBAR(R.id.battleground_behavior_navbar),
