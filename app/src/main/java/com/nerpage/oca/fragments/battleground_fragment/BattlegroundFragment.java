@@ -3,11 +3,6 @@ package com.nerpage.oca.fragments.battleground_fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.activities.CharacterEditorActivity;
-import com.nerpage.oca.adapters.BattlegroundActionAdapter;
 import com.nerpage.oca.classes.PlayerCharacter;
 import com.nerpage.oca.classes.events.Event;
 import com.nerpage.oca.classes.events.EventController;
@@ -30,11 +24,9 @@ import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.PACFragment;
-import com.nerpage.oca.fragments.models.ActionCardModel;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BattlegroundFragment extends PACFragment<BattlegroundModel, BattlegroundPresenter> implements EventController.EventReceiver, EventController.EventEmitter {
@@ -96,14 +88,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     private void updateModel(){
         m.pcCurrentBlood = getFightManager().getPcFighter().getEntity().getBlood();
         m.pcMaxBlood = getFightManager().getPcFighter().getEntity().getMaxBlood();
-        m.possibleActions = new ArrayList<>();
-        for(Action action : getFightManager().getPcFighter().getEntity().getPossibleActions()){
-            ActionCardModel newModel = new ActionCardModel();
-            newModel.thumbnailResId = action.getThumbnailResId();
-            newModel.title = action.getName(getContext());
-            newModel.description = action.getDescription(requireContext());
-            m.possibleActions.add(newModel);
-        }
+        actionsRecyclerFragment.updateModel(getFightManager().getPcFighter().getEntity().getPossibleActions());
 
         fighterCardFragment.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
     }
@@ -154,12 +139,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         p.updatePCCurrentBlood(String.valueOf(m.pcCurrentBlood));
         p.updatePCMaxBlood(String.valueOf(m.pcMaxBlood));
         fighterCardFragment.updatePresentation();
-
-        //TODO: adapter should be stored as class field!
-        BattlegroundActionAdapter adapter = ((BattlegroundActionAdapter) p.getRecycler().getAdapter());
-        assert adapter != null;
-        adapter.setDataset(new ArrayList<>(m.possibleActions));
-        adapter.notifyDataSetChanged();
+        actionsRecyclerFragment.updatePresentation();
     }
 
     public void updateView(){

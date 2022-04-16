@@ -1,5 +1,7 @@
 package com.nerpage.oca.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.nerpage.oca.fragments.models.ActionCardModel;
 import com.nerpage.oca.fragments.presenters.ActionsRecyclerPresenter;
 import com.nerpage.oca.fragments.models.ActionsRecyclerModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, ActionsRecyclerPresenter> implements PACFragment.CallbackToParent<ActionsRecyclerFragment.Callback>{
@@ -46,6 +49,13 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //================================================================================
     //================================================================================
     // region //            Private methods
+
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return p.getRoot().getContext();
+    }
 
     private void onRecyclerScrolled(){
         updateDetailsVisibility();
@@ -91,6 +101,7 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     }
 
     public void updateModel(List<Action> actions) {
+        m.possibleActions = new ArrayList<>();
         for(Action action : actions){
             ActionCardModel newModel = new ActionCardModel();
             newModel.thumbnailResId = action.getThumbnailResId();
@@ -100,8 +111,11 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
         }
     }
 
+    //TODO: notifyDataSetChanged shouldn't be used
+    @SuppressLint("NotifyDataSetChanged")
     public void updatePresentation() {
-        //main, public presentation updating method
+        adapter.setDataset(new ArrayList<>(m.possibleActions));
+        adapter.notifyDataSetChanged();
     }
 
     public void initRecyclerView(){
