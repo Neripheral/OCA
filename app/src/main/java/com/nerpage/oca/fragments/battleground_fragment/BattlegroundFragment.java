@@ -118,17 +118,14 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     }
 
     private void initView(){
-        //TODO: when POIs are available remove referencing by R
-        fighterCardFragment = (FighterCardFragment) getChildFragmentManager().findFragmentById(R.id.enemy_include);
-
-        actionsRecyclerFragment.injectRoot(p.getActionsRecyclerFrame());
+        fighterCardFragment = p.findFighterCardFragment(getChildFragmentManager());
+        actionsRecyclerFragment = p.findActionRecyclerFragment(getChildFragmentManager());
         actionsRecyclerFragment.registerCallback(new ActionsRecyclerFragment.Callback() {
             @Override
             public void tellActionItemWasClicked(int position) {
                 onActionItemClicked(position);
             }
         });
-        actionsRecyclerFragment.initRecyclerView();
 
         p.getBehaviorNavbar().setOnNavigationItemSelectedListener(BehaviorHelper::onBehaviorItemSelected);
     }
@@ -187,8 +184,6 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        actionsRecyclerFragment = new ActionsRecyclerFragment();
 
         setFightManager(new FightManager());
         getFightManager().addFlowFreezer(this);

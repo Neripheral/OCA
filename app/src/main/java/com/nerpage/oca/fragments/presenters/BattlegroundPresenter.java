@@ -6,12 +6,16 @@ import android.animation.AnimatorListenerAdapter;
 import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.adapters.BattlegroundActionAdapter;
+import com.nerpage.oca.fragments.ActionsRecyclerFragment;
+import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.fragments.Presenter;
 
 public class BattlegroundPresenter extends Presenter {
@@ -52,6 +56,22 @@ public class BattlegroundPresenter extends Presenter {
     //================================================================================
     //================================================================================
     // region //            Interface
+
+    public @NonNull FighterCardFragment findFighterCardFragment(FragmentManager fm){
+        FighterCardFragment fragment = (FighterCardFragment) fm.findFragmentByTag("battleground_enemy");
+        assert fragment != null;
+        return fragment;
+    }
+
+    public View getEnemyFrame(){
+        return getView(POI.ENEMY_CONTAINER);
+    }
+
+    public @NonNull ActionsRecyclerFragment findActionRecyclerFragment(FragmentManager fm){
+        ActionsRecyclerFragment fragment = (ActionsRecyclerFragment) fm.findFragmentByTag("battleground_actionsRecycler");
+        assert fragment != null;
+        return fragment;
+    }
 
     public View getActionsRecyclerFrame(){
         return getView(POI.ACTIONS_RECYCLER_FRAME);

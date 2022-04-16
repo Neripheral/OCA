@@ -50,13 +50,6 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //================================================================================
     // region //            Private methods
 
-
-    @Nullable
-    @Override
-    public Context getContext() {
-        return p.getRoot().getContext();
-    }
-
     private void onRecyclerScrolled(){
         updateDetailsVisibility();
     }
@@ -84,21 +77,6 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //================================================================================
     //================================================================================
     // region //            Interface
-
-    //TODO: only for migration purposes, remove when unnecessary
-    public void injectRoot(View newRoot){
-        initPAC();
-        p.setRoot(newRoot);
-
-        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        adapter = new BattlegroundActionAdapter(){
-            @Override
-            public void onCardClicked(int position) {
-                if(callToParent != null)
-                    callToParent.tellActionItemWasClicked(position);
-            }
-        };
-    }
 
     public void updateModel(List<Action> actions) {
         m.possibleActions = new ArrayList<>();

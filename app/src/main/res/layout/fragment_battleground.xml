@@ -17,6 +17,7 @@
         android:name="com.nerpage.oca.fragments.FighterCardFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tag="battleground_enemy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,26 +32,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2">
 
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/battleground_actionsRecycler_frame"
+            android:name="com.nerpage.oca.fragments.ActionsRecyclerFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:tag="battleground_actionsRecycler"
             app:layout_constraintBottom_toTopOf="@id/battleground_pc_infobar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                layout="@layout/fragment_actions_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                android:clipToPadding="false"
-                android:paddingStart="@dimen/action_item_width"
-                android:paddingEnd="@dimen/action_item_width"
-                />
-
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/battleground_pc_infobar"
