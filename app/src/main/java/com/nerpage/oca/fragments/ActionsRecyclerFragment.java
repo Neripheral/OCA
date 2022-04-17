@@ -92,7 +92,6 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //TODO: notifyDataSetChanged shouldn't be used
     @SuppressLint("NotifyDataSetChanged")
     public void updatePresentation() {
-        adapter.setDataset(new ArrayList<>(m.possibleActions));
         adapter.notifyDataSetChanged();
     }
 
@@ -112,7 +111,6 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     //================================================================================
     //================================================================================
     // region //            Fragment overrides
-
 
     @Override
     public void registerCallback(Callback callback) {
@@ -136,6 +134,11 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
             public void onCardClicked(int position) {
                 if(callToParent != null)
                     callToParent.tellActionItemWasClicked(position);
+            }
+
+            @Override
+            public List<ActionCardModel> getDataset() {
+                return m.possibleActions;
             }
         };
     }

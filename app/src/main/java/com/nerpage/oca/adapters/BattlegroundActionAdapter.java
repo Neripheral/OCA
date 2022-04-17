@@ -86,31 +86,16 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
     // endregion //         Inner classes
     //================================================================================
     //================================================================================
-    // region //            Fields
+    // region //            Abstract
 
-    private List<ActionCardModel> dataset;
+    public abstract void onCardClicked(int position);
 
-    // endregion //         Fields
-    //================================================================================
-    //================================================================================
-    // region //            Accessors
+    public abstract List<ActionCardModel> getDataset();
 
-    public void updateDataOnPosition(int position, ActionCardModel newModel){
-        dataset.set(position, newModel);
-        notifyItemChanged(position);
-    }
-
-    public BattlegroundActionAdapter setDataset(List<ActionCardModel> dataset) {
-        this.dataset = dataset;
-        return this;
-    }
-
-    // endregion //         Accessors
+    // endregion //         Abstract
     //================================================================================
     //================================================================================
     // region //            Interface
-
-    public abstract void onCardClicked(int position);
 
     @NonNull
     @Override
@@ -130,14 +115,14 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
 
     @Override
     public void onBindViewHolder(@NonNull ActionCardHolder holder, int position) {
-        holder.updateModel(dataset.get(position));
+        holder.updateModel(getDataset().get(position));
         holder.updateView();
         holder.hideDetails();
     }
 
     @Override
     public int getItemCount() {
-        return this.dataset.size();
+        return getDataset().size();
     }
 
     // endregion //         Interface
@@ -145,13 +130,7 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
     //================================================================================
     // region //            Constructors
 
-    public BattlegroundActionAdapter(List<ActionCardModel> dataset) {
-        this.dataset = dataset;
-    }
-
-    public BattlegroundActionAdapter() {
-        this(new ArrayList<>());
-    }
+    public BattlegroundActionAdapter() {}
 
     // endregion //         Constructors
     //================================================================================
