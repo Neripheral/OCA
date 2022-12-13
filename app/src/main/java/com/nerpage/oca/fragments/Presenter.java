@@ -17,7 +17,7 @@ public abstract class Presenter implements HasLayout {
     //================================================================================
     // region //            Fields
 
-    private View root;
+    private final View root;
 
     // endregion //         Fields
     //================================================================================
@@ -27,10 +27,6 @@ public abstract class Presenter implements HasLayout {
     @Override
     public View getRoot() {
         return root;
-    }
-
-    public void setRoot(View newRoot){
-        root = newRoot;
     }
 
     // endregion //         Accessors
@@ -44,10 +40,6 @@ public abstract class Presenter implements HasLayout {
     //================================================================================
     //================================================================================
     // region //            Interface
-
-    public boolean isRootNull(){
-        return (getRoot() == null);
-    }
 
     public void playEffect(POI poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
@@ -63,8 +55,6 @@ public abstract class Presenter implements HasLayout {
     public Presenter(View newRoot){
         root = newRoot;
     }
-
-    public Presenter(){}
 
     // endregion //         Constructors
     //================================================================================
