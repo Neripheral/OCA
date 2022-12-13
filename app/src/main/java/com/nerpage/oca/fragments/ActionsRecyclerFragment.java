@@ -121,7 +121,6 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     public void initPAC() {
         //default initPAC, not necessary to change
         m = new ActionsRecyclerModel();
-        p = new ActionsRecyclerPresenter();
     }
 
     @Override
@@ -147,7 +146,7 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(p.getDescribedLayoutId(), container, false);
-        p.setRoot(root);
+        p = new ActionsRecyclerPresenter(root);
 
         initRecyclerView();
 

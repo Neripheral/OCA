@@ -1,5 +1,7 @@
 package com.nerpage.oca.fragments.presenters;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
@@ -43,5 +45,14 @@ public class ActionsRecyclerPresenter extends Presenter {
     }
 
     // endregion //         Interface
+    //================================================================================
+    //================================================================================
+    // region //            Constructor
+
+    public ActionsRecyclerPresenter(View root){
+        super(root);
+    }
+
+    // endregion //         Constructor
     //================================================================================
 }
