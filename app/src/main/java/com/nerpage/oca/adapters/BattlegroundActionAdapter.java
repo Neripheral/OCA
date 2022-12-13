@@ -29,10 +29,6 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         //================================================================================
         //================================================================================
         // region //           ActionViewHolder: Methods
-
-        public void setRoot(View root){
-            p.setRoot(root);
-        }
         
         public void updateView(){
             p.updateThumbnail(m.thumbnailResId);
@@ -74,8 +70,7 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
 
         public ActionCardHolder(@NonNull View root) {
             super(root);
-            p = new ActionCardPresenter();
-            setRoot(root);
+            p = new ActionCardPresenter(root);
             m = new ActionCardModel();
         }
 
