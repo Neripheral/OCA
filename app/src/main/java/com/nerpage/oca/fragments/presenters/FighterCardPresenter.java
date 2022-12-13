@@ -1,5 +1,7 @@
 package com.nerpage.oca.fragments.presenters;
 
+import android.view.View;
+
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.Presenter;
 
@@ -53,5 +55,14 @@ public class FighterCardPresenter extends Presenter {
     }
 
     // endregion //         Interface
+    //================================================================================
+    //================================================================================
+    // region //            Constructor
+
+    public FighterCardPresenter(View root){
+        super(root);
+    }
+
+    // endregion //         Constructor
     //================================================================================
 }

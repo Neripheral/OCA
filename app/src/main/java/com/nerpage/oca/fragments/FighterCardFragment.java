@@ -62,14 +62,13 @@ public final class FighterCardFragment extends PACFragment<FighterCardModel, Fig
     @Override
     public void initPAC() {
         m = new FighterCardModel();
-        p = new FighterCardPresenter();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(p.getDescribedLayoutId(), container, false);
-        p.setRoot(root);
+        p = new FighterCardPresenter(root);
         return root;
     }
 
