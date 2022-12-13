@@ -194,7 +194,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        p.setRoot(inflater.inflate(R.layout.fragment_battleground, container, false));
+        p = new BattlegroundPresenter(inflater.inflate(R.layout.fragment_battleground, container, false));
         initView();
 
         updateModel();
@@ -237,7 +237,6 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     @Override
     public void initPAC() {
         m = new BattlegroundModel();
-        p = new BattlegroundPresenter();
     }
 
     // endregion //         Public Methods

@@ -135,4 +135,13 @@ public class BattlegroundPresenter extends Presenter {
 
     // endregion //         Interface
     //================================================================================
+    //================================================================================
+    // region //            Constructor
+
+    public BattlegroundPresenter(View root){
+        super(root);
+    }
+
+    // endregion //         Constructor
+    //================================================================================
 }
