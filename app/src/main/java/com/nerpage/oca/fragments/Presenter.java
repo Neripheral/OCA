@@ -4,23 +4,58 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.nerpage.oca.classes.helpers.AnimationHelper;
+
+import java.util.Objects;
 
 public abstract class Presenter {
 
+    /**
+     * Initiates the presenter to manage an already existing layout rooted at
+     * the specific {@code View}.
+     *
+     * @param root View being a root of this presenter's described layout.
+     *             Throws {@code NullPointerException} if null.
+     */
+    public Presenter(@NonNull View root){
+        this.root = Objects.requireNonNull(root);
+    }
+
+
+    /**
+     * POI (Point of Interest) is an autocompletion-friendly layer of abstraction
+     * between xml ids and the source code. Subclasses of {@code Presenter}
+     */
     public interface POI{
         int getId();
     }
 
-
-
-    private final View root;
-
-    public View getRoot() {
-        return root;
+    /**
+     * A functional interface in form of (void) -> (void) with a sole purpose of being
+     * injected into {@code Presenters} if it needs to inform the client back about something.
+     */
+    public interface Callback{
+        void call();
     }
 
 
+    /**
+     * A view being the root of an already existing hierarchy that
+     * this {@code Presenter} helps to manage.
+     */
+    @NonNull
+    private final View root;
+
+    /**
+     * Returns the root of an existing hierarchy this presenter describes.
+     * @return root {@code View}
+     */
+    @NonNull
+    public View getRoot() {
+        return root;
+    }
 
     public void playEffect(POI poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
@@ -52,8 +87,6 @@ public abstract class Presenter {
         return this.getView(poi);
     }
 
-    public Presenter(View newRoot){
-        root = newRoot;
-    }
+
 
 }
