@@ -20,7 +20,8 @@ public abstract class Presenter {
      *             Throws {@code NullPointerException} if null.
      */
     public Presenter(@NonNull View root){
-        this.root = Objects.requireNonNull(root);
+        Objects.requireNonNull(root, "Argument root must not be null");
+        this.root = root;
     }
 
 
@@ -32,7 +33,7 @@ public abstract class Presenter {
      */
     public interface POI{
         /**
-         * Getter of the view id represented by POI constant
+         * Getter of the {@code View} identifier represented by {@code POI} constant
          * @return resource id (R.id.*)
          */
         int getId();
@@ -62,6 +63,9 @@ public abstract class Presenter {
     public View getRoot() {
         return root;
     }
+
+
+
 
     public void playEffect(POI poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
