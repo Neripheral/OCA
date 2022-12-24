@@ -48,16 +48,28 @@ public class ExamplePresenter extends Presenter {
 
 
     public void setTitle(String newTitle){
-        ((TextView)getRoot().findViewById(POI.TITLE.getId())).setText(newTitle);
+        POI.TITLE
+                .of(getRoot())
+                .ifPresent(
+                    view -> ((TextView)view).setText(newTitle)
+                );
     }
 
     public String getInputFieldText(){
-        return ((EditText)getRoot().findViewById(POI.INPUT_FIELD.getId())).getText().toString();
+        return POI.INPUT_FIELD
+                .of(getRoot())
+                .map(
+                    view -> ((EditText)view).getText().toString()
+                ).orElse("");
     }
 
     public void setOnConfirmButtonPressedCallback(Callback newCallback){
         onConfirmButtonPressCallback = newCallback;
-        ((Button)getRoot().findViewById(POI.CONFIRM_BUTTON.getId())).setOnClickListener(view -> onConfirmButtonPressCallback.call() );
+        POI.CONFIRM_BUTTON
+                .of(getRoot())
+                .ifPresent(
+                        view -> ((Button)view).setOnClickListener(v->onConfirmButtonPressCallback.call())
+                );
     }
 
 
