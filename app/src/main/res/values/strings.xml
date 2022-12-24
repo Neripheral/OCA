@@ -82,4 +82,6 @@
     <string name="fighter_turn_started">%s started their turn.</string>
     <string name="fighter_turn_ended">%s ended their turn.</string>
     <string name="awaiting_input_from_blank">Awaiting input from %s</string>
+    <string name="example_fragment_title" translatable="false">Example Fragment</string>
+    <string name="example_textField" translatable="false">example input</string>
 </resources>
