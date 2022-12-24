@@ -26,9 +26,15 @@ public abstract class Presenter {
 
     /**
      * POI (Point of Interest) is an autocompletion-friendly layer of abstraction
-     * between xml ids and the source code. Subclasses of {@code Presenter}
+     * between xml ids and the source code. Subclasses of {@code Presenter} have their own
+     * static enum subclass of POI that maps enum constant to the view's id (R.id.*).
+     * @see com.nerpage.oca.fragments.presenters.ExamplePresenter.POI
      */
     public interface POI{
+        /**
+         * Getter of the view id represented by POI constant
+         * @return resource id (R.id.*)
+         */
         int getId();
     }
 
