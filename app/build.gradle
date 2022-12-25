@@ -6,7 +6,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId 'com.nerpage.oca'
         minSdkVersion 24
@@ -15,8 +14,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resConfigs 'pl'
         testInstrumentationRunnerArguments runnerBuilder: "de.mannodermaus.junit5.AndroidJUnit5Builder"
-        resConfigs "pl"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -32,12 +31,17 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleDependency: 1.2.0 is the latest available for SDK 29
     implementation 'androidx.appcompat:appcompat:1.2.0'
+    //noinspection GradleDependency: 2.0.4 is the latest available for SDK 29
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //noinspection GradleDependency: 2.3.5 is the latest available for SDK 29
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    //noinspection GradleDependency: 2.3.5 is the latest available for SDK 29
     implementation 'androidx.navigation:navigation-ui:2.3.5'
-    implementation 'com.google.android.material:material:1.3.0'
+    //noinspection GradleDependency: 1.4.0 is the latest available for SDK 29
+    implementation 'com.google.android.material:material:1.4.0'
 
     //Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.1"
@@ -52,7 +56,7 @@ dependencies {
     implementation "androidx.test:core:1.5.0"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation "com.google.truth:truth:1.1.3"
-    //noinspection GradleDependency: 1.2.5 is the latest available for SDK 28
+    //noinspection GradleDependency: 1.2.5 is the latest available for SDK 29
     debugImplementation 'androidx.fragment:fragment-testing:1.2.5'
 }
 
