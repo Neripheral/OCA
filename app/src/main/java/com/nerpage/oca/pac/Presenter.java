@@ -49,4 +49,18 @@ public interface Presenter {
     interface Callback{
         void call();
     }
+
+    /**
+     * The core interface of all {@code Presenter}'s subclasses' {@code Factory} classes.
+     * Every {@code Presenter}'s implementation that should also implement its own {@code Factory} class.
+     * @param <P> subclass of {@code Presenter} that the {@code Factory} class should produce objects of
+     */
+    interface AbstractFactory<P extends Presenter>{
+        /**
+         * Creates a new {@code Presenter} of class {@code P} for the specified root View.
+         * @param root View being the root of the described hierarchy
+         * @return {@code Presenter} anchored at {@code root View}
+         */
+        P createFor(View root);
+    }
 }
