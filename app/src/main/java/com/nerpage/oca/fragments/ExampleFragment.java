@@ -1,6 +1,5 @@
 package com.nerpage.oca.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +20,6 @@ import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 
 public final class ExampleFragment extends AbstractController<ExampleModel, ExamplePresenter> {
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +41,6 @@ public final class ExampleFragment extends AbstractController<ExampleModel, Exam
     }
 
     public ExampleFragment(){
-        setPresenterFactory(new DefaultExamplePresenter.Factory());
+        setPresenterFactory(new DefaultExamplePresenter.DefaultExamplePresenterFactory());
     }
 }

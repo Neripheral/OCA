@@ -55,7 +55,7 @@ public interface Presenter {
      * Every {@code Presenter}'s implementation that should also implement its own {@code Factory} class.
      * @param <P> subclass of {@code Presenter} that the {@code Factory} class should produce objects of
      */
-    interface AbstractFactory<P extends Presenter>{
+    interface Factory<P extends Presenter>{
         /**
          * Creates a new {@code Presenter} of class {@code P} for the specified root View.
          * @param root View being the root of the described hierarchy

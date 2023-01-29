@@ -7,7 +7,7 @@ import com.nerpage.oca.pac.presenters.ExamplePresenterUtilizingPresenters;
 import org.junit.jupiter.api.BeforeEach;
 
 public class PresentersTest extends ExampleNodeTest{
-    Presenter.AbstractFactory<ExamplePresenter> factory = new ExamplePresenterUtilizingPresenters.Factory();
+    Presenter.Factory<ExamplePresenter> factory = new ExamplePresenterUtilizingPresenters.ExamplePresenterUtilizingPresentersFactory();
 
     @Override
     @BeforeEach

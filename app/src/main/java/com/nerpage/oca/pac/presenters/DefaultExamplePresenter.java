@@ -47,7 +47,7 @@ public final class DefaultExamplePresenter extends AbstractPresenter implements 
 
     private Callback onConfirmButtonPressCallback;
 
-    public static class Factory implements AbstractFactory<ExamplePresenter>{
+    public static class DefaultExamplePresenterFactory implements Factory<ExamplePresenter> {
         @Override
         public ExamplePresenter createFor(View root) {
             return new DefaultExamplePresenter(root);
