@@ -24,13 +24,10 @@ public final class ExampleFragment extends AbstractController<ExampleModel, Exam
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(ExamplePresenter.getDescribedLayoutId(), container, false);
-        getPresenterFactory().ifPresent(
-                f -> {
-                    ExamplePresenter p = f.createFor(root);
-                    p.setOnConfirmButtonPressedCallback(this::onConfirmButtonPressed);
-                    setPresenter(p);
-                }
-        );
+        tryBuildPresenter(root)
+                .ifPresent(
+                        p -> p.setOnConfirmButtonPressedCallback(this::onConfirmButtonPressed)
+                );
         return root;
     }
 
