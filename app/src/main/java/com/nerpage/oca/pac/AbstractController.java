@@ -1,19 +1,23 @@
 package com.nerpage.oca.pac;
 
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.nerpage.oca.fragments.Model;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class AbstractController<M extends Model, P extends Presenter> extends Fragment {
-    private Presenter.AbstractFactory<P> presenterFactory;
+    private Presenter.Factory<P> presenterFactory;
 
-    public void setPresenterFactory(Presenter.AbstractFactory<P> presenterFactory){
+    public void setPresenterFactory(Presenter.Factory<P> presenterFactory){
         this.presenterFactory = presenterFactory;
     }
 
-    protected Optional<? extends Presenter.AbstractFactory<P>> getPresenterFactory(){
+    protected Optional<? extends Presenter.Factory<P>> getPresenterFactory(){
         return Optional.ofNullable(presenterFactory);
     }
 
@@ -26,6 +30,22 @@ public abstract class AbstractController<M extends Model, P extends Presenter> e
 
     protected void setPresenter(P presenter) {
         this.presenter = presenter;
+    }
+
+
+    /**
+     * Attempts to create a new {@code Presenter} from {@code Factory} object and binds it to this
+     * {@code Controller}. If there is no {@code Factory} set, function does nothing.
+     *
+     * @param root View being the root of a hierarchy that the {@code Presenter} is supposed to be
+     *             based on. Cannot be null.
+     * @return {@code Optional} of {@code Presenter}. Present if it has been created successfully.
+     */
+    protected Optional<P> tryBuildPresenter(@NonNull View root){
+        Objects.requireNonNull(root);
+        Optional<P> p = getPresenterFactory().map(f -> f.createFor(root));
+        p.ifPresent(this::setPresenter);
+        return p;
     }
 
 
