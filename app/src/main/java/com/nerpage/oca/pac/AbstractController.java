@@ -9,7 +9,7 @@ import java.util.Optional;
 public abstract class AbstractController<M extends Model, P extends Presenter> extends Fragment {
     private Presenter.AbstractFactory<P> presenterFactory;
 
-    protected void setPresenterFactory(Presenter.AbstractFactory<P> presenterFactory){
+    public void setPresenterFactory(Presenter.AbstractFactory<P> presenterFactory){
         this.presenterFactory = presenterFactory;
     }
 
