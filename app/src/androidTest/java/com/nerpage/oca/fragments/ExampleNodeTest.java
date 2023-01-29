@@ -12,9 +12,8 @@ import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.presenters.ExamplePresenter;
+import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

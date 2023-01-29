@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.nerpage.oca.fragments.presenters.ExamplePresenter;
+import com.nerpage.oca.pac.presenters.DefaultExamplePresenter;
 import com.nerpage.oca.fragments.models.ExampleModel;
+import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 /**
  * @see ExampleModel
@@ -27,7 +28,7 @@ public final class ExampleFragment extends PACFragment<ExampleModel, ExamplePres
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //default onCreateView, not necessary to change
         root = inflater.inflate(ExamplePresenter.getDescribedLayoutId(), container, false);
-        p = new ExamplePresenter(root);
+        p = new DefaultExamplePresenter(root);
         p.setOnConfirmButtonPressedCallback(this::onConfirmButtonPressed);
         return root;
     }
