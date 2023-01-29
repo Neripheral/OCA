@@ -2,12 +2,12 @@ package com.nerpage.oca.fragments;
 
 import com.nerpage.oca.pac.Presenter;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
-import com.nerpage.oca.pac.presenters.PresentersUtilisingExamplePresenter;
+import com.nerpage.oca.pac.presenters.ExamplePresenterUtilizingPresenters;
 
 import org.junit.jupiter.api.BeforeEach;
 
 public class PresentersTest extends ExampleNodeTest{
-    Presenter.AbstractFactory<ExamplePresenter> factory = new PresentersUtilisingExamplePresenter.Factory();
+    Presenter.AbstractFactory<ExamplePresenter> factory = new ExamplePresenterUtilizingPresenters.Factory();
 
     @Override
     @BeforeEach

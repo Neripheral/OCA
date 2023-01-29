@@ -8,9 +8,9 @@ import com.nerpage.oca.util.Presenters;
 /**
  * @see com.nerpage.oca.fragments.ExampleFragment
  */
-public class PresentersUtilisingExamplePresenter extends AbstractPresenter implements ExamplePresenter {
+public class ExamplePresenterUtilizingPresenters extends AbstractPresenter implements ExamplePresenter {
 
-    public PresentersUtilisingExamplePresenter(View root){
+    public ExamplePresenterUtilizingPresenters(View root){
         super(root);
     }
 
@@ -38,7 +38,7 @@ public class PresentersUtilisingExamplePresenter extends AbstractPresenter imple
     public static class Factory implements AbstractFactory<ExamplePresenter>{
         @Override
         public ExamplePresenter createFor(View root) {
-            return new PresentersUtilisingExamplePresenter(root);
+            return new ExamplePresenterUtilizingPresenters(root);
         }
     }
 

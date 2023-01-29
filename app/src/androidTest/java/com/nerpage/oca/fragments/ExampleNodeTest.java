@@ -12,19 +12,11 @@ import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.pac.Presenter;
-import com.nerpage.oca.pac.presenters.DefaultExamplePresenter;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
-import com.nerpage.oca.pac.presenters.PresentersUtilisingExamplePresenter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
 
 class ExampleNodeTest {
     public FragmentScenario<ExampleFragment> scenario;
