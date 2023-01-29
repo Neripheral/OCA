@@ -6,13 +6,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.PACFragment;
-import com.nerpage.oca.fragments.Presenter;
+import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.Presenter;
 
 /**
  * @see com.nerpage.oca.fragments.ExampleFragment
  */
-public class ExamplePresenter extends Presenter {
+public class ExamplePresenter extends AbstractPresenter {
 
     public ExamplePresenter(View root){
         super(root);

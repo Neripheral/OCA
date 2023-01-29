@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.nerpage.oca.pac.Presenter;
+
 public abstract class PACFragment<M extends Model, P extends Presenter> extends Fragment {
     public interface CallbackToParent<C extends CallbackToParent.Callback>{
         interface Callback{}

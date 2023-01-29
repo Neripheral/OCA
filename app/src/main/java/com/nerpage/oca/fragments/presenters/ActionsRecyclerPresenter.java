@@ -5,9 +5,10 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.Presenter;
+import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.Presenter;
 
-public class ActionsRecyclerPresenter extends Presenter {
+public class ActionsRecyclerPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 

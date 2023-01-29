@@ -3,9 +3,10 @@ package com.nerpage.oca.fragments.presenters;
 import android.view.View;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.Presenter;
+import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.Presenter;
 
-public class ActionCardPresenter extends Presenter {
+public class ActionCardPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 

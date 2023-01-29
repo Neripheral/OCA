@@ -13,9 +13,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
 import com.nerpage.oca.fragments.FighterCardFragment;
-import com.nerpage.oca.fragments.Presenter;
+import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.Presenter;
 
-public class BattlegroundPresenter extends Presenter {
+public class BattlegroundPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 
