@@ -4,13 +4,12 @@ import android.view.View;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.Presenter;
 
 public class ActionCardPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 
-    public enum POI implements Presenter.POI {
+    public enum POI implements PointOfInterest {
         CONTAINER(R.id.action_container),
         THUMBNAIL(R.id.action_thumbnail),
         TITLE(R.id.action_title),

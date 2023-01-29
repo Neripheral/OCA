@@ -14,13 +14,12 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
 import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.Presenter;
 
 public class BattlegroundPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 
-    public enum POI implements Presenter.POI {
+    public enum POI implements PointOfInterest {
         ENEMY_CONTAINER(R.id.battleground_enemy_frame),
         PC_CURRENT_BLOOD(R.id.battleground_pc_currentBlood),
         PC_MAX_BLOOD(R.id.battleground_pc_maxBlood),

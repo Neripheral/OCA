@@ -4,13 +4,12 @@ import android.view.View;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.Presenter;
 
 public class FighterCardPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 
-    public enum POI implements Presenter.POI {
+    public enum POI implements PointOfInterest {
         CONTAINER(R.id.fighter_root),
         CARD(R.id.fighter_container),
         TITLE(R.id.fighter_title),

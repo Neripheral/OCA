@@ -41,32 +41,32 @@ public abstract class AbstractPresenter implements Presenter {
     /**
      *  For compatibility reasons only. Heavily deprecated. DO NOT USE.
      */
-    public void playEffect(POI poi, int resId, int duration, float scale, Runnable after){
+    public void playEffect(PointOfInterest poi, int resId, int duration, float scale, Runnable after){
         getView(poi).setScaleX(scale);
         getView(poi).setScaleY(scale);
         AnimationHelper.playCustomDurationAnimation((ImageView)getView(poi), resId, duration, after);
     }
 
-    public View getView(POI poi) {
+    public View getView(PointOfInterest poi) {
         return getRoot().findViewById(poi.getId());
     }
 
-    public TextView updateText(POI poi, String text){
+    public TextView updateText(PointOfInterest poi, String text){
         ((TextView)this.getView(poi)).setText(text);
         return ((TextView)this.getView(poi));
     }
 
-    public ImageView updateImage(POI poi, int imgId){
+    public ImageView updateImage(PointOfInterest poi, int imgId){
         ((ImageView)this.getView(poi)).setImageResource(imgId);
         return ((ImageView)this.getView(poi));
     }
 
-    public View show(POI poi){
+    public View show(PointOfInterest poi){
         this.getView(poi).setVisibility(View.VISIBLE);
         return this.getView(poi);
     }
 
-    public View hide(POI poi){
+    public View hide(PointOfInterest poi){
         this.getView(poi).setVisibility(View.GONE);
         return this.getView(poi);
     }

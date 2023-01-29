@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.Presenter;
 
 public class ActionsRecyclerPresenter extends AbstractPresenter {
     //================================================================================
     // region //            POI
 
-    public enum POI implements Presenter.POI {
+    public enum POI implements PointOfInterest {
         RECYCLER(R.id.actions_recycler);
 
         int id;

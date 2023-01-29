@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.Presenter;
 
 /**
  * @see com.nerpage.oca.fragments.ExampleFragment
@@ -20,7 +19,7 @@ public class ExamplePresenter extends AbstractPresenter {
 
 
 
-    public enum POI implements Presenter.POI {
+    public enum POI implements PointOfInterest {
         ROOT(R.id.root_example),
         TITLE(R.id.f_example_title),
         CONFIRM_BUTTON(R.id.f_example_confirmButton),

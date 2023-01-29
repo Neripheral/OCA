@@ -21,7 +21,7 @@ public interface Presenter {
      * static enum subclass of POI that maps enum constant to the view's id (R.id.*).
      * @see com.nerpage.oca.fragments.presenters.ExamplePresenter.POI
      */
-    interface POI{
+    interface PointOfInterest {
         /**
          * Getter of the {@code View} identifier represented by {@code POI} constant
          * @return resource id (R.id.*)
