@@ -8,7 +8,7 @@ import com.nerpage.oca.util.Presenters;
 /**
  * @see com.nerpage.oca.fragments.ExampleFragment
  */
-public class ExamplePresenterUtilizingPresenters extends AbstractPresenter implements ExamplePresenter {
+public final class ExamplePresenterUtilizingPresenters extends AbstractPresenter implements ExamplePresenter {
 
     public ExamplePresenterUtilizingPresenters(View root){
         super(root);
