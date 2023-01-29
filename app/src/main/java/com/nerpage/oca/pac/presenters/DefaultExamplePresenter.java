@@ -9,7 +9,7 @@ import com.nerpage.oca.pac.AbstractPresenter;
 /**
  * @see com.nerpage.oca.fragments.ExampleFragment
  */
-public class DefaultExamplePresenter extends AbstractPresenter implements ExamplePresenter {
+public final class DefaultExamplePresenter extends AbstractPresenter implements ExamplePresenter {
 
     public DefaultExamplePresenter(View root){
         super(root);
