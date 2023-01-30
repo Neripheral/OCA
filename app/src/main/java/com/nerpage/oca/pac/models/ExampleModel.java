@@ -1,4 +1,4 @@
-package com.nerpage.oca.fragments.models;
+package com.nerpage.oca.pac.models;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;

@@ -6,22 +6,15 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static com.google.common.truth.Truth.assertThat;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.view.View;
-
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.fragments.models.ExampleModel;
+import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
-import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

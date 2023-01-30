@@ -1,6 +1,5 @@
 package com.nerpage.oca.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nerpage.oca.pac.AbstractController;
-import com.nerpage.oca.fragments.models.ExampleModel;
+import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.DefaultExamplePresenter;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
