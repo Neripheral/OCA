@@ -12,6 +12,7 @@ import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.pac.controllers.ExampleFragment;
 import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 

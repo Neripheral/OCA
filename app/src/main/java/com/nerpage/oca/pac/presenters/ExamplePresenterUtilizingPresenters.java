@@ -3,10 +3,11 @@ package com.nerpage.oca.pac.presenters;
 import android.view.View;
 
 import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.controllers.ExampleFragment;
 import com.nerpage.oca.util.Presenters;
 
 /**
- * @see com.nerpage.oca.fragments.ExampleFragment
+ * @see ExampleFragment
  */
 public final class ExamplePresenterUtilizingPresenters extends AbstractPresenter implements ExamplePresenter {
 
