@@ -11,7 +11,7 @@ import com.nerpage.oca.pac.controllers.ExampleController;
 /**
  * @see ExampleController
  */
-public class ExampleModel extends Model {
+public final class ExampleModel extends Model {
     public static final String INITIAL_TITLE = "Example Fragment";
 
     private final MutableLiveData<String> title = new MutableLiveData<>(INITIAL_TITLE);
