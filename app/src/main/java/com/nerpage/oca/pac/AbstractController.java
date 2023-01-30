@@ -5,8 +5,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.nerpage.oca.fragments.Model;
-
 import java.util.Objects;
 import java.util.Optional;
 
