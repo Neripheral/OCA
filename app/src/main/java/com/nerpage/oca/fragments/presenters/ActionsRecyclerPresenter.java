@@ -36,7 +36,7 @@ public class ActionsRecyclerPresenter extends AbstractPresenter {
     //================================================================================
     // region //            Interface
 
-    public int getDescribedLayoutId() {
+    public static int getDescribedLayoutId() {
         return R.layout.fragment_actions_recycler;
     }
 

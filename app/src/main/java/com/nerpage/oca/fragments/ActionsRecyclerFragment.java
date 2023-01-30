@@ -145,7 +145,7 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(p.getDescribedLayoutId(), container, false);
+        root = inflater.inflate(ActionsRecyclerPresenter.getDescribedLayoutId(), container, false);
         p = new ActionsRecyclerPresenter(root);
 
         initRecyclerView();
