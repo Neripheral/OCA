@@ -15,11 +15,8 @@ import com.nerpage.oca.pac.presenters.DefaultExamplePresenter;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 /**
- * @see ExampleModel
- * @see ExamplePresenter
+ * Node serving as a helping template and for testing purposes.
  */
-
-
 public final class ExampleController extends AbstractController<ExampleModel, ExamplePresenter> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
