@@ -18,6 +18,7 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
+import com.nerpage.oca.fragments.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 import org.hamcrest.Matcher;
@@ -55,7 +56,7 @@ class ExampleNodeTest {
     @Test
     public void viewIsVisibleWhenInResumedState(){
         scenario.moveToState(Lifecycle.State.RESUMED);
-        onView(withText(R.string.example_fragment_title)).check(matches(isDisplayed()));
+        onView(withText(ExampleModel.INITIAL_TITLE)).check(matches(isDisplayed()));
     }
 
     @Test
