@@ -1,14 +1,14 @@
 package com.nerpage.oca.util;
 
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.pac.Presenter;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -55,5 +55,12 @@ public enum Presenters {
 
         View v = getView(poi, root);
         return getText(v);
+    }
+
+    public static void playEffect(Presenter.PointOfInterest poi, View root, int resId, int duration, float scale, Runnable after){
+        View view = getView(poi, root);
+        view.setScaleX(scale);
+        view.setScaleY(scale);
+        AnimationHelper.playCustomDurationAnimation((ImageView)view, resId, duration, after);
     }
 }
