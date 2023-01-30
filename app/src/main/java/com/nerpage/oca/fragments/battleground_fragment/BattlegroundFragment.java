@@ -22,7 +22,7 @@ import com.nerpage.oca.classes.fighting.behaviors.FightingBehavior;
 import com.nerpage.oca.classes.fighting.events.EntityPerformedActionEvent;
 import com.nerpage.oca.classes.fighting.phases.ActiveFighterAwaitingActionPhase;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
-import com.nerpage.oca.fragments.FighterCardFragment;
+import com.nerpage.oca.pac.controllers.FighterCardController;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
@@ -33,7 +33,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     //================================================================================
     // region //            Fields
 
-    private FighterCardFragment fighterCardFragment;
+    private FighterCardController fighterCardController;
     private ActionsRecyclerFragment actionsRecyclerFragment;
     private FightManager fightManager;
     private Action nextAction = null;
@@ -90,7 +90,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         m.pcMaxBlood = getFightManager().getPcFighter().getEntity().getMaxBlood();
         actionsRecyclerFragment.updateModel(getFightManager().getPcFighter().getEntity().getPossibleActions());
 
-        fighterCardFragment.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
+        fighterCardController.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
     }
 
     private PlayerCharacter getPlayerCharacter(){
@@ -118,7 +118,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     }
 
     private void initView(){
-        fighterCardFragment = p.findFighterCardFragment(getChildFragmentManager());
+        fighterCardController = p.findFighterCardFragment(getChildFragmentManager());
         actionsRecyclerFragment = p.findActionRecyclerFragment(getChildFragmentManager());
         actionsRecyclerFragment.registerCallback(new ActionsRecyclerFragment.Callback() {
             @Override
@@ -135,7 +135,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(m.pcCurrentBlood));
         p.updatePCMaxBlood(String.valueOf(m.pcMaxBlood));
-        fighterCardFragment.updatePresentation();
+        fighterCardController.updatePresentation();
         actionsRecyclerFragment.updatePresentation();
     }
 
@@ -161,7 +161,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
             else{
                 stopModelUpdates = true;
                 p.highlightEnemyCard(()-> {
-                            fighterCardFragment.playEffect(
+                            fighterCardController.playEffect(
                                     effect.getEffectResId(),
                                     effect.getEffectDuration(),
                                     effect.getEffectScale(),

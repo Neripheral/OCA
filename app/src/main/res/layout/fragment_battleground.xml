@@ -14,7 +14,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/battleground_enemy_frame"
-        android:name="com.nerpage.oca.fragments.FighterCardFragment"
+        android:name="com.nerpage.oca.pac.controllers.FighterCardController"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:tag="battleground_enemy"

@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer;
 import com.nerpage.oca.pac.Model;
 
 public class FighterCardModel extends Model {
-    private MutableLiveData<String> title;
+    private final MutableLiveData<String> title = new MutableLiveData<>("enemy_name");
     public String getTitle() {
         return title.getValue();
     }
@@ -21,7 +21,7 @@ public class FighterCardModel extends Model {
     }
 
 
-    private MutableLiveData<String> currentBlood;
+    private final MutableLiveData<String> currentBlood = new MutableLiveData<>("???");
     public String getCurrentBlood() {
         return currentBlood.getValue();
     }
@@ -34,7 +34,7 @@ public class FighterCardModel extends Model {
     }
 
 
-    private MutableLiveData<String> maxBlood;
+    private final MutableLiveData<String> maxBlood = new MutableLiveData<>("???");
     public String getMaxBlood() {
         return maxBlood.getValue();
     }

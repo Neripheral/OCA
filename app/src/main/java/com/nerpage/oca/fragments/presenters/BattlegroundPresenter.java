@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.ActionsRecyclerFragment;
-import com.nerpage.oca.fragments.FighterCardFragment;
 import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.pac.controllers.FighterCardController;
 
 public class BattlegroundPresenter extends AbstractPresenter {
     //================================================================================
@@ -54,8 +54,8 @@ public class BattlegroundPresenter extends AbstractPresenter {
     //================================================================================
     // region //            Interface
 
-    public @NonNull FighterCardFragment findFighterCardFragment(FragmentManager fm){
-        FighterCardFragment fragment = (FighterCardFragment) fm.findFragmentByTag("battleground_enemy");
+    public @NonNull FighterCardController findFighterCardFragment(FragmentManager fm){
+        FighterCardController fragment = (FighterCardController) fm.findFragmentByTag("battleground_enemy");
         assert fragment != null;
         return fragment;
     }
