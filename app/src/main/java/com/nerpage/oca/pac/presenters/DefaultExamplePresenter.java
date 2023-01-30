@@ -5,10 +5,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nerpage.oca.pac.AbstractPresenter;
-import com.nerpage.oca.pac.controllers.ExampleFragment;
+import com.nerpage.oca.pac.controllers.ExampleController;
 
 /**
- * @see ExampleFragment
+ * @see ExampleController
  */
 public final class DefaultExamplePresenter extends AbstractPresenter implements ExamplePresenter {
 

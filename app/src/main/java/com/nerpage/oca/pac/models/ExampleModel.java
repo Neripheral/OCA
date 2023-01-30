@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.nerpage.oca.pac.Model;
-import com.nerpage.oca.pac.controllers.ExampleFragment;
+import com.nerpage.oca.pac.controllers.ExampleController;
 
 /**
- * @see ExampleFragment
+ * @see ExampleController
  */
 public class ExampleModel extends Model {
     public static final String INITIAL_TITLE = "Example Fragment";

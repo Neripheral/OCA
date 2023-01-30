@@ -12,7 +12,7 @@ import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
-import com.nerpage.oca.pac.controllers.ExampleFragment;
+import com.nerpage.oca.pac.controllers.ExampleController;
 import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
@@ -21,12 +21,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ExampleNodeTest {
-    public FragmentScenario<ExampleFragment> scenario;
+    public FragmentScenario<ExampleController> scenario;
 
     @BeforeEach
     public void setUp() {
         scenario = FragmentScenario.launchInContainer(
-                ExampleFragment.class,
+                ExampleController.class,
                 null,
                 R.style.AppTheme,
                 Lifecycle.State.INITIALIZED);

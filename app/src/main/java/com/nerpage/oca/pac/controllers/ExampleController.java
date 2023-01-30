@@ -20,7 +20,7 @@ import com.nerpage.oca.pac.presenters.ExamplePresenter;
  */
 
 
-public final class ExampleFragment extends AbstractController<ExampleModel, ExamplePresenter> {
+public final class ExampleController extends AbstractController<ExampleModel, ExamplePresenter> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public final class ExampleFragment extends AbstractController<ExampleModel, Exam
         getPresenter().ifPresent(p->p.setTitle(title));
     }
 
-    public ExampleFragment(){
+    public ExampleController(){
         setPresenterFactory(new DefaultExamplePresenter.DefaultExamplePresenterFactory());
     }
 }
