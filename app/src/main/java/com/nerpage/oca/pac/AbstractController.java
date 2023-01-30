@@ -28,6 +28,11 @@ public abstract class AbstractController<M extends Model, P extends Presenter> e
         return Optional.ofNullable(presenter);
     }
 
+    protected P requirePresenter(){
+        return getPresenter().orElseThrow(
+                ()->new IllegalStateException("Presenter required but isn't available."));
+    }
+
     protected void setPresenter(P presenter) {
         this.presenter = presenter;
     }
@@ -53,6 +58,11 @@ public abstract class AbstractController<M extends Model, P extends Presenter> e
 
     protected Optional<M> getModel(){
         return Optional.ofNullable(model);
+    }
+
+    protected M requireModel(){
+        return getModel().orElseThrow(
+                ()->new IllegalStateException("Model required but isn't available."));
     }
 
     protected void setModel(M model){
