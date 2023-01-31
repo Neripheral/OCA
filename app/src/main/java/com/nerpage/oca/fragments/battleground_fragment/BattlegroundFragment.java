@@ -90,7 +90,10 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
         m.pcMaxBlood = getFightManager().getPcFighter().getEntity().getMaxBlood();
         actionsRecyclerFragment.updateModel(getFightManager().getPcFighter().getEntity().getPossibleActions());
 
-        fighterCardController.updateModel(getFightManager().getParticipantsExceptForPc().get(0));
+        Fighter enemy = getFightManager().getParticipantsExceptForPc().get(0);
+        fighterCardController.updateTitle(enemy.getEntity().getName(getContext()));
+        fighterCardController.updateCurrentBlood(String.valueOf(enemy.getEntity().getBlood()));
+        fighterCardController.updateMaxBlood(String.valueOf(enemy.getEntity().getMaxBlood()));
     }
 
     private PlayerCharacter getPlayerCharacter(){

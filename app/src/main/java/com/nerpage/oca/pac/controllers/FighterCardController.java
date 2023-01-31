@@ -9,18 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.nerpage.oca.classes.fighting.Fighter;
 import com.nerpage.oca.pac.AbstractController;
 import com.nerpage.oca.pac.models.FighterCardModel;
 import com.nerpage.oca.pac.presenters.DefaultFighterCardPresenter;
 import com.nerpage.oca.pac.presenters.FighterCardPresenter;
 
 public final class FighterCardController extends AbstractController<FighterCardModel, FighterCardPresenter> {
-    public void updateModel(Fighter fighter){
+    public void updateTitle(String newTitle) {
         getModel().ifPresent(m-> {
-            m.setTitle(fighter.getEntity().getName(getContext()));
-            m.setCurrentBlood(String.valueOf(fighter.getEntity().getBlood()));
-            m.setMaxBlood(String.valueOf(fighter.getEntity().getMaxBlood()));
+            if(!m.getTitle().equals(newTitle))
+                m.setTitle(newTitle);
+        });
+    }
+
+    public void updateCurrentBlood(String newCurrentBlood) {
+        getModel().ifPresent(m-> {
+            if(!m.getCurrentBlood().equals(newCurrentBlood))
+                m.setCurrentBlood(newCurrentBlood);
+        });
+    }
+
+    public void updateMaxBlood(String newMaxBlood) {
+        getModel().ifPresent(m-> {
+            if(!m.getMaxBlood().equals(newMaxBlood))
+                m.setMaxBlood(newMaxBlood);
         });
     }
 

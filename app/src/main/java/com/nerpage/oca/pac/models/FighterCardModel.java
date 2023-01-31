@@ -13,8 +13,7 @@ public class FighterCardModel extends Model {
         return title.getValue();
     }
     public void setTitle(String title) {
-        if(!getTitle().equals(title))
-            this.title.setValue(title);
+        this.title.setValue(title);
     }
     public void setOnTitleChanged(@NonNull LifecycleOwner owner, @NonNull Observer<? super String> observer){
         title.observe(owner, observer);
@@ -26,8 +25,7 @@ public class FighterCardModel extends Model {
         return currentBlood.getValue();
     }
     public void setCurrentBlood(String currentBlood) {
-        if(!getCurrentBlood().equals(currentBlood))
-            this.currentBlood.setValue(currentBlood);
+        this.currentBlood.setValue(currentBlood);
     }
     public void setOnCurrentBloodChanged(@NonNull LifecycleOwner owner, @NonNull Observer<? super String> observer){
         currentBlood.observe(owner, observer);
@@ -39,8 +37,7 @@ public class FighterCardModel extends Model {
         return maxBlood.getValue();
     }
     public void setMaxBlood(String maxBlood) {
-        if(!getMaxBlood().equals(maxBlood))
-            this.maxBlood.setValue(maxBlood);
+        this.maxBlood.setValue(maxBlood);
     }
     public void setOnMaxBloodChanged(@NonNull LifecycleOwner owner, @NonNull Observer<? super String> observer){
         maxBlood.observe(owner, observer);
