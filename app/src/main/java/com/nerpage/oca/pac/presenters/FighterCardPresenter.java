@@ -2,6 +2,7 @@ package com.nerpage.oca.pac.presenters;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.Presenter;
+import com.nerpage.oca.util.AnimatedDrawable;
 
 public interface FighterCardPresenter extends Presenter {
     static int getDescribedLayoutId() {
@@ -14,7 +15,7 @@ public interface FighterCardPresenter extends Presenter {
 
     void updateMaxBlood(String newMaxBlood);
 
-    void playEffectOnAvatar(int resId, int duration, float scale, Runnable after);
+    void playEffectOnAvatar(AnimatedDrawable animatedDrawable);
 
 
     enum POI implements PointOfInterest {

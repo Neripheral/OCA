@@ -13,6 +13,8 @@ import com.nerpage.oca.pac.AbstractController;
 import com.nerpage.oca.pac.models.FighterCardModel;
 import com.nerpage.oca.pac.presenters.DefaultFighterCardPresenter;
 import com.nerpage.oca.pac.presenters.FighterCardPresenter;
+import com.nerpage.oca.util.AnimatedDrawable;
+import com.nerpage.oca.util.Callback;
 
 /**
  * Node responsible for display and manipulation of a fighter card present during a fight.
@@ -54,9 +56,13 @@ public final class FighterCardController extends AbstractController<FighterCardM
         });
     }
 
-    public void playEffect(int resId, int duration, float scale, Runnable after){
+    public void playAnimation(int animationResId, int duration, float scale, Callback onAnimationEnd){
+
+    }
+
+    public void playEffect(AnimatedDrawable animatedDrawable){
         getPresenter().ifPresent(p->
-                p.playEffectOnAvatar(resId, duration, scale, after)
+                p.playEffectOnAvatar(animatedDrawable)
         );
     }
 

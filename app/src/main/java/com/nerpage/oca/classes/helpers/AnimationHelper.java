@@ -4,6 +4,8 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.SystemClock;
 import android.widget.ImageView;
 
+import com.nerpage.oca.util.AnimatedDrawable;
+
 public class AnimationHelper {
     public static class AnimationDrawableEx extends AnimationDrawable{
         private volatile int duration;
@@ -43,6 +45,20 @@ public class AnimationHelper {
         public void onAnimationEnd(){
             return;
         }
+    }
+
+    public static void playAnimatedDrawable(ImageView view, AnimatedDrawable animatedDrawable){
+        view.setBackgroundResource(animatedDrawable.getResourceId());
+        int delayMilliseconds = Math.round(1000f/60 * animatedDrawable.getSpeedMultiplier());
+        AnimationDrawableEx animation = new AnimationDrawableEx((AnimationDrawable)view.getBackground(), delayMilliseconds){
+            @Override
+            public void onAnimationEnd() {
+                animatedDrawable.onAnimationEnd().call();
+            }
+        };
+        view.setBackground(animation);
+        animation.stop();
+        animation.start();
     }
 
     public static void playCustomDurationAnimation(final ImageView view, final int resId, final int duration, final Runnable onAnimationEnd){

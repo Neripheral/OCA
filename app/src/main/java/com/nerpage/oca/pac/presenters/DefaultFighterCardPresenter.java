@@ -2,6 +2,7 @@ package com.nerpage.oca.pac.presenters;
 
 import android.view.View;
 import com.nerpage.oca.pac.AbstractPresenter;
+import com.nerpage.oca.util.AnimatedDrawable;
 import com.nerpage.oca.util.Presenters;
 
 
@@ -23,8 +24,8 @@ public final class DefaultFighterCardPresenter extends AbstractPresenter impleme
     }
 
     @Override
-    public void playEffectOnAvatar(int resId, int duration, float scale, Runnable after){
-        Presenters.playEffect(POI.EFFECT, getRoot(), resId, duration, scale, after);
+    public void playEffectOnAvatar(AnimatedDrawable animatedDrawable){
+        Presenters.playEffect(POI.EFFECT, getRoot(), animatedDrawable);
     }
 
 

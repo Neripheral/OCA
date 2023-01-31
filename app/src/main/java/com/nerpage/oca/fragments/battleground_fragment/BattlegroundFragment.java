@@ -26,6 +26,7 @@ import com.nerpage.oca.pac.controllers.FighterCardController;
 import com.nerpage.oca.fragments.PACFragment;
 import com.nerpage.oca.fragments.models.BattlegroundModel;
 import com.nerpage.oca.fragments.presenters.BattlegroundPresenter;
+import com.nerpage.oca.util.AnimatedDrawable;
 
 import java.util.List;
 
@@ -165,11 +166,12 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
                 stopModelUpdates = true;
                 p.highlightEnemyCard(()-> {
                             fighterCardController.playEffect(
-                                    effect.getEffectResId(),
-                                    effect.getEffectDuration(),
-                                    effect.getEffectScale(),
-                                    () ->
-                                            p.unhighlightEnemyCard(flowHelper::startFlow)
+                                    AnimatedDrawable.builder(effect.getEffectResId())
+                                                            .speedMultiplier(effect.getEffectDuration()/(1000f/60))
+                                                            .scale(effect.getEffectScale())
+                                                            .onAnimationEndCallback(()->
+                                                                    p.unhighlightEnemyCard(flowHelper::startFlow)
+                                                            ).build()
                             );
                             p.shakeEnemyCard();
                             forceViewUpdate();

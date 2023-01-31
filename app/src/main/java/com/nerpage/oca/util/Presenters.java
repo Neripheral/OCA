@@ -57,10 +57,10 @@ public enum Presenters {
         return getText(v);
     }
 
-    public static void playEffect(Presenter.PointOfInterest poi, View root, int resId, int duration, float scale, Runnable after){
+    public static void playEffect(Presenter.PointOfInterest poi, @NonNull View root, AnimatedDrawable animatedDrawable){
         View view = getView(poi, root);
-        view.setScaleX(scale);
-        view.setScaleY(scale);
-        AnimationHelper.playCustomDurationAnimation((ImageView)view, resId, duration, after);
+        view.setScaleX(animatedDrawable.getScaleX());
+        view.setScaleY(animatedDrawable.getScaleY());
+        AnimationHelper.playAnimatedDrawable((ImageView)view, animatedDrawable);
     }
 }
