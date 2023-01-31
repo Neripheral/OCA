@@ -59,7 +59,7 @@ public enum Presenters {
 
 
 
-    public static void setImage(@NonNull View view, int imageResourceId){
+    private static void setImage(@NonNull View view, int imageResourceId){
         Objects.requireNonNull(view, "View can't be null.");
         if(!(view instanceof ImageView))
             throw new IllegalArgumentException("View isn't an ImageView.");
@@ -75,6 +75,32 @@ public enum Presenters {
     }
 
 
+
+    private static void show(@NonNull View view){
+        Objects.requireNonNull(view, "View can't be null.");
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public static void show(@NonNull Presenter.PointOfInterest poi, @NonNull View root){
+        Objects.requireNonNull(poi, "POI can't be null.");
+        Objects.requireNonNull(root, "Root can't be null.");
+
+        show(getView(poi, root));
+    }
+
+
+
+    private static void hide(@NonNull View view){
+        Objects.requireNonNull(view, "View can't be null.");
+        view.setVisibility(View.GONE);
+    }
+
+    public static void hide(@NonNull Presenter.PointOfInterest poi, @NonNull View root){
+        Objects.requireNonNull(poi, "POI can't be null.");
+        Objects.requireNonNull(root, "Root can't be null.");
+
+        hide(getView(poi, root));
+    }
 
     public static void playEffect(Presenter.PointOfInterest poi, @NonNull View root, AnimatedDrawable animatedDrawable){
         View view = getView(poi, root);
