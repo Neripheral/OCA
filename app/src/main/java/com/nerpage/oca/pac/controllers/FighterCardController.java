@@ -14,13 +14,18 @@ import com.nerpage.oca.pac.models.FighterCardModel;
 import com.nerpage.oca.pac.presenters.DefaultFighterCardPresenter;
 import com.nerpage.oca.pac.presenters.FighterCardPresenter;
 import com.nerpage.oca.util.AnimatedDrawable;
-import com.nerpage.oca.util.Callback;
+
+import java.util.Objects;
 
 /**
  * Node responsible for display and manipulation of a fighter card present during a fight.
  * It's supposed to be a representation of an enemy and their stats.
  */
 public final class FighterCardController extends AbstractController<FighterCardModel, FighterCardPresenter> {
+    public FighterCardController() {
+        setPresenterFactory(new DefaultFighterCardPresenter.DefaultFighterCardPresenterFactory());
+    }
+
     /**
      * Updates this card's title.
      * @param newTitle a new title of type String
@@ -56,11 +61,15 @@ public final class FighterCardController extends AbstractController<FighterCardM
         });
     }
 
-    public void playAnimation(int animationResId, int duration, float scale, Callback onAnimationEnd){
+    /**
+     * Plays a specified animated picture on top of the fighter's avatar.
+     * @param animatedDrawable an animated picture with optional specifications.
+     *                         If null then the function has no effect.
+     */
+    public void playAnimationOnAvatar(AnimatedDrawable animatedDrawable){
+        if(Objects.isNull(animatedDrawable))
+            return;
 
-    }
-
-    public void playEffect(AnimatedDrawable animatedDrawable){
         getPresenter().ifPresent(p->
                 p.playEffectOnAvatar(animatedDrawable)
         );
@@ -83,6 +92,8 @@ public final class FighterCardController extends AbstractController<FighterCardM
         return root;
     }
 
+
+
     private void initModel() {
         FighterCardModel m = requireModel();
         m.setOnTitleChanged(this, this::onTitleChanged);
@@ -101,6 +112,8 @@ public final class FighterCardController extends AbstractController<FighterCardM
         );
     }
 
+
+
     private void onTitleChanged(String title){
         getPresenter().ifPresent(
                 p -> p.updateTitle(title)
@@ -117,9 +130,5 @@ public final class FighterCardController extends AbstractController<FighterCardM
         getPresenter().ifPresent(
                 p -> p.updateMaxBlood(maxBlood)
         );
-    }
-
-    public FighterCardController() {
-        setPresenterFactory(new DefaultFighterCardPresenter.DefaultFighterCardPresenterFactory());
     }
 }
