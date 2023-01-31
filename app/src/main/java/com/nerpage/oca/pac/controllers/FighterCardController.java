@@ -66,9 +66,7 @@ public final class FighterCardController extends AbstractController<FighterCardM
         );
     }
 
-    public void updatePresentation(){
 
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

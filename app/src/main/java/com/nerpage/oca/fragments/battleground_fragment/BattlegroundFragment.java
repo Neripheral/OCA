@@ -139,7 +139,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
     private void forceViewUpdate(){
         p.updatePCCurrentBlood(String.valueOf(m.pcCurrentBlood));
         p.updatePCMaxBlood(String.valueOf(m.pcMaxBlood));
-        fighterCardController.updatePresentation();
+        //fighterCardController.updatePresentation();
         actionsRecyclerFragment.updatePresentation();
     }
 
@@ -165,7 +165,7 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
             else{
                 stopModelUpdates = true;
                 p.highlightEnemyCard(()-> {
-                            fighterCardController.playEffect(
+                            fighterCardController.playAnimationOnAvatar(
                                     AnimatedDrawable.builder(effect.getEffectResId())
                                                             .speedMultiplier(effect.getEffectDuration()/(1000f/60))
                                                             .scale(effect.getEffectScale())
