@@ -14,7 +14,15 @@ import com.nerpage.oca.pac.models.FighterCardModel;
 import com.nerpage.oca.pac.presenters.DefaultFighterCardPresenter;
 import com.nerpage.oca.pac.presenters.FighterCardPresenter;
 
+/**
+ * Node responsible for display and manipulation of a fighter card present during a fight.
+ * It's supposed to be a representation of an enemy and their stats.
+ */
 public final class FighterCardController extends AbstractController<FighterCardModel, FighterCardPresenter> {
+    /**
+     * Updates this card's title.
+     * @param newTitle a new title of type String
+     */
     public void updateTitle(String newTitle) {
         getModel().ifPresent(m-> {
             if(!m.getTitle().equals(newTitle))
@@ -22,6 +30,10 @@ public final class FighterCardController extends AbstractController<FighterCardM
         });
     }
 
+    /**
+     * Updates this card's current blood level.
+     * @param newCurrentBlood a new current blood level of type int
+     */
     public void updateCurrentBlood(int newCurrentBlood) {
         String stringCurrentBlood = String.valueOf(newCurrentBlood);
         getModel().ifPresent(m-> {
@@ -30,6 +42,10 @@ public final class FighterCardController extends AbstractController<FighterCardM
         });
     }
 
+    /**
+     * Updates this card's maximum blood level.
+     * @param newMaxBlood a new current blood level of type int
+     */
     public void updateMaxBlood(int newMaxBlood) {
         String stringMaxBlood = String.valueOf(newMaxBlood);
         getModel().ifPresent(m-> {
