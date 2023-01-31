@@ -57,6 +57,25 @@ public enum Presenters {
         return getText(v);
     }
 
+
+
+    public static void setImage(@NonNull View view, int imageResourceId){
+        Objects.requireNonNull(view, "View can't be null.");
+        if(!(view instanceof ImageView))
+            throw new IllegalArgumentException("View isn't an ImageView.");
+        ((ImageView)view).setImageResource(imageResourceId);
+    }
+
+    public static void setImage(Presenter.PointOfInterest poi, View root, int imageResourceId){
+        Objects.requireNonNull(poi, "poi can't be null.");
+        Objects.requireNonNull(root, "root can't be null.");
+
+        View v = getView(poi, root);
+        setImage(v, imageResourceId);
+    }
+
+
+
     public static void playEffect(Presenter.PointOfInterest poi, @NonNull View root, AnimatedDrawable animatedDrawable){
         View view = getView(poi, root);
         view.setScaleX(animatedDrawable.getScaleX());
