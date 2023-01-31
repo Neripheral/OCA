@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FighterCardNodeTest {
     public static final String NEW_TITLE = "New Enemy";
@@ -63,8 +64,8 @@ public class FighterCardNodeTest {
         scenario.onFragment(f-> {
             switch (poi) {
                 case TITLE -> f.updateTitle(map.get(poi));
-                case CURRENT_BLOOD -> f.updateCurrentBlood(map.get(poi));
-                case MAX_BLOOD -> f.updateMaxBlood(map.get(poi));
+                case CURRENT_BLOOD -> f.updateCurrentBlood(Integer.parseInt(Objects.requireNonNull(map.get(poi))));
+                case MAX_BLOOD -> f.updateMaxBlood(Integer.parseInt(Objects.requireNonNull(map.get(poi))));
             }
         });
         onView(withId(poi.getId())).check(matches(withText(map.get(poi))));

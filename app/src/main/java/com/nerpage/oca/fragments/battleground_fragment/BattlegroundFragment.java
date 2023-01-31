@@ -92,8 +92,8 @@ public class BattlegroundFragment extends PACFragment<BattlegroundModel, Battleg
 
         Fighter enemy = getFightManager().getParticipantsExceptForPc().get(0);
         fighterCardController.updateTitle(enemy.getEntity().getName(getContext()));
-        fighterCardController.updateCurrentBlood(String.valueOf(enemy.getEntity().getBlood()));
-        fighterCardController.updateMaxBlood(String.valueOf(enemy.getEntity().getMaxBlood()));
+        fighterCardController.updateCurrentBlood(enemy.getEntity().getBlood());
+        fighterCardController.updateMaxBlood(enemy.getEntity().getMaxBlood());
     }
 
     private PlayerCharacter getPlayerCharacter(){

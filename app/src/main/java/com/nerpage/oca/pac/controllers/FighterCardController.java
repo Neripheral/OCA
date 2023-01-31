@@ -22,17 +22,19 @@ public final class FighterCardController extends AbstractController<FighterCardM
         });
     }
 
-    public void updateCurrentBlood(String newCurrentBlood) {
+    public void updateCurrentBlood(int newCurrentBlood) {
+        String stringCurrentBlood = String.valueOf(newCurrentBlood);
         getModel().ifPresent(m-> {
-            if(!m.getCurrentBlood().equals(newCurrentBlood))
-                m.setCurrentBlood(newCurrentBlood);
+            if(!m.getCurrentBlood().equals(stringCurrentBlood))
+                m.setCurrentBlood(stringCurrentBlood);
         });
     }
 
-    public void updateMaxBlood(String newMaxBlood) {
+    public void updateMaxBlood(int newMaxBlood) {
+        String stringMaxBlood = String.valueOf(newMaxBlood);
         getModel().ifPresent(m-> {
-            if(!m.getMaxBlood().equals(newMaxBlood))
-                m.setMaxBlood(newMaxBlood);
+            if(!m.getMaxBlood().equals(stringMaxBlood))
+                m.setMaxBlood(stringMaxBlood);
         });
     }
 
