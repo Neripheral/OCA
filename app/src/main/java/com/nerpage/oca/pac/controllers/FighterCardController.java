@@ -93,7 +93,7 @@ public final class FighterCardController extends AbstractController<FighterCardM
 
     private void onMaxBloodChanged(String maxBlood){
         getPresenter().ifPresent(
-                p -> p.updateTitle(maxBlood)
+                p -> p.updateMaxBlood(maxBlood)
         );
     }
 
