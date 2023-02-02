@@ -1,10 +1,25 @@
 package com.nerpage.ocaproc;
 
+import java.util.List;
+
 /**
  * This file has been automatically generated.
  */
 public class ClassBuilder {
-    private String preamble(){
+    public static String build(String className, List<String> attributes){
+        StringBuilder stringBuilder = new StringBuilder()
+                .append(preamble())
+                .append(imports())
+                .append(classOpen(className));
+
+        for(String a : attributes)
+            stringBuilder.append(attribute(a));
+
+        stringBuilder.append(classClose());
+        return stringBuilder.toString();
+    }
+
+    private static String preamble(){
         return "/**\r\n" +
                 " * This file has been automatically generated.\r\n" +
                 " */\r\n" +
@@ -13,7 +28,7 @@ public class ClassBuilder {
                 "\r\n";
     }
 
-    private String imports(){
+    private static String imports(){
         return  "import androidx.annotation.NonNull;\r\n" +
                 "import androidx.lifecycle.LifecycleOwner;\r\n" +
                 "import androidx.lifecycle.MutableLiveData;\r\n" +
@@ -22,14 +37,28 @@ public class ClassBuilder {
                 "import com.nerpage.oca.pac.Model;\r\n";
     }
 
-    private String classOpen(String className){
+    private static String classOpen(String className){
         return "public class " + className + "Model extends Model {\r\n";
     }
 
-    private String attribute(String type, String name, String defaultValue){
+    private static String attribute(String attribute){
+        String[] tmp = attribute.split(" ");
+        if(tmp.length != 2)
+            return "";
+
+        String type = tmp[0];
+        String name = tmp[1];
+
+        if(type.equals("Boolean"))
+            return attributeAsText(type, name, "", "is");
+        else
+            return attributeAsText(type, name, "", "get");
+    }
+
+    private static String attributeAsText(String type, String name, String defaultValue, String getter){
         return String.format(
                 "private final MutableLiveData<%1$s> %2$s = new MutableLiveData<>(%3$s);\r\n" +
-                "    public %1$s get%4$s() {\r\n" +
+                "    public %1$s %5$s%4$s() {\r\n" +
                 "        return %2$s.getValue();\r\n" +
                 "    }\r\n" +
                 "    public void set%4$s(%1$s %2$s) {\r\n" +
@@ -42,11 +71,12 @@ public class ClassBuilder {
             type,
             name,
             defaultValue,
-            Character.toUpperCase(type.charAt(0)) + type.substring(1)
+            Character.toUpperCase(type.charAt(0)) + type.substring(1),
+            getter
         );
     }
 
-    private String classClose(){
+    private static String classClose(){
         return "}";
     }
 }
