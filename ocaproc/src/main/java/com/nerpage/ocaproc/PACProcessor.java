@@ -2,6 +2,8 @@ package com.nerpage.ocaproc;
 
 import com.google.auto.service.AutoService;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +19,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
 
 
 @SupportedAnnotationTypes("com.nerpage.ocaproc.HasStandardModel")
@@ -71,8 +74,21 @@ public class PACProcessor extends AbstractProcessor {
 
 
     private void processElement(Element element){
+        String className = element.getSimpleName().toString().split("Controller")[0] + "Model";
         List<String> attributes = List.of(element.getAnnotation(HasStandardModel.class).value());
+        String builtClass = ClassBuilder.build(className, attributes);
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, builtClass);
 
+        try {
+            JavaFileObject source = processingEnv.getFiler().createSourceFile("com.nerpage.oca.pac.models." + className);
+            Writer writer = source.openWriter();
+            writer.write(builtClass);
+            writer.flush();
+            writer.close();
+        }catch(IOException e){
+            processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
+                    "IO error while generating " + className);
+        }
     }
 
 
