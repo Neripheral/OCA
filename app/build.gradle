@@ -31,7 +31,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //annotationProcessor fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly 'com.google.auto.service:auto-service-annotations:1.0.1'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0.1'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -39,7 +41,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.google.dagger:hilt-android:2.44.2'
+    implementation project(path: ':ocaproc')
     annotationProcessor 'com.google.dagger:hilt-compiler:2.44.2'
+    annotationProcessor files('libs/ocaproc.jar')
 
     //Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.1"
@@ -84,6 +88,14 @@ task buildItemDatabase {
         new File(resDir, "item_list.txt").text = namesStr
     }
 }
+
+tasks.register('processorTask', Copy){
+    from "$projectDir/../ocaproc/build/libs/ocaproc.jar"
+    into "$projectDir/libs/"
+}
+
+//processorTask.dependsOn(':processor:build')
+preBuild.dependsOn(processorTask)
 
 afterEvaluate{
     android.applicationVariants.all{ variant ->
