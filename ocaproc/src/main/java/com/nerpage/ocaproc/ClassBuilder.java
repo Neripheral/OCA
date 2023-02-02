@@ -38,7 +38,7 @@ public class ClassBuilder {
     }
 
     private static String classOpen(String className){
-        return "public class " + className + "Model extends Model {\r\n";
+        return "public class " + className + " extends Model {\r\n";
     }
 
     private static String attribute(String attribute){
@@ -57,21 +57,21 @@ public class ClassBuilder {
 
     private static String attributeAsText(String type, String name, String defaultValue, String getter){
         return String.format(
-                "private final MutableLiveData<%1$s> %2$s = new MutableLiveData<>(%3$s);\r\n" +
-                "    public %1$s %5$s%4$s() {\r\n" +
-                "        return %2$s.getValue();\r\n" +
-                "    }\r\n" +
-                "    public void set%4$s(%1$s %2$s) {\r\n" +
-                "        this.%2$s.setValue(%2$s);\r\n" +
-                "    }\r\n" +
-                "    public void setOn%4$sChanged(@NonNull LifecycleOwner owner, @NonNull Observer<? super %1$s> observer){\r\n" +
-                "        %2$s.observe(owner, observer);\r\n" +
-                "    }\r\n" +
+                "\tprivate final MutableLiveData<%1$s> %2$s = new MutableLiveData<>(%3$s);\r\n" +
+                "\tpublic %1$s %5$s%4$s() {\r\n" +
+                "\t    return %2$s.getValue();\r\n" +
+                "\t}\r\n" +
+                "\tpublic void set%4$s(%1$s %2$s) {\r\n" +
+                "\t    this.%2$s.setValue(%2$s);\r\n" +
+                "\t}\r\n" +
+                "\tpublic void setOn%4$sChanged(@NonNull LifecycleOwner owner, @NonNull Observer<? super %1$s> observer){\r\n" +
+                "\t    %2$s.observe(owner, observer);\r\n" +
+                "\t}\r\n" +
                 "\r\n",
             type,
             name,
             defaultValue,
-            Character.toUpperCase(type.charAt(0)) + type.substring(1),
+            Character.toUpperCase(name.charAt(0)) + name.substring(1),
             getter
         );
     }
