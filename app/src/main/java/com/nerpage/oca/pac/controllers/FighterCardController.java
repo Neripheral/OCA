@@ -7,9 +7,9 @@ import com.nerpage.oca.util.AnimatedDrawable;
 import com.nerpage.ocaproc.HasStandardModel;
 
 @HasStandardModel({
-    "String title \"\"",
-    "String currentBlood \"\"",
-    "String maxBlood \"\""
+    "String title \"missing_title\"",
+    "String currentBlood \"-1\"",
+    "String maxBlood \"-1\""
 })
 public abstract class FighterCardController extends AbstractController<FighterCardModel, FighterCardPresenter> {
     public abstract void updateTitle(String newTitle);
