@@ -11,7 +11,6 @@ import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.presenters.ActionCardPresenter;
 import com.nerpage.oca.fragments.models.ActionCardModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<BattlegroundActionAdapter.ActionCardHolder>{
@@ -97,7 +96,7 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
     public ActionCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.battleground_action_listitem,
+                .inflate(R.layout.fragment_actioncard,
                         parent,
                         false);
         return new ActionCardHolder(v){

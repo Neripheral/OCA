@@ -18,5 +18,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/battleground_action_listitem" />
+        tools:listitem="@layout/fragment_actioncard" />
 </androidx.constraintlayout.widget.ConstraintLayout>
