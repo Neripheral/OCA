@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.controllers.FighterCardController;
+import com.nerpage.oca.pac.controllers.implementation.DefaultFighterCardController;
 import com.nerpage.oca.pac.presenters.FighterCardPresenter;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,13 +28,13 @@ public class FighterCardNodeTest {
     public static final String NEW_CURRENT_BLOOD = "-111";
     public static final String NEW_MAX_BLOOD = "-200";
 
-    public FragmentScenario<FighterCardController> scenario;
+    public FragmentScenario<? extends FighterCardController> scenario;
 
 
     @BeforeEach
     public void setUp() {
         scenario = FragmentScenario.launchInContainer(
-                FighterCardController.class,
+                DefaultFighterCardController.class,
                 null,
                 R.style.AppTheme,
                 Lifecycle.State.INITIALIZED);
