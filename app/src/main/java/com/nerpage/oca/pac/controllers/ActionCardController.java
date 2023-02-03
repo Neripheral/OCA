@@ -9,7 +9,7 @@ import com.nerpage.ocaproc.HasStandardModel;
         "String title \"missing_title\"",
         "Integer thumbnailResId 0",
         "String description \"missing_description\"",
-        "Boolean isOpen false"
+        "Boolean open false"
 })
 public abstract class ActionCardController extends AbstractController<ActionCardModel, ActionCardPresenter> {
     public abstract void setTitle(String title);
