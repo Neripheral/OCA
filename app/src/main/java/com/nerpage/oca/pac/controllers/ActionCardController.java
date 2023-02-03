@@ -1,5 +1,6 @@
 package com.nerpage.oca.pac.controllers;
 
+import com.nerpage.oca.R;
 import com.nerpage.oca.pac.AbstractController;
 import com.nerpage.oca.pac.models.ActionCardModel;
 import com.nerpage.oca.pac.presenters.ActionCardPresenter;
@@ -7,7 +8,7 @@ import com.nerpage.ocaproc.HasStandardModel;
 
 @HasStandardModel({
         "String title \"missing_title\"",
-        "Integer thumbnailResId 0",
+        "Integer thumbnailResId " + R.drawable.blank,
         "String description \"missing_description\"",
         "Boolean open true"
 })
