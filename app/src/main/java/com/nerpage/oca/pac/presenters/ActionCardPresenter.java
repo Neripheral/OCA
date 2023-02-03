@@ -1,5 +1,7 @@
 package com.nerpage.oca.pac.presenters;
 
+import android.view.View;
+
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.Presenter;
 import com.nerpage.oca.util.Presenters;
@@ -9,11 +11,14 @@ public interface ActionCardPresenter extends Presenter {
         return R.layout.fragment_actioncard;
     }
 
+    static Factory<ActionCardPresenter> getPresenter(){
+        return new DefaultActionCardPresenter.DefaultActionCardPresenterFactory();
+    }
+
     void updateThumbnail(int imgResId);
     void updateTitle(String title);
     void updateDescription(String description);
-    void showDetails();
-    void hideDetails();
+    void updateIsOpen(boolean isOpen);
 
     enum POI implements PointOfInterest {
         THUMBNAIL(R.id.action_thumbnail),

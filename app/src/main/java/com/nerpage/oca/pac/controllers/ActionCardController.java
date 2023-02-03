@@ -1,0 +1,19 @@
+package com.nerpage.oca.pac.controllers;
+
+import com.nerpage.oca.pac.AbstractController;
+import com.nerpage.oca.pac.models.ActionCardModel;
+import com.nerpage.oca.pac.presenters.ActionCardPresenter;
+import com.nerpage.ocaproc.HasStandardModel;
+
+@HasStandardModel({
+        "String title \"missing_title\"",
+        "Integer thumbnailResId 0",
+        "String description \"missing_description\"",
+        "Boolean isOpen false"
+})
+public abstract class ActionCardController extends AbstractController<ActionCardModel, ActionCardPresenter> {
+    public abstract void setTitle(String title);
+    public abstract void setThumbnailResId(int resId);
+    public abstract void setDescription(String description);
+    public abstract void setIsDescriptionBoxOpen(boolean isOpen);
+}
