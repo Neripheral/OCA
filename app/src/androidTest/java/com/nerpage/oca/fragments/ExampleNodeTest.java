@@ -14,7 +14,6 @@ import androidx.test.espresso.action.ViewActions;
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.controllers.ExampleController;
 import com.nerpage.oca.pac.controllers.implementation.DefaultExampleController;
-import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 import org.junit.jupiter.api.Assertions;
@@ -50,7 +49,7 @@ class ExampleNodeTest {
     @Test
     public void viewIsVisibleWhenInResumedState(){
         scenario.moveToState(Lifecycle.State.RESUMED);
-        onView(withText(ExampleModel.INITIAL_TITLE)).check(matches(isDisplayed()));
+        onView(withText("Example Fragment")).check(matches(isDisplayed()));
     }
 
     @Test
