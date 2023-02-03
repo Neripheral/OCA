@@ -43,16 +43,17 @@ public class ClassBuilder {
 
     private static String attribute(String attribute){
         String[] tmp = attribute.split(" ");
-        if(tmp.length != 2)
+        if(tmp.length != 3)
             return "";
 
         String type = tmp[0];
         String name = tmp[1];
+        String defaultValue = tmp[2];
 
         if(type.equals("Boolean"))
-            return attributeAsText(type, name, "", "is");
+            return attributeAsText(type, name, defaultValue, "is");
         else
-            return attributeAsText(type, name, "", "get");
+            return attributeAsText(type, name, defaultValue, "get");
     }
 
     private static String attributeAsText(String type, String name, String defaultValue, String getter){
