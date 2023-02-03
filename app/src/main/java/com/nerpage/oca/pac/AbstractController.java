@@ -28,7 +28,7 @@ public abstract class AbstractController<M extends Model, P extends Presenter> e
      * Setter changing this {@code Controller}'s {@code Presenter Factory}.
      * @param presenterFactory new {@code Presenter Factory}. May be null.
      */
-    public void setPresenterFactory(@Nullable Presenter.Factory<P> presenterFactory){
+    protected void setPresenterFactory(@Nullable Presenter.Factory<P> presenterFactory){
         this.presenterFactory = presenterFactory;
     }
 

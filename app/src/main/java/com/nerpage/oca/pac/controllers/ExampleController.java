@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.nerpage.oca.pac.AbstractController;
+import com.nerpage.oca.pac.Presenter;
 import com.nerpage.oca.pac.models.ExampleModel;
 import com.nerpage.oca.pac.presenters.DefaultExamplePresenter;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
@@ -18,6 +19,11 @@ import com.nerpage.oca.pac.presenters.ExamplePresenter;
  * Node serving as a helping template and for testing purposes.
  */
 public final class ExampleController extends AbstractController<ExampleModel, ExamplePresenter> {
+    @Override
+    public void setPresenterFactory(@Nullable Presenter.Factory<ExamplePresenter> presenterFactory) {
+        super.setPresenterFactory(presenterFactory);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
