@@ -1,6 +1,8 @@
 package com.nerpage.ocaproc;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This file has been automatically generated.
@@ -21,7 +23,7 @@ public class ClassBuilder {
 
     private static String preamble(){
         return "/**\r\n" +
-                " * This file has been automatically generated.\r\n" +
+                " * This file has been generated automatically.\r\n" +
                 " */\r\n" +
                 "\r\n" +
                 "package com.nerpage.oca.pac.models;\r\n" +
@@ -42,17 +44,19 @@ public class ClassBuilder {
     }
 
     private static String attribute(String attribute){
-        String[] tmp = attribute.split(" ");
-        if(tmp.length != 2)
+        Pattern pattern = Pattern.compile("(\\w+)\\s+(\\w+)\\s+(.+)");
+        Matcher matcher = pattern.matcher(attribute);
+        if(!matcher.find())
             return "";
 
-        String type = tmp[0];
-        String name = tmp[1];
+        String type = matcher.group(1);
+        String name = matcher.group(2);
+        String defaultValue = matcher.group(3);
 
         if(type.equals("Boolean"))
-            return attributeAsText(type, name, "", "is");
+            return attributeAsText(type, name, defaultValue, "is");
         else
-            return attributeAsText(type, name, "", "get");
+            return attributeAsText(type, name, defaultValue, "get");
     }
 
     private static String attributeAsText(String type, String name, String defaultValue, String getter){

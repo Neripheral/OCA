@@ -13,7 +13,7 @@ import androidx.test.espresso.action.ViewActions;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.pac.controllers.ExampleController;
-import com.nerpage.oca.pac.models.ExampleModel;
+import com.nerpage.oca.pac.controllers.implementation.DefaultExampleController;
 import com.nerpage.oca.pac.presenters.ExamplePresenter;
 
 import org.junit.jupiter.api.Assertions;
@@ -21,16 +21,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ExampleNodeTest {
-    public FragmentScenario<ExampleController> scenario;
+    public FragmentScenario<? extends ExampleController> scenario;
 
     @BeforeEach
     public void setUp() {
         scenario = FragmentScenario.launchInContainer(
-                ExampleController.class,
+                DefaultExampleController.class,
                 null,
                 R.style.AppTheme,
                 Lifecycle.State.INITIALIZED);
-        //scenario.recreate();
     }
 
     @Test
@@ -50,7 +49,7 @@ class ExampleNodeTest {
     @Test
     public void viewIsVisibleWhenInResumedState(){
         scenario.moveToState(Lifecycle.State.RESUMED);
-        onView(withText(ExampleModel.INITIAL_TITLE)).check(matches(isDisplayed()));
+        onView(withText("Example Fragment")).check(matches(isDisplayed()));
     }
 
     @Test
