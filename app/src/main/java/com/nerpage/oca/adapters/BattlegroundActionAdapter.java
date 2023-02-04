@@ -5,11 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nerpage.oca.R;
 import com.nerpage.oca.fragments.presenters.ActionCardPresenter;
 import com.nerpage.oca.fragments.models.ActionCardModel;
+import com.nerpage.oca.pac.controllers.ActionCardController;
+import com.nerpage.oca.pac.controllers.implementation.DefaultActionCardController;
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         //================================================================================
         // region //           ActionViewHolder: Fields
 
-        private ActionCardPresenter p;
-        private ActionCardModel m;
+        private ActionCardController controller;
+        public View root;
 
         // endregion //        ActionViewHolder: Fields
         //================================================================================
@@ -30,26 +33,22 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         // region //           ActionViewHolder: Methods
         
         public void updateView(){
-            p.updateThumbnail(m.thumbnailResId);
-            p.updateTitle(m.title);
-            p.updateDescription(m.description);
-            p.setOverallListener(this);
         }
 
         public void updateModel(ActionCardModel newModel){
-            m.thumbnailResId = newModel.thumbnailResId;
-            m.title = newModel.title;
-            m.description = newModel.description;
+            controller.setThumbnailResId(newModel.thumbnailResId);
+            controller.setTitle(newModel.title);
+            controller.setDescription(newModel.description);
         }
 
         public abstract void onCardClicked(int position);
 
         public void showDetails(){
-            p.showDetails();
+            controller.setIsDescriptionBoxOpen(true);
         }
 
         public void hideDetails(){
-            p.hideDetails();
+            controller.setIsDescriptionBoxOpen(false);
         }
 
         // endregion //        ActionViewHolder: Methods
@@ -67,10 +66,10 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         //================================================================================
         // region //           ActionViewHolder: Constructors
 
-        public ActionCardHolder(@NonNull View root) {
-            super(root);
-            p = new ActionCardPresenter(root);
-            m = new ActionCardModel();
+        public ActionCardHolder(View v, ActionCardController controller) {
+            super(v);
+            this.root = v;
+            this.controller = controller;
         }
 
         // endregion //        ActionViewHolder: Constructors
@@ -86,23 +85,35 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
 
     public abstract List<ActionCardModel> getDataset();
 
+    public abstract FragmentManager getFragmentManager();
+
+
     // endregion //         Abstract
     //================================================================================
     //================================================================================
     // region //            Interface
+
+    private static int viewIdCounter = 1;
 
     @NonNull
     @Override
     public ActionCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.fragment_actioncard,
+                .inflate(R.layout.frameholder,
                         parent,
                         false);
-        return new ActionCardHolder(v){
+        v.setLayoutParams(new ViewGroup.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.MATCH_PARENT));
+        v.setTag(R.layout.frameholder, viewIdCounter);
+        int id = View.generateViewId();
+        v.setId(id);
+        viewIdCounter++;
+        ActionCardController actionCard = new DefaultActionCardController();
+        getFragmentManager().beginTransaction().replace(id, actionCard, "actionCard" + viewIdCounter).commit();
+        return new ActionCardHolder(v, actionCard){
             @Override
             public void onCardClicked(int position) {
-                BattlegroundActionAdapter.this.onCardClicked(position);
+
             }
         };
     }
@@ -112,6 +123,7 @@ public abstract class BattlegroundActionAdapter extends RecyclerView.Adapter<Bat
         holder.updateModel(getDataset().get(position));
         holder.updateView();
         holder.hideDetails();
+        holder.root.setOnClickListener((v)->BattlegroundActionAdapter.this.onCardClicked(position));
     }
 
     @Override

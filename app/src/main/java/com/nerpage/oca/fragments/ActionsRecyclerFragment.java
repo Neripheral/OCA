@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -138,6 +139,11 @@ public class ActionsRecyclerFragment extends PACFragment<ActionsRecyclerModel, A
             @Override
             public List<ActionCardModel> getDataset() {
                 return m.possibleActions;
+            }
+
+            @Override
+            public FragmentManager getFragmentManager() {
+                return getChildFragmentManager();
             }
         };
     }
