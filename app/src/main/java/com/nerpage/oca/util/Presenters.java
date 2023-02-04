@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.nerpage.oca.R;
 import com.nerpage.oca.classes.helpers.AnimationHelper;
 import com.nerpage.oca.pac.Presenter;
 
@@ -64,6 +65,7 @@ public enum Presenters {
         if(!(view instanceof ImageView))
             throw new IllegalArgumentException("View isn't an ImageView.");
         ((ImageView)view).setImageResource(imageResourceId);
+        view.setTag(R.id.testing_image_resId, imageResourceId);
     }
 
     public static void setImage(Presenter.PointOfInterest poi, View root, int imageResourceId){
