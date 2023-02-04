@@ -8,7 +8,7 @@ import com.nerpage.ocaproc.HasStandardModel;
 
 @HasStandardModel({
         "String title \"missing_title\"",
-        "Integer thumbnailResId " + R.drawable.blank,
+        "Integer thumbnailResId " + android.R.drawable.ic_menu_report_image,
         "String description \"missing_description\"",
         "Boolean open true"
 })
